@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Font sizes Start-->
+    <dimen name="font_size_11">11sp</dimen>
+    <dimen name="font_size_12">12sp</dimen>
+    <dimen name="font_size_13">13sp</dimen>
+    <dimen name="font_size_12.67">12.67sp</dimen>
+    <dimen name="font_size_13.33">13.33sp</dimen>
+    <dimen name="font_size_15">15sp</dimen>
+    <dimen name="font_size_17">17sp</dimen>
+    <dimen name="font_size_19">19sp</dimen>
+    <dimen name="font_size_20">20sp</dimen>
+    <dimen name="font_size_30">30sp</dimen>
+    <dimen name="font_size_50">50sp</dimen>
+    <dimen name="font_size_90">90sp</dimen>
+    <dimen name="timer_save_button_size">15sp</dimen>
+    <dimen name="check_in_button_size">15sp</dimen>
+    <dimen name="get_activation_size">13sp</dimen>
+    <dimen name="check_in_button_normal_size">18sp</dimen>
+    <dimen name="text_repeat_size">17sp</dimen>
+
+    <dimen name="watch_logo_height">22.33dp</dimen>
+    <dimen name="font_size_100">100sp</dimen>
+    <dimen name="font_size_pending_count_down">33dp</dimen>
+    <dimen name="stop_count_down">90sp</dimen>
+    <dimen name="alert_dialog_height">150dp</dimen>
+    <dimen name="alert_dialog_width">330dp</dimen>
+    <dimen name="alert_check_dialog_height">160dp</dimen>
+    <dimen name="alert_check_sub_dialog_height">110dp</dimen>
+    <dimen name="linear_alert_dialog_height">100dp</dimen>
+    <dimen name="intro_layout_next">10dp</dimen>
+
+    <dimen name="loner_dialog_width">330dp</dimen>
+
+    <!--Font sizes End-->
+
+    <!--Margins Start-->
+    <dimen name="diff_tab_tittle">0dp</dimen>
+    <dimen name="diff_tab_content">15dp</dimen>
+    <dimen name="diff_minus3">-3dp</dimen>
+    <dimen name="diff_0">0dp</dimen>
+    <dimen name="diff_2">2dp</dimen>
+    <dimen name="diff_3">3dp</dimen>
+    <dimen name="diff_5">5dp</dimen>
+    <dimen name="diff_10">10dp</dimen>
+    <dimen name="diff_15">15dp</dimen>
+    <dimen name="diff_17">17dp</dimen>
+    <dimen name="diff_20">20dp</dimen>
+    <dimen name="diff_25">25dp</dimen>
+    <dimen name="diff_30">30dp</dimen>
+    <dimen name="diff_40">40dp</dimen>
+    <dimen name="diff_50">50dp</dimen>
+    <dimen name="diff_60">60dp</dimen>
+    <!--Margins End-->
+
+    <!--Constant dimension start-->
+    <dimen name="btn_bold_height">60dp</dimen>
+    <!--Constant dimension end-->
+
+    <!--Splash Screen Start-->
+    <dimen name="splash_logo_width">192dp</dimen>
+    <dimen name="Splash_logo_height">76dp</dimen>
+    <dimen name="splash_footer_width">133.67dp</dimen>
+    <dimen name="Splash_footer_height">21dp</dimen>
+    <!--Splash Screen End-->
+
+
+    <!--For Front Screen Start-->
+    <dimen name="front_logo_width">192dp</dimen>
+    <dimen name="front_logo_height">76dp</dimen>
+    <dimen name="login_button_width">185dp</dimen>
+    <dimen name="login_button_height">49dp</dimen>
+    <!--For Front Screen End-->
+
+    <!--Enter Pin Screen Start-->
+    <dimen name="back_icon_layout_width">25dp</dimen>
+    <dimen name="back_icon_layout_height">25dp</dimen>
+    <dimen name="back_icon_width">13dp</dimen>
+    <dimen name="back_icon_height">12dp</dimen>
+    <dimen name="enter_pin_edt_width">292.67dp</dimen>
+    <dimen name="enter_pin_edt_height">37dp</dimen>
+    <dimen name="help_layout_width">30dp</dimen>
+    <dimen name="help_icon_size">17dp</dimen>
+    <!--Enter Pin Screen End-->
+
+    <!--Activation Code Screen Start-->
+    <dimen name="minmum_width">330dp</dimen>
+    <dimen name="close_layout_dim">35dp</dimen>
+    <dimen name="close_icon_dim">13.33dp</dimen>
+    <dimen name="activation_code_logo_width">213dp</dimen>
+    <dimen name="activation_code_logo_height">168.67dp</dimen>
+    <!--Activation Code Screen End-->
+
+    <!--Monitoring Screen Start-->
+    <dimen name="emergency_slider_height">73dp</dimen>
+    <dimen name="slide_hold_view_width">420dp</dimen>
+    <dimen name="btn_height_on_monitoring">60dp</dimen>
+    <dimen name="tab_view_component_height">163dp</dimen>
+    <dimen name="tab_duo_status_icon_height">56dp</dimen>
+    <dimen name="tab_duo_status_icon_width">65.33dp</dimen>
+
+    <dimen name="learn_more_height">22dp</dimen>
+    <!--Monitoring Screen End-->
+
+    <!--Enter pin-->
+    <dimen name="large_btn_width">296dp</dimen>
+    <dimen name="large_btn_height">50.33dp</dimen>
+    <dimen name="small_text_size">15dp</dimen>
+    <dimen name="btn_text_size">18.67dp</dimen>
+    <!--Enter pin-->
+
+    <!--How To Get An Activation Code-->
+    <!--How To Get An Activation Code-->
+
+    <!--Title View-->
+    <dimen name="seprator_height">1dp</dimen>
+    <dimen name="title_components_margin_top_bottom">15dp</dimen>
+    <dimen name="timer_title_components_margin_top_bottom">28dp</dimen>
+    <dimen name="title_set_timer_components_margin_top_bottom">10dp</dimen>
+    <dimen name="title_logo_margin_left">24.67dp</dimen>
+    <dimen name="loner_watch_margin_left">5dp</dimen>
+    <dimen name="title_logo_width">82dp</dimen>
+
+    <dimen name="title_logo_height">35.33dp</dimen>
+    <dimen name="title_timer_logo_height">30dp</dimen>
+
+    <dimen name="title_button_save_done_width">130dp</dimen>
+    <dimen name="title_button_stop_width">170dp</dimen>
+    <dimen name="title_button_height">35.33dp</dimen>
+    <!--Title View-->
+
+    <!-- Learn More start -->
+    <dimen name="learn_more_logo_width">129dp</dimen>
+    <dimen name="learn_more_logo_height">105.67dp</dimen>
+    <!-- Learn More end -->
+
+    <!--Start Up Screen-->
+    <dimen name="duo_component_margin_from_top">48.67dp</dimen>
+    <dimen name="startup_countdown_button_margin_from_top">10dp</dimen>
+    <dimen name="network_icon_width_height">59.33dp</dimen>
+    <dimen name="duo_icon_width">103.33dp</dimen>
+    <dimen name="duo_icon_height">84.33dp</dimen>
+    <dimen name="duo_status_width">30dp</dimen>
+    <dimen name="duo_status_height">33.33dp</dimen>
+    <dimen name="duo_status_margin_from_left">23dp</dimen>
+    <dimen name="manual_disabled_margin_top">10dp</dimen>
+    <dimen name="manual_disabled_margin_decription">10dp</dimen>
+    <dimen name="silent_countdown_margin_top">10dp</dimen>
+    <dimen name="shutdown_time_txt_margin_top">-20dp</dimen>
+
+    <dimen name="start_monitoring_text_size">15sp</dimen>
+    <dimen name="count_down_text_size">70sp</dimen>
+    <dimen name="silent_count_text_size">180sp</dimen>
+    <dimen name="silent_alert_title_text_size">35sp</dimen>
+    <dimen name="silent_alert_sub_title_text_size">24sp</dimen>
+    <dimen name="manual_disabled_text_size">20sp</dimen>
+    <dimen name="tab_seprator_height">1.67dp</dimen>
+    <dimen name="tab_button_widtht">57dp</dimen>
+
+    <!--Start Up Screen-->
+
+    <!--Start Alert Screen -->
+
+    <dimen name="alert_title_text_size">33sp</dimen>
+
+    <dimen name="alert_sub_title_text_size">23sp</dimen>
+
+    <dimen name="margin_from_top_alert_icon">66.67dp</dimen>
+
+    <dimen name="alert_icon_width">80dp</dimen>
+    <dimen name="alert_icon_height">80dp</dimen>
+
+    <!--End Alert Screen -->
+
+    <!-- Start Duo device screen -->
+
+    <dimen name="width_for_duo_components">300dp</dimen>
+    <dimen name="height_for_duo_list">170dp</dimen>
+    <dimen name="height_for_spinner">50dp</dimen>
+    <dimen name="small_margin_from_top">10dp</dimen>
+
+    <!-- End Duo device screen -->
+
+    <!-- Start chekin screen -->
+
+    <dimen name="medium_margin_from_top">15dp</dimen>
+    <dimen name="edit_text_field_height">150dp</dimen>
+    <dimen name="average_padding">10dp</dimen>
+    <dimen name="mid_plus_margin_from_top">20dp</dimen>
+    <dimen name="network_overlay_height">220dp</dimen>
+    <dimen name="max_marging_from_top">40dp</dimen>
+    <dimen name="outlined_btn_width">112.67dp</dimen>
+    <dimen name="outlined_btn_height">34dp</dimen>
+    <dimen name="title_header_height">50dp</dimen>
+    <dimen name="title_header_height_title">25dp</dimen>
+    <dimen name="scan_ble_header_height">120dp</dimen>
+
+
+    <!-- End checkin screen -->
+
+
+    <!-- Need an activaction code screen -->
+
+
+    <!--Configuration Screen-->
+    <dimen name="toggle_width">35.33dp</dimen>
+    <dimen name="toggle_height">23dp</dimen>
+    <dimen name="config_large_edt_width">157dp</dimen>
+    <dimen name="config_large_med_edt_width">137dp</dimen>
+    <dimen name="config_large_edt_height">30dp</dimen>
+    <dimen name="config_small_edt_width">60dp</dimen>
+    <dimen name="config_medium_edt_width">100dp</dimen>
+    <dimen name="config_small_edt_height">25dp</dimen>
+
+    <!-- Server Url changes -->s
+    <dimen name="title_bar_height">60dp</dimen>
+    <dimen name="title_text_size">16sp</dimen>
+    <dimen name="view_seprator">1dp</dimen>
+    <dimen name="btn_start_monitoring">67dp</dimen>
+    <dimen name="button_text_size">19sp</dimen>
+    <!-- weight value of layout-->
+
+    <dimen name="image_width_hundred">100dp</dimen>
+    <dimen name="image_height_hundred">60dp</dimen>
+
+    <dimen name="label_intro_title_text_size">23sp</dimen>
+    <dimen name="label_intro_description_text_size">16.67sp</dimen>
+    <dimen name="label_intro_title_padding">5dp</dimen>
+    <dimen name="county_language_list">50dp</dimen>
+    <dimen name="repeat_list">210dp</dimen>
+
+</resources>

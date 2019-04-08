@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ui screeen for emergency alert and get displayed after the emergency alert has been sent on to the server -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@android:style/Theme.NoTitleBar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bkg_color_for_alert_screens">
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_from_top_alert_icon"
+            android:layout_below="@+id/txtAlertSent_Emer">
+
+            <ImageView
+                android:layout_width="@dimen/alert_icon_width"
+                android:layout_height="@dimen/alert_icon_height"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/emergency_alert_icon" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtEmer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_centerHorizontal="true"
+            android:text="@string/emergency"
+            android:layout_marginTop="@dimen/diff_25"
+            android:textColor="@color/white"
+            android:typeface="sans"
+            android:textStyle="bold"
+            android:textSize="@dimen/alert_title_text_size" />
+
+        <TextView
+            android:id="@+id/txtAlertSent_Emer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/diff_10"
+            android:text="@string/alert_sent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/alert_sub_title_text_size" />
+
+
+
+
+        <Button
+            android:id="@+id/btnEmergencyAcknowledge"
+            android:layout_width="@dimen/large_btn_width"
+            android:layout_height="@dimen/btn_height_on_monitoring"
+            android:text="@string/acknowledge"
+            android:layout_marginTop="@dimen/diff_20"
+            android:textAllCaps="true"
+            android:background="@drawable/btn_new_check_in_selector"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_size_15"  />
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>
