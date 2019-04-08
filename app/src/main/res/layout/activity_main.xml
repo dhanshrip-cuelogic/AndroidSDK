@@ -8,7 +8,7 @@
 
 
 
-    <com.example.cue.sdklibrary.activity.EmergencyAlert
+    <com.loner.android.sdk.activity.EmergencyAlert
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/emergency"

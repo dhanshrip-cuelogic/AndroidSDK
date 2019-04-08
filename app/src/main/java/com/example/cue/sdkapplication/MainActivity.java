@@ -1,14 +1,15 @@
 package com.example.cue.sdkapplication;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-import com.example.cue.sdklibrary.activity.EmergencyAlert;
-import com.example.cue.sdklibrary.Utility.ToastManger;
+import com.loner.android.sdk.activity.EmergencyAlert;
+import com.loner.android.sdk.utilities.Toaster;
 
 
 public class MainActivity extends AppCompatActivity {
     EmergencyAlert emergencyAlert;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         emergencyAlert.setOnEmergencyAlert(new EmergencyAlert.OnEmergencyClickListioner() {
             @Override
             public void onClick() {
-                ToastManger.showsMessage(MainActivity.this, "This is Emergency Alert");
+                Toaster.showShort(MainActivity.this, "This is Emergency Alert");
             }
         });
 
