@@ -4,7 +4,6 @@ import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface;
 import com.loner.android.sdk.webservice.network.networking.ServiceManager;
 
 class RealLoner extends Loner {
-
     private static ServiceManager serviceManager;
 
     static RealLoner create() {
@@ -13,12 +12,9 @@ class RealLoner extends Loner {
     }
 
     @Override
-    public void register(String value, ActivityCallBackInterface listener) {
+    public void registerDeviceApi(String value, ActivityCallBackInterface listener) {
         serviceManager.registerDevice(value, listener);
     }
 
-    @Override
-    public void function2(String value) {
 
-    }
 }

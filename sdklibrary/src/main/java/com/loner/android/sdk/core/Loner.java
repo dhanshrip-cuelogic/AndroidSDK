@@ -29,8 +29,7 @@ public abstract class Loner {
         return instance;
     }
 
-    public abstract void register(String value, ActivityCallBackInterface listener);
+    public abstract void registerDeviceApi(String value, ActivityCallBackInterface listener);
 
-    public abstract void function2(String value);
 
 }
