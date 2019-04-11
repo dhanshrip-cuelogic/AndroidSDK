@@ -1,5 +1,4 @@
-package com.loner.android.sdk.webservice.interfaces;
-
+package com.loner.android.sdk.webservice.interfaces
 
 
 /**
@@ -7,15 +6,15 @@ package com.loner.android.sdk.webservice.interfaces;
  * between the service manager class, from the service layer and any of the view controller
  * from the view and the requesting activity will always implements this interface.
  */
-public interface ActivityCallBackInterface {
+interface ActivityCallBackInterface {
 
     /**
      * Will trigger when the request is successful.
      */
-    void onResponseDataSuccess(String successResponse);
+    fun onResponseDataSuccess(successResponse: String)
 
     /**
      * Will trigger when the request has failed.
      */
-    void onResponseDataFailure(String failureResponse);
+    fun onResponseDataFailure(failureResponse: String)
 }
