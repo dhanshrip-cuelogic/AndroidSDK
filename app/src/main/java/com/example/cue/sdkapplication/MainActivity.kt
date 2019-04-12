@@ -1,23 +1,28 @@
 package com.example.cue.sdkapplication
 
+import android.app.Activity
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
+import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
+import com.loner.android.sdk.widget.EmergencySlider
 
-import com.loner.android.sdk.activity.EmergencyAlert
-import com.loner.android.sdk.utilities.Toaster
-
-
-class MainActivity : AppCompatActivity() {
-
+class MainActivity : Activity() {
+    var emergencySlider: EmergencySlider? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val emergencyAlert = findViewById<EmergencyAlert>(R.id.emergency)
+        emergencySlider = findViewById(R.id.emergency_slider)
+        emergencySlider?.setOnEmergencySliderListetener(object : ActivityCallBackInterface {
+            override fun onResponseDataSuccess(successResponse: String) {
+                Toast.makeText(applicationContext, successResponse, Toast.LENGTH_LONG).show()
+            }
 
-        emergencyAlert.setOnEmergencyAlert(object : EmergencyAlert.OnEmergencyClickListioner {
-            override fun onClick() {
-                Toaster.showShort(this@MainActivity, "This is Emergency Alert")
+            override fun onResponseDataFailure(failureResponse: String) {
+                Toast.makeText(applicationContext, failureResponse, Toast.LENGTH_LONG).show()
             }
         })
+
+
+
     }
 }

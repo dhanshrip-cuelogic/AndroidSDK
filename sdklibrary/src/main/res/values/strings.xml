@@ -234,6 +234,10 @@
     <string name="countdown_required_to_check_in">Countdown to required check-in</string>
     <string name="continue_to_hold">Continue holding</string>
     <string name="silent_alert_countdown_alert">Silent Alert</string>
+    <string name="swipe_text_sos_alert"><b>swipe</b> for SOS alert </string>
+    <string name="hold_silent_alert"><b>hold</b> for silent SOS </string>
+    <string name="hold_text">hold</string>
+    <string name="silent_alert_text">for silent SOS alert</string>
     <string name="silent_alert_subtitle">will be sent in:</string>
     <string name="monitoring_will_stop_in_">to stop monitoring in:</string>
     <string name="_3">3</string>

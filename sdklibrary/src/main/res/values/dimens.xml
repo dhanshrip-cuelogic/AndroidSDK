@@ -5,8 +5,6 @@
     <dimen name="font_size_11">11sp</dimen>
     <dimen name="font_size_12">12sp</dimen>
     <dimen name="font_size_13">13sp</dimen>
-    <dimen name="font_size_12.67">12.67sp</dimen>
-    <dimen name="font_size_13.33">13.33sp</dimen>
     <dimen name="font_size_15">15sp</dimen>
     <dimen name="font_size_17">17sp</dimen>
     <dimen name="font_size_19">19sp</dimen>

@@ -3,7 +3,7 @@ package com.loner.android.sdk.model.response
 import com.google.gson.annotations.SerializedName
 import com.loner.android.sdk.webservice.models.BaseData
 
-class AccessToken : BaseData() {
+class AccessToken {
 
     @SerializedName("device_id")
     var deviceId: String? = null

@@ -1,4 +1,4 @@
-package com.loner.android.sdk.utilities
+package com.loner.android.sdk.utils
 
 import android.app.Activity
 import android.text.TextUtils

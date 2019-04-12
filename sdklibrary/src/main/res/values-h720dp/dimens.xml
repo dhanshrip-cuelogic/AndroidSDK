@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="large_btn_width">330dp</dimen>
+    <dimen name="btn_height_on_monitoring">65dp</dimen>
+    <dimen name="tab_view_component_height">190dp</dimen>
+    <dimen name="emergency_slider_height">73dp</dimen>
+    <dimen name="width_for_duo_components">340dp</dimen>
+    <dimen name="outlined_btn_width">115.67dp</dimen>
+    <dimen name="outlined_btn_height">40dp</dimen>
+    <dimen name="edit_text_field_height">180dp</dimen>
+    <dimen name="title_header_height">60dp</dimen>
+    <dimen name="scan_ble_header_height">145dp</dimen>
+    <dimen name="height_for_duo_list">190dp</dimen>
+    <dimen name="height_for_spinner">60dp</dimen>
+    <dimen name="county_language_list">60dp</dimen>
+    <dimen name="alert_dialog_width">370dp</dimen>
+    <dimen name="alert_check_sub_dialog_height">130dp</dimen>
+    <dimen name="alert_check_dialog_height">180dp</dimen>
+    <dimen name="alert_dialog_height">180dp</dimen>
+    <dimen name="linear_alert_dialog_height">130dp</dimen>
+    <dimen name="intro_layout_next">25dp</dimen>
+    <dimen name="repeat_list">217dp</dimen>
+    <dimen name="loner_dialog_width">350dp</dimen>
+  <!--  <dimen name="alert_dialog_height">250dp</dimen>
+    <dimen name="linear_alert_dialog_height">200dp</dimen>-->
+</resources>

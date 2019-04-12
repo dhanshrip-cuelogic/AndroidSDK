@@ -9,6 +9,10 @@ internal class RealLoner : Loner() {
         serviceManager!!.registerDevice(value, listener)
     }
 
+    override fun sendEmergencyAlertApi(listener: ActivityCallBackInterface) {
+        serviceManager!!.sendAlertApi(listener)
+    }
+
     companion object {
         private var serviceManager: ServiceManager? = null
 

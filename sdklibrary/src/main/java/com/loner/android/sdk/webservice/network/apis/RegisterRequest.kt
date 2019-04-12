@@ -19,9 +19,8 @@ class RegisterRequest(accessToken: String, private val listener: HTTPClientInter
         callRegistration!!.enqueue(object : Callback<AccessToken> {
             override fun onResponse(call: Call<AccessToken>, response: Response<AccessToken>) {
                 if (response.code() == 200) {
-                    val accessToken = response.body()
                     val networkSuccessInformation = NetworkSuccessInformation(STASK_Authentication)
-                    listener.onSuccess(requestObject, accessToken!!, networkSuccessInformation)
+                    listener.onSuccess(requestObject,response, networkSuccessInformation)
                 } else {
                     val errorInformation = NetworkErrorInformation()
                     errorInformation.error = "Error"

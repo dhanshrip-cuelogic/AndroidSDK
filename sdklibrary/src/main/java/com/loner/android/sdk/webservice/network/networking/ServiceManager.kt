@@ -1,10 +1,11 @@
 package com.loner.android.sdk.webservice.network.networking
 
-import com.loner.android.sdk.utilities.Constant
+import com.loner.android.sdk.utils.Constant
 import com.loner.android.sdk.webservice.interfaces.APIsInterface
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.webservice.interfaces.HTTPClientInterface
 import com.loner.android.sdk.webservice.models.BaseData
+import com.loner.android.sdk.webservice.network.apis.AlertRequest
 import com.loner.android.sdk.webservice.network.apis.BaseRequest
 import com.loner.android.sdk.webservice.network.apis.RegisterRequest
 import com.loner.android.sdk.webservice.network.helper.NetworkErrorInformation
@@ -18,10 +19,10 @@ import java.util.*
  */
 class ServiceManager private constructor() : HTTPClientInterface, APIsInterface {
     private var registerRequest: RegisterRequest? = null
-
+    private var alertRequest: AlertRequest? = null
     private val callbackMap: HashMap<BaseRequest, ActivityCallBackInterface> = HashMap()
 
-    override fun onSuccess(responseObject: BaseRequest, baseDataObject: BaseData, networkSuccessInformation: NetworkSuccessInformation) {
+    override fun onSuccess(responseObject: BaseRequest, baseDataObject: Any, networkSuccessInformation: NetworkSuccessInformation) {
         val listener = callbackMap[responseObject]
         if (listener != null) {
             listener.onResponseDataSuccess(networkSuccessInformation.responseMsg!!)
@@ -32,7 +33,7 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
     override fun onFailure(responseObject: BaseRequest, errorInformation: NetworkErrorInformation) {
         val listener = callbackMap[responseObject]
         if (listener != null) {
-            listener.onResponseDataFailure(errorInformation.error!!)
+            listener.onResponseDataFailure(errorInformation.detailMessage!!)
             callbackMap.remove(responseObject)
         }
     }
@@ -46,13 +47,17 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
                 responseDataListener.onResponseDataFailure("AccessToken can not empty")
             }
 
+
+    override fun sendAlertApi(responseDataListener: ActivityCallBackInterface) {
+            alertRequest = AlertRequest(this)
+            callbackMap[alertRequest as BaseRequest] = responseDataListener
+            alertRequest!!.alert(alertRequest!!, Constant.STASK_AlertEmergency)
+
+    }
+
     companion object {
 
         private var serviceManagerInstance: ServiceManager? = null
-
-        /**
-         * This method returns the ServiceManager instance.
-         */
         val instance: ServiceManager
             get() {
                 if (serviceManagerInstance == null) {

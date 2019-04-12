@@ -8,7 +8,7 @@ import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 abstract class Loner {
 
     abstract fun registerDeviceApi(value: String, listener: ActivityCallBackInterface)
-
+    abstract fun sendEmergencyAlertApi(listener: ActivityCallBackInterface)
     companion object {
 
         private val TAG = Loner::class.java.simpleName

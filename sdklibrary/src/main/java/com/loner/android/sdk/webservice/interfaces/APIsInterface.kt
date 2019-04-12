@@ -6,4 +6,5 @@ package com.loner.android.sdk.webservice.interfaces
  */
 interface APIsInterface {
     fun registerDevice(accessToken: String, responseDataListener: ActivityCallBackInterface)
+    fun sendAlertApi(responseDataListener: ActivityCallBackInterface)
 }
