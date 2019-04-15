@@ -7,6 +7,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+/**
+ * <p>This is singleton class, which provide a Retrofit object.
+ *    It has also implemented certificatePinning for api calling.
+ */
 class RetrofitClientInstance : RequestConfig {
     companion object {
         private var retrofit: Retrofit? = null

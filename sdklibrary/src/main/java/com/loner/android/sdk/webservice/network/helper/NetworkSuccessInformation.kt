@@ -2,6 +2,9 @@ package com.loner.android.sdk.webservice.network.helper
 
 import com.loner.android.sdk.utils.Constant
 
+/**
+ * This class filter a response message according to API request.
+ */
 class NetworkSuccessInformation(statusCode: Int) {
 
     var responseMsg: String? = null

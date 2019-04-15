@@ -6,21 +6,27 @@ import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.webservice.interfaces.HTTPClientInterface
 import com.loner.android.sdk.webservice.network.apis.AlertRequest
 import com.loner.android.sdk.webservice.network.apis.BaseRequest
-import com.loner.android.sdk.webservice.network.apis.RegisterRequest
 import com.loner.android.sdk.webservice.network.helper.NetworkErrorInformation
 import com.loner.android.sdk.webservice.network.helper.NetworkSuccessInformation
 import java.util.*
 
 /**
- * This files used as ServiceManager. This class is responsible to create instances
+ * <p>This files used as ServiceManager. This class is responsible to create instances
  * of different API classes and call their respective Request functions.
- * Note : This is a Singleton class.
+ * Note : This is a Singleton class.</p>
  */
 class ServiceManager private constructor() : HTTPClientInterface, APIsInterface {
-    private var registerRequest: RegisterRequest? = null
     private var alertRequest: AlertRequest? = null
     private val callbackMap: HashMap<BaseRequest, ActivityCallBackInterface> = HashMap()
 
+
+    /**
+     * <p>This method of  HTTPClientInterface
+     * When the request api returns the success state 200 status code.</p>
+     * @param responseObject this object provide call back object related API call classes.
+     * @param baseDataObject it's provide a response data class class object
+     * @param networkSuccessInformation it is provide success response message as per API call.
+     */
     override fun onSuccess(responseObject: BaseRequest, baseDataObject: Any, networkSuccessInformation: NetworkSuccessInformation) {
         val listener = callbackMap[responseObject]
         if (listener != null) {
@@ -28,7 +34,11 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
             callbackMap.remove(responseObject)
         }
     }
-
+    /**<p>This method of  HTTPClientInterface
+     * When the request api returns the failure.</p>
+     * @param responseObject this object provide call back object related API call classes.
+     * @param errorInformation this object provide error message related api.
+     */
     override fun onFailure(responseObject: BaseRequest, errorInformation: NetworkErrorInformation) {
         val listener = callbackMap[responseObject]
         if (listener != null) {
@@ -37,20 +47,15 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
         }
     }
 
-    override fun registerDevice(accessToken: String, responseDataListener: ActivityCallBackInterface) =
-            if (!accessToken.isEmpty()) {
-                registerRequest = RegisterRequest(accessToken, this)
-                callbackMap[registerRequest as BaseRequest] = responseDataListener
-                registerRequest!!.register(registerRequest!!, Constant.STASK_Authentication)
-            } else {
-                responseDataListener.onResponseDataFailure("AccessToken can not empty")
-            }
-
-
+    /**
+     * <p>This method of  APIsInterface </p>
+     * This method create a object AlertRequest class.
+     * @param responseDataListener this interface return a callback of API response
+     */
     override fun sendAlertApi(responseDataListener: ActivityCallBackInterface) {
-            alertRequest = AlertRequest(this)
-            callbackMap[alertRequest as BaseRequest] = responseDataListener
-            alertRequest!!.alert(alertRequest!!, Constant.STASK_AlertEmergency)
+        alertRequest = AlertRequest(this)
+        callbackMap[alertRequest as BaseRequest] = responseDataListener
+        alertRequest!!.alert(alertRequest!!, Constant.STASK_AlertEmergency)
 
     }
 
@@ -58,6 +63,7 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
     companion object {
         @Volatile
         private var serviceManagerInstance: ServiceManager? = null
+
         fun getInstance(): ServiceManager {
             return serviceManagerInstance ?: synchronized(this) {
                 ServiceManager().also {

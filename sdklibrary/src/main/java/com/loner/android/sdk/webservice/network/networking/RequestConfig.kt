@@ -1,5 +1,8 @@
 package com.loner.android.sdk.webservice.network.networking
 
+/**
+ * This interface stored sha_256 key and host name, base url which need into API calling.
+ */
 interface RequestConfig {
     companion object {
         val BASE_URL = "https://connect-staging-20.blackline-dev.com"

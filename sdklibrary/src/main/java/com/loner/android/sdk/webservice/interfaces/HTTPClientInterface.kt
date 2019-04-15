@@ -21,6 +21,6 @@ interface HTTPClientInterface {
     /**
      * When the request api returns the failure.
      */
-    fun onFailure(responseObject: BaseRequest, ErrorInformationObject: NetworkErrorInformation)
+    fun onFailure(responseObject: BaseRequest, errorInformationObject: NetworkErrorInformation)
 
 }

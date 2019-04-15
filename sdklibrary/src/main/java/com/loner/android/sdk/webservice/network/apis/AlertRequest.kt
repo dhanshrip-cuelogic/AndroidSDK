@@ -8,12 +8,14 @@ import com.loner.android.sdk.webservice.interfaces.HTTPClientInterface
 import com.loner.android.sdk.webservice.network.helper.NetworkConstants
 import com.loner.android.sdk.webservice.network.helper.NetworkErrorInformation
 import com.loner.android.sdk.webservice.network.helper.NetworkSuccessInformation
-import com.loner.android.sdk.webservice.network.networking.NetworkStatus
-import com.loner.android.sdk.webservice.network.networking.NetworkStatusReceiver
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
+/**
+ * <p> This class has implemented a logic of API calling of all alert request, it's also create
+ *     RequestAlert data class which use for API input parameters<p>
+ */
 
 class AlertRequest(private val listener: HTTPClientInterface) : BaseRequest() {
     private var alertCallObjet: Call<Void>? = null

@@ -6,10 +6,6 @@ import org.json.JSONObject
 
 /**
  * This class stores all the information's related to the Errors that can occur.
- *
- * @author Swapnil Sonar
- * @version 1.0.0
- * @Date 29/12/2015
  */
 class NetworkErrorInformation : BaseJSONParser {
 

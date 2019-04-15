@@ -8,7 +8,7 @@ class MyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Loner.initialize(this)
+        Loner.initialize()
     }
 
 }

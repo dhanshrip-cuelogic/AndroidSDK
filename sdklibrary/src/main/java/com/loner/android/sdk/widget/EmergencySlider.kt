@@ -11,6 +11,9 @@ import com.loner.android.sdk.core.Loner
 import com.loner.android.sdk.utils.SliderUnlockWidget
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 
+/**
+ * This call provide a callback of Emergency Slider swipe left to right.
+ */
 class EmergencySlider : RelativeLayout, SliderUnlockWidget.SliderUnlockWidgetListener {
 
     private var redComponentView: View? = null
