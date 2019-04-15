@@ -24,7 +24,8 @@ class RetrofitClientInstance : RequestConfig {
 
                     val client = OkHttpClient.Builder().addInterceptor(interceptor)
                             .certificatePinner(certificatePinner)
-                            .connectTimeout(RequestConfig.Companion.TIMEOUT.toLong(), TimeUnit.MILLISECONDS).build()
+                            .callTimeout(RequestConfig.TIMEOUT.toLong(),TimeUnit.SECONDS).build()
+
 
                     retrofit = Retrofit.Builder()
                             .baseUrl(RequestConfig.Companion.BASE_URL)
