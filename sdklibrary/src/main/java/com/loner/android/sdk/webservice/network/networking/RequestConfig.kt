@@ -9,6 +9,7 @@ interface RequestConfig {
         // production key
         //    String SHA_256 = "OkCcMYBVBnbpc8KRJbdVytXdu1BNZy6y4jKgK97PfzY=";
         //    String HOST_NAME = "connect-live.blacklinesafety.com";
-        val TIMEOUT = 5
+        val TIMEOUT = 10    // Ten seconds
+
     }
 }

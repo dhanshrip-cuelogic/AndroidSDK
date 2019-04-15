@@ -4,7 +4,6 @@ import com.loner.android.sdk.utils.Constant
 import com.loner.android.sdk.webservice.interfaces.APIsInterface
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.webservice.interfaces.HTTPClientInterface
-import com.loner.android.sdk.webservice.models.BaseData
 import com.loner.android.sdk.webservice.network.apis.AlertRequest
 import com.loner.android.sdk.webservice.network.apis.BaseRequest
 import com.loner.android.sdk.webservice.network.apis.RegisterRequest
@@ -55,15 +54,16 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
 
     }
 
-    companion object {
 
+    companion object {
+        @Volatile
         private var serviceManagerInstance: ServiceManager? = null
-        val instance: ServiceManager
-            get() {
-                if (serviceManagerInstance == null) {
-                    serviceManagerInstance = ServiceManager()
+        fun getInstance(): ServiceManager {
+            return serviceManagerInstance ?: synchronized(this) {
+                ServiceManager().also {
+                    serviceManagerInstance = it
                 }
-                return serviceManagerInstance as ServiceManager
             }
+        }
     }
 }

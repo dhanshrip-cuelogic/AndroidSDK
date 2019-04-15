@@ -15,7 +15,7 @@ class EmergencySlider : RelativeLayout, SliderUnlockWidget.SliderUnlockWidgetLis
 
     private var redComponentView: View? = null
     private var emergencySlider: SliderUnlockWidget? = null
-    private var listener: ActivityCallBackInterface? = null
+    private var listener: EmergencySliderListetener? = null
 
     constructor(context: Context) : super(context) {
         init()
@@ -39,11 +39,11 @@ class EmergencySlider : RelativeLayout, SliderUnlockWidget.SliderUnlockWidgetLis
     override fun onSliderUnlock(sliderUnlockWidget: SliderUnlockWidget) {
         emergencySlider!!.progress = 0
         emergencySlider!!.updateTheRedComponent(0)
-        Loner.client.sendEmergencyAlertApi(listener!!)
+        listener!!.onEmergencySlide()
 
     }
 
-    fun setOnEmergencySliderListetener(listener: ActivityCallBackInterface) {
+    fun setOnEmergencySliderListetener(listener: EmergencySliderListetener) {
         this.listener = listener
     }
 
@@ -51,4 +51,7 @@ class EmergencySlider : RelativeLayout, SliderUnlockWidget.SliderUnlockWidgetLis
 
     }
 
+   interface EmergencySliderListetener {
+       fun  onEmergencySlide()
+   }
 }

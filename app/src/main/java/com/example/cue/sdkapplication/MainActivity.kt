@@ -3,14 +3,11 @@ package com.example.cue.sdkapplication
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.content.res.Resources
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Window
-
-import android.widget.Toast
+import com.loner.android.sdk.core.Loner
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.widget.EmergencySlider
+import com.loner.android.sdk.widget.EmergencySlider.EmergencySliderListetener;
 
 class MainActivity : Activity() {
     var emergencySlider: EmergencySlider? = null
@@ -18,17 +15,21 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         emergencySlider = findViewById(R.id.emergency_slider)
-        emergencySlider?.setOnEmergencySliderListetener(object : ActivityCallBackInterface {
-            override fun onResponseDataSuccess(successResponse: String) {
-                alertResponseDialog(successResponse)
+        emergencySlider?.setOnEmergencySliderListetener(object : EmergencySliderListetener{
+            override fun onEmergencySlide() {
+                Loner.client.sendEmergencyAlertApi(object: ActivityCallBackInterface {
+                 override fun onResponseDataSuccess(successResponse: String) {
+                     alertResponseDialog(successResponse)
+                 }
 
+                 override fun onResponseDataFailure(failureResponse: String) {
+                     alertResponseDialog(failureResponse)
+                 }
+
+             })
             }
 
-            override fun onResponseDataFailure(failureResponse: String) {
-                alertResponseDialog(failureResponse)
-            }
         })
-
     }
 
 

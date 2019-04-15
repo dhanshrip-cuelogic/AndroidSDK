@@ -3,7 +3,7 @@ package com.loner.android.sdk.core
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.webservice.network.networking.ServiceManager
 
-internal class RealLoner : Loner() {
+ class RealLoner private constructor() : Loner() {
 
     override fun registerDeviceApi(value: String, listener: ActivityCallBackInterface) {
         serviceManager!!.registerDevice(value, listener)
@@ -15,9 +15,8 @@ internal class RealLoner : Loner() {
 
     companion object {
         private var serviceManager: ServiceManager? = null
-
         fun create(): RealLoner {
-            serviceManager = ServiceManager.instance
+            serviceManager = ServiceManager.getInstance()
             return RealLoner()
         }
     }

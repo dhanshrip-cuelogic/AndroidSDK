@@ -9,9 +9,7 @@ import java.util.concurrent.TimeUnit
 
 class RetrofitClientInstance : RequestConfig {
     companion object {
-
         private var retrofit: Retrofit? = null
-
         val retrofitInstance: Retrofit?
             get() {
                 if (retrofit == null) {
