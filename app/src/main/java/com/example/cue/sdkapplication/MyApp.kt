@@ -8,6 +8,7 @@ class MyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        // we can do authentication here for sdk in feature
         Loner.initialize()
     }
 

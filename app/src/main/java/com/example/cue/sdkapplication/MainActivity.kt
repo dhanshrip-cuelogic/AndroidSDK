@@ -39,8 +39,6 @@ class MainActivity : Activity() {
 
         })
     }
-
-
     fun emergencyAlertCall() {
         // Call alert send api call from loner sdk
         Loner.client.sendEmergencyAlertApi(object : ActivityCallBackInterface {
@@ -48,7 +46,6 @@ class MainActivity : Activity() {
                 progressBarDailog!!.dismiss()
                 alertResponseDialog(successResponse)
             }
-
             override fun onResponseDataFailure(failureResponse: String) {
                 progressBarDailog!!.dismiss()
                 alertResponseDialog(failureResponse)
