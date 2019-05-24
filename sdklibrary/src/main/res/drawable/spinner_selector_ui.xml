@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Selector for TextView for default, state_pressed and state_pressed. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@color/custom_blue_color_default" android:state_pressed="true"/> <!-- pressed -->
+    <item android:drawable="@mipmap/dropdown_message_list_focus" android:state_focused="true"/> <!-- focused -->
+    <item android:drawable="@mipmap/dropdown_message_list"/> <!-- default -->
+
+</selector>

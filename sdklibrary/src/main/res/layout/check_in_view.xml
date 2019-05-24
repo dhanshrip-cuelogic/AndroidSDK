@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="center_horizontal|center_vertical"
+    android:layout_centerHorizontal="true"
+    android:layout_centerInParent="true"
+    >
+
+    <TextView
+        android:id="@+id/txtManualDisabled"
+        android:layout_width="@dimen/large_btn_width"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtCheckin"
+        android:gravity="center_horizontal"
+        android:text="@string/countdown_timer_disabled"
+        android:layout_marginBottom="@dimen/diff_15"
+        android:textColor="@color/black"
+        android:textSize="@dimen/manual_disabled_text_size" />
+    <TextView
+        android:id="@+id/txtCheckin"
+        android:layout_width="@dimen/large_btn_width"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtTimer"
+        android:layout_below="@+id/txtManualDisabled"
+        android:text="@string/countdown_required_to_check_in"
+        android:layout_marginBottom="@dimen/diff_15"
+        android:textColor="@color/textual_grey"
+        android:textSize="@dimen/start_monitoring_text_size" />
+
+    <TextView
+        android:id="@+id/txtTimer"
+        android:layout_width="@dimen/large_btn_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtCheckin"
+        android:layout_alignLeft="@+id/checkInButtonLayout"
+        android:text="@string/start_monitoring_timer"
+        android:layout_marginTop="-20dp"
+        android:textSize="@dimen/count_down_text_size"
+        android:textStyle="bold"
+        android:textColor="@color/check_in_default"
+        android:layout_centerHorizontal="true" />
+    <LinearLayout
+        android:id="@+id/checkInButtonLayout"
+        android:layout_width="@dimen/large_btn_width"
+        android:layout_height="@dimen/btn_height_on_monitoring"
+        android:layout_below="@id/txtTimer"
+        android:layout_marginTop="@dimen/startup_countdown_button_margin_from_top"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true">
+        <Button
+            android:id="@+id/btnSetTimerButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAllCaps="true"
+            android:background="@drawable/btn_change_timer_selector"
+            android:text="@string/change_timer"
+            android:textColor="@android:color/black"
+            android:layout_marginRight="@dimen/diff_3" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/btnCheckinWithNotes"
+            android:textAllCaps="true"
+            android:background="@drawable/btn_new_check_in_selector"
+            android:text="@string/checkin"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="@dimen/diff_3" />
+
+    </LinearLayout>
+</RelativeLayout>

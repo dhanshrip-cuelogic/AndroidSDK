@@ -21,7 +21,7 @@ class RetrofitClientInstance : RequestConfig {
                     interceptor.level = HttpLoggingInterceptor.Level.BODY
 
                     val certificatePinner = CertificatePinner.Builder()
-                            .add(RequestConfig.Companion.HOST_NAME, "sha256/" + RequestConfig.Companion.SHA_256)
+                            .add(RequestConfig.HOST_NAME, "sha256/" + RequestConfig.SHA_256)
                             .build()
 
                     val client = OkHttpClient.Builder().addInterceptor(interceptor)
@@ -30,7 +30,7 @@ class RetrofitClientInstance : RequestConfig {
 
 
                     retrofit = Retrofit.Builder()
-                            .baseUrl(RequestConfig.Companion.BASE_URL)
+                            .baseUrl(RequestConfig.BASE_URL)
                             .addConverterFactory(GsonConverterFactory.create())
                             .client(client)
                             .build()

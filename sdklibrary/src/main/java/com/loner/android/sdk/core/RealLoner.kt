@@ -1,5 +1,6 @@
 package com.loner.android.sdk.core
 
+import android.content.Context
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.webservice.network.networking.ServiceManager
 
@@ -16,12 +17,17 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
      *    for callback</p>
      *  @param ActivityCallBackInterface ActivityCallBackInterface It's give a callback to app for Api request success or failure
      */
-    override fun sendEmergencyAlertApi(listener: ActivityCallBackInterface) {
-        serviceManager!!.sendAlertApi(listener)
+    override fun sendEmergencyAlertApi(context:Context,listener: ActivityCallBackInterface) {
+        serviceManager.sendAlertApi(context,listener)
+    }
+
+    override fun getConfiguration(context: Context, listener: ActivityCallBackInterface) {
+
+        serviceManager.requestConfiguration(context,listener)
     }
 
     companion object {
-        private var serviceManager: ServiceManager? = null
+        private lateinit var serviceManager:ServiceManager
         fun create(): RealLoner {
             serviceManager = ServiceManager.getInstance()
             return RealLoner()

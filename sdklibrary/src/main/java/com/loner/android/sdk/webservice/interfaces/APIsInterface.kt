@@ -1,9 +1,13 @@
 package com.loner.android.sdk.webservice.interfaces
 
+import android.content.Context
+
 /**
  * This class contains all the services related method which are declared over but
  * implemented at the APIsInterface class of Service layer.
  */
 interface APIsInterface {
-    fun sendAlertApi(responseDataListener: ActivityCallBackInterface)
+    fun sendAlertApi(context: Context, responseDataListener: ActivityCallBackInterface)
+    fun requestConfiguration(context:Context,responseDataListener: ActivityCallBackInterface)
+
 }

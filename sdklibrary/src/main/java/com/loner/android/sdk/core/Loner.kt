@@ -1,6 +1,7 @@
 package com.loner.android.sdk.core
 
 
+import android.content.Context
 import android.util.Log
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 
@@ -49,5 +50,7 @@ abstract class Loner {
      *  App can call this method when emergency slider swipe left to right or call from any event listener</p>
      * @param ActivityCallBackInterface It's give a callback to app for Api request success or failure
      */
-    abstract fun sendEmergencyAlertApi(listener: ActivityCallBackInterface)
+    abstract fun sendEmergencyAlertApi(context:Context,listener: ActivityCallBackInterface)
+    abstract fun getConfiguration(context:Context,listener: ActivityCallBackInterface)
+
 }

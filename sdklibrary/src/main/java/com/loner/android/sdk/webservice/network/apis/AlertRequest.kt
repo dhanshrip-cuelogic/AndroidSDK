@@ -19,10 +19,9 @@ import retrofit2.Response
 
 class AlertRequest(private val listener: HTTPClientInterface) : BaseRequest() {
     private var alertCallObjet: Call<Void>? = null
-    private val requestAlert: RequestAlert
+    private val requestAlert: RequestAlert = RequestAlert()
 
     init {
-        requestAlert = RequestAlert()
         requestAlert.alertType = "emergency_alert"
         requestAlert.data = Utility.currentDate
         requestAlert.deviceId = Constant.deviceId

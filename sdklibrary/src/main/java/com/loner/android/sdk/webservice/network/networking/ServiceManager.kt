@@ -1,11 +1,13 @@
 package com.loner.android.sdk.webservice.network.networking
 
+import android.content.Context
 import com.loner.android.sdk.utils.Constant
 import com.loner.android.sdk.webservice.interfaces.APIsInterface
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.webservice.interfaces.HTTPClientInterface
 import com.loner.android.sdk.webservice.network.apis.AlertRequest
 import com.loner.android.sdk.webservice.network.apis.BaseRequest
+import com.loner.android.sdk.webservice.network.apis.ConfigurationRequest
 import com.loner.android.sdk.webservice.network.helper.NetworkErrorInformation
 import com.loner.android.sdk.webservice.network.helper.NetworkSuccessInformation
 import java.util.*
@@ -17,8 +19,9 @@ import java.util.*
  */
 class ServiceManager private constructor() : HTTPClientInterface, APIsInterface {
     private var alertRequest: AlertRequest? = null
+    private var configurationRequest: ConfigurationRequest? = null
     private val callbackMap: HashMap<BaseRequest, ActivityCallBackInterface> = HashMap()
-
+    var networkStatus: NetworkStatus = NetworkStatus()
 
     /**
      * <p>This method of  HTTPClientInterface
@@ -52,13 +55,27 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
      * This method create a object AlertRequest class.
      * @param responseDataListener this interface return a callback of API response
      */
-    override fun sendAlertApi(responseDataListener: ActivityCallBackInterface) {
-        alertRequest = AlertRequest(this)
-        callbackMap[alertRequest as BaseRequest] = responseDataListener
-        alertRequest!!.alert(alertRequest!!, Constant.STASK_AlertEmergency)
+    override fun sendAlertApi(context:Context,responseDataListener: ActivityCallBackInterface) {
+        if(networkStatus.isNetworkAvailable(context)) {
+            alertRequest = AlertRequest(this)
+            callbackMap[alertRequest as BaseRequest] = responseDataListener
+            alertRequest!!.alert(alertRequest!!, Constant.STASK_AlertEmergency)
+        }else {
+            responseDataListener.onResponseDataFailure("Please check Internet Connection")
+        }
 
     }
 
+    override fun requestConfiguration(context: Context, responseDataListener: ActivityCallBackInterface) {
+        if(networkStatus.isNetworkAvailable(context)) {
+            configurationRequest = ConfigurationRequest(this)
+            callbackMap[configurationRequest as BaseRequest] = responseDataListener
+            configurationRequest!!.getConfiguration(configurationRequest!!, Constant.STASK_Configuration)
+        }else {
+            responseDataListener.onResponseDataFailure("Please check Internet Connection")
+        }
+
+    }
 
     companion object {
         @Volatile

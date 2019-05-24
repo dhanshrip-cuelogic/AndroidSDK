@@ -116,6 +116,7 @@
 
     <!-- Added string values that are directly used on in the class files -->
     <!-- AlertHistoryActivity -->
+    <string name="change_timer">Change Timer</string>
     <string name="alert_history">Alert History</string>
     <string name="loading">Loading..</string>
 
@@ -262,4 +263,26 @@
 	<string name="bluetooth_alert_message">Turn on bluetooth to use bluetooth services?</string>
 	<string name="searching_for_devices">"Searching for devices..."</string>
 	<string name="debug_mode">"Debug mode"</string>
+
+    <string-array name="barrows_list">
+        <item>SELECT A QUICK NOTE</item>
+        <item>Starting shift.</item>
+        <item>Ending shift.</item>
+        <item>Entering site.</item>
+        <item>Exiting site.</item>
+        <item>Flagging location.</item>
+    </string-array>
+
+    <string name="send_check_in_all">Send</string>
+    <string name="set_timer">SET TIMER</string>
+    <string name="hours_text">hours</string>
+    <string name="hour_text">hour</string>
+    <string name="minute_text">minute</string>
+    <string name="minutes_text">minutes</string>
+    <string name="repeat_text">Repeat</string>
+    <string name="disable_text">Disable</string>
+    <string name="check_in_time_info">If you are using a default check-in timer, this feature will override it.</string>
+    <string name="save">Save</string>
+    <string name="text_decription">When would you like Loner Mobile to check on you until?</string>
+    <string name="text_back">Back</string>
 </resources>

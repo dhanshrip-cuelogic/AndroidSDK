@@ -15,5 +15,7 @@ class NetworkSuccessInformation(statusCode: Int) {
             responseMsg = "User Successfully register"
         if( statusCode == Constant.STASK_AlertEmergency)
             responseMsg = "Emergency alert successfully triggered"
+        if( statusCode == Constant.STASK_Configuration)
+            responseMsg = "Configuration fetch successfully"
     }
 }

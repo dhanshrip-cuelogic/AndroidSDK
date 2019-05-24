@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/timeheader"
+        layout="@layout/timerheader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/timeheader"
+        android:layout_marginBottom="@dimen/diff_15">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/settimertitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/diff_5">
+
+                <TextView
+                    android:id="@+id/nameOftheScreenTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="@string/repeat_text"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_17" />
+            </RelativeLayout>
+
+            <ListView
+                android:id="@+id/repeatList"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/repeat_list"
+                android:layout_below="@+id/settimertitle"
+                android:clickable="false"
+                android:divider="@null" />
+
+            <TextView
+                android:id="@+id/desciptionUntilSpecific"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/repeatList"
+                android:layout_marginTop="-10dp"
+                android:paddingLeft="@dimen/diff_25"
+                android:paddingRight="@dimen/diff_10"
+                android:text="@string/text_decription"
+                android:textSize="@dimen/font_size_12"
+                android:visibility="gone" />
+            <LinearLayout
+                android:id="@+id/pickerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/desciptionUntilSpecific"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/diff_5">
+                <DatePicker
+                    android:id="@+id/datePicker"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.44"
+                    android:layout_height="150dp"
+                    android:calendarViewShown="false"
+                    android:descendantFocusability="blocksDescendants"
+                    />
+
+                <TimePicker
+                    android:id="@+id/timepicker"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="0.76"
+                    android:descendantFocusability="blocksDescendants"
+                    android:layout_marginLeft="-10dp"
+                    />
+
+            </LinearLayout>
+            <View
+                android:id="@+id/viewline_one"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/pickerLayout"
+                android:layout_marginTop="-2dp"
+                android:background="@color/timer_colour" />
+
+            <Button
+                android:id="@+id/btnBackButton"
+                android:layout_width="@dimen/outlined_btn_width"
+                android:layout_height="@dimen/outlined_btn_height"
+                android:layout_below="@+id/viewline_one"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/diff_15"
+                android:background="@drawable/btn_timer_save_selector"
+                android:text="@string/text_back"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/timer_save_button_size" />
+        </RelativeLayout>
+    </ScrollView>
+    <include
+        android:id="@+id/networkOverlay"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/network_overlay_height"
+        android:layout_centerInParent="true"
+        layout="@layout/large_network_error_overlay"
+        android:visibility="gone" />
+</RelativeLayout>
