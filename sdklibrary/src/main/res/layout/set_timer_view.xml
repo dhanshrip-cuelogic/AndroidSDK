@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.0" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.1" />
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
+        app:srcCompat="@mipmap/loner_app_title_logo" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="#D8D8D8"
+        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"></View>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="@dimen/back_icon_width"
+        android:layout_height="@dimen/back_icon_height"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:background="@mipmap/back"
+        android:clickable="false"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
+    <TextView
+        android:id="@+id/nameOftheScreenTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="@string/set_timer"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_17"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
+    <View
+        android:id="@+id/viewline1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/settimertitle"
+        android:background="@color/timer_colour"
+        app:layout_constraintBottom_toTopOf="@+id/guideline" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <LinearLayout
+        android:id="@+id/numberPickerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/diff_15"
+        android:paddingBottom="@dimen/diff_15"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewline1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/texthour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:paddingLeft="@dimen/diff_20"
+                android:text="@string/hour_text"
+                android:textSize="@dimen/font_size_17" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <NumberPicker
+                android:id="@+id/hourPicker"
+                style="@android:style/Theme.Holo.Light"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:clipToPadding="false"
+                android:descendantFocusability="blocksDescendants"
+                android:hapticFeedbackEnabled="true" />
+
+            <NumberPicker
+                android:id="@+id/minutePicker"
+                style="@android:style/Theme.Holo.Light"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:descendantFocusability="blocksDescendants"
+                android:hapticFeedbackEnabled="true" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textminutes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:paddingRight="@dimen/diff_20"
+                android:text="@string/minute_text"
+                android:textSize="@dimen/font_size_17" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewline_one"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/numberPickerLayout"
+        android:layout_marginTop="8dp"
+        android:background="@color/timer_colour"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numberPickerLayout" />
+
+
+    <RelativeLayout
+        android:id="@+id/repeatLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewline_one"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:padding="@dimen/diff_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewline_one">
+
+        <TextView
+            android:id="@+id/textrepeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/diff_10"
+            android:gravity="center"
+            android:text="@string/repeat_text"
+            android:textSize="@dimen/font_size_17" />
+
+        <ImageView
+            android:id="@+id/backarrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/diff_5"
+            android:src="@mipmap/spinner_arrow" />
+
+        <TextView
+            android:id="@+id/textrepeatselection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textrepeat"
+            android:layout_marginRight="@dimen/diff_10"
+            android:layout_toLeftOf="@+id/backarrow"
+            android:gravity="center"
+            android:text="Never"
+            android:textSize="@dimen/text_repeat_size" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/viewline_second"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/repeatLayout"
+        android:layout_marginTop="8dp"
+        android:background="@color/timer_colour"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/repeatLayout" />
+
+    <LinearLayout
+        android:id="@+id/saveButtonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewline_second"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/diff_40"
+        android:paddingTop="@dimen/diff_15"
+        android:paddingRight="@dimen/diff_40"
+        android:paddingBottom="@dimen/diff_15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewline_second">
+
+        <Button
+            android:id="@+id/btnDisableTimer"
+            android:layout_width="@dimen/outlined_btn_width"
+            android:layout_height="@dimen/outlined_btn_height"
+            android:layout_marginRight="@dimen/diff_10"
+            android:background="@drawable/btn_disable_selector"
+            android:text="@string/disable_text"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/timer_save_button_size" />
+
+        <Button
+            android:id="@+id/btnSaveTimer"
+            android:layout_width="@dimen/outlined_btn_width"
+            android:layout_height="@dimen/outlined_btn_height"
+            android:layout_marginLeft="@dimen/diff_10"
+            android:background="@drawable/btn_timer_save_selector"
+            android:text="@string/save"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/timer_save_button_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/saveButtonLayout"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/diff_20"
+        android:paddingRight="@dimen/diff_20"
+        android:paddingBottom="@dimen/diff_15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saveButtonLayout">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@null"
+            android:src="@mipmap/check_in_timer_info" />
+
+        <TextView
+            android:id="@+id/check_info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/diff_5"
+            android:text="@string/check_in_time_info"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/networkOverlay"
+        layout="@layout/large_network_error_overlay"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/network_overlay_height"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline8" />
+</android.support.constraint.ConstraintLayout>
