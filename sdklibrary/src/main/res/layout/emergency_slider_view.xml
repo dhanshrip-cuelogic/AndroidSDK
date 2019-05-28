@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="@dimen/emergency_slider_height"
     android:layout_alignParentBottom="true"
     android:layout_marginBottom="@dimen/diff_minus3">
     <RelativeLayout
         android:id="@+id/sliderLayoutId"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/emergency_slider_height"
         android:clickable="true"
         android:layout_alignParentBottom="true">
 
         <HorizontalScrollView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/emergency_slider_height"
             android:scrollbars="none">
             <LinearLayout
@@ -55,12 +55,12 @@
                 </LinearLayout>
             </LinearLayout>
         </HorizontalScrollView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"
             android:alpha="0.9"/>
-
         <com.loner.android.sdk.utils.SliderUnlockWidget
             android:id="@+id/seekEmergency"
             android:layout_width="match_parent"

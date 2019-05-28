@@ -1,8 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.loner.android.sdk" >
+    package="com.loner.android.sdk">
 
+    <application>
+        <activity
+            android:name=".activity.CheckInActivity"
+            android:launchMode="singleTask">
 
-
-
+        </activity>
+    </application>
 
 </manifest>

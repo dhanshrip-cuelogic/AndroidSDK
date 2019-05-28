@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.widget.Button
 import com.loner.android.sdk.core.Loner
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
+import com.loner.android.sdk.widget.CheckInTimerView
 import com.loner.android.sdk.widget.EmergencySlider
 import com.loner.android.sdk.widget.EmergencySlider.EmergencySliderListetener;
 
@@ -16,30 +17,18 @@ import com.loner.android.sdk.widget.EmergencySlider.EmergencySliderListetener;
 class MainActivity : Activity(){
     var emergencySlider: EmergencySlider? = null
     var progressBarDailog: ProgressDialog? = null
-    var mConfiguration : Button? = null
+    lateinit var checkInTimerView: CheckInTimerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         progressBarDailog = ProgressDialog(this)
         progressBarDailog!!.setMessage("Loading..")
         progressBarDailog!!.setCancelable(true)
         emergencySlider = findViewById(R.id.emergency_slider)
-        mConfiguration = findViewById(R.id.button)
+        checkInTimerView = findViewById(R.id.check_view)
+        checkInTimerView.loadChecKInTimerComponent(true,true, 120)
 
-        mConfiguration?.setOnClickListener {
-            Loner.client.getConfiguration(this, object :ActivityCallBackInterface {
-                override fun onResponseDataSuccess(successResponse: String) {
-
-                }
-
-                override fun onResponseDataFailure(failureResponse: String) {
-
-                }
-
-            })
-        }
 
         // use Loner sdk for slider
         emergencySlider?.setOnEmergencySliderListetener(object : EmergencySliderListetener {
@@ -64,7 +53,6 @@ class MainActivity : Activity(){
 
         })
     }
-
 
     fun alertResponseDialog(alertMsg: String) {
         val dialogBuilder = AlertDialog.Builder(this)

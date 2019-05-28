@@ -28,7 +28,7 @@ class EmergencySlider : RelativeLayout, SliderUnlockWidget.SliderUnlockWidgetLis
         init()
     }
 
-    fun init() {
+    private fun init() {
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.emergency_slider_view, this)
         redComponentView = findViewById(R.id.redComponentView)
