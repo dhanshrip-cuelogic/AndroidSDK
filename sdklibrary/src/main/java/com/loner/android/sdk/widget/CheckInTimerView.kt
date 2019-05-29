@@ -41,6 +41,18 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     private var currentTimerLengthMillisecond: Long = 0
     private var monitoringTimer: MonitoringCoutDownTimer? = null
 
+    companion object {
+        lateinit var instance : CheckInTimerView
+
+        fun setCheckInTimerView(instance:CheckInTimerView){
+            this.instance = instance
+        }
+
+        fun getCheckInTimerView():CheckInTimerView{
+            return instance
+        }
+    }
+
     constructor(context: Context) : super(context) {
         this.mContext = context
         init()
@@ -54,6 +66,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     private fun init() {
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.check_in_view, this)
+        setCheckInTimerView(this)
         mCheckInTimerDisable = findViewById(R.id.txtManualDisabled)
         mCheckInTimerDiscription = findViewById(R.id.txtCheckin)
         mCheckInTimer = findViewById(R.id.txtTimer)
@@ -65,9 +78,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         mMunalCheckInButton!!.setOnClickListener {
             var checkInTimerListener = this
             var intent = Intent(mContext, CheckInActivity::class.java)
-               // intent.putExtra(Constant.manualCheckInListener,checkInTimerListener)
             mContext?.startActivity(intent)
-            CheckInActivity.getCheckinInstance().setManualCheckListener(this)
         }
     }
 
@@ -196,7 +207,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
 
     override fun manualCheckInCompeleted(timer: Boolean) {
         if(timer) {
-            setTimerStatus(TimerState.Stopped)
+            stopMonitorTimer()
             startMonitorTimer()
         }
 

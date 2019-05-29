@@ -50,16 +50,18 @@
             android:layout_width="@dimen/width_for_duo_components"
             android:layout_height="@dimen/edit_text_field_height"
             android:layout_below="@+id/spinQuickNoteFull"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/mid_plus_margin_from_top"
             android:background="@drawable/edt_box_selector"
             android:ems="10"
-            android:padding="@dimen/average_padding"
+            android:fontFamily="@font/open_sans"
             android:gravity="top"
-            android:textSize="@dimen/small_text_size"
-            android:windowSoftInputMode="stateHidden"
-            android:inputType="textMultiLine"
             android:hint="@string/custom_note_hint_text"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/mid_plus_margin_from_top">
+            android:inputType="textMultiLine"
+            android:padding="@dimen/average_padding"
+            android:textSize="@dimen/small_text_size"
+            android:windowSoftInputMode="stateHidden">
+
             <requestFocus />
         </EditText>
 
@@ -75,11 +77,12 @@
         android:layout_below="@+id/sendNoteReLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/max_marging_from_top"
+        android:background="@drawable/btn_new_check_in_selector"
+        android:fontFamily="@font/open_sans"
         android:text="@string/send_check_in_all"
         android:textAllCaps="true"
-        android:textSize="@dimen/font_size_15"
         android:textColor="@color/custom_white"
-        android:background="@drawable/btn_new_check_in_selector" />
+        android:textSize="@dimen/font_size_15" />
 
 
     <Button
@@ -89,11 +92,12 @@
         android:layout_below="@+id/btnSendCheckin"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/mid_plus_margin_from_top"
+        android:background="@drawable/small_outlined_btn_selector"
+        android:fontFamily="@font/open_sans"
         android:text="@string/cancel"
-        android:textSize="@dimen/font_size_15"
         android:textAllCaps="true"
         android:textColor="@color/black"
-        android:background="@drawable/small_outlined_btn_selector" />
+        android:textSize="@dimen/font_size_15" />
 
     <include
         android:id="@+id/networkOverlay"
