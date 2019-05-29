@@ -11,11 +11,12 @@ class NetworkSuccessInformation(statusCode: Int) {
         private set
 
     init {
-        if (statusCode == Constant.STASK_Authentication)
-            responseMsg = "User Successfully register"
-        if( statusCode == Constant.STASK_AlertEmergency)
-            responseMsg = "Emergency alert successfully triggered"
-        if( statusCode == Constant.STASK_Configuration)
-            responseMsg = "Configuration fetch successfully"
+        when (statusCode) {
+            Constant.STASK_Authentication -> responseMsg = "User Successfully register"
+            Constant.STASK_AlertEmergency -> responseMsg = "Emergency alert successfully triggered"
+            Constant.STASK_Configuration -> responseMsg = "Configuration fetch successfully"
+            Constant.STASK_MESSAGE -> responseMsg = "Send Message to server successfully"
+        }
+
     }
 }

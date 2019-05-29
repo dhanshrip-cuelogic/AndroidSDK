@@ -34,5 +34,7 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
         }
     }
 
-
+    override fun sendMessage(context: Context, message: String, listener: ActivityCallBackInterface) {
+        serviceManager.sendMessageApi(context, message, listener)
+    }
 }

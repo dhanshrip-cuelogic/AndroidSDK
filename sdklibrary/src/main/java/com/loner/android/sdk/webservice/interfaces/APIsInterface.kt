@@ -9,5 +9,6 @@ import android.content.Context
 interface APIsInterface {
     fun sendAlertApi(context: Context, responseDataListener: ActivityCallBackInterface)
     fun requestConfiguration(context:Context,responseDataListener: ActivityCallBackInterface)
+    fun sendMessageApi(context: Context, message:String,responseDataListener: ActivityCallBackInterface)
 
 }

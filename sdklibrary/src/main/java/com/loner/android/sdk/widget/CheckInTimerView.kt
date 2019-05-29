@@ -16,6 +16,7 @@ import android.widget.TextView
 import com.loner.android.sdk.R
 import com.loner.android.sdk.activity.ActivityInterface.ManualCheckInListener
 import com.loner.android.sdk.activity.CheckInActivity
+import com.loner.android.sdk.activity.SetTimerActivity
 import com.loner.android.sdk.countdowntimer.CheckInTimerListener
 import com.loner.android.sdk.countdowntimer.MonitoringCoutDownTimer
 import com.loner.android.sdk.utils.Constant
@@ -73,10 +74,10 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         mSetTimerButton = findViewById(R.id.btnSetTimerButton)
         mMunalCheckInButton = findViewById(R.id.btnCheckinWithNotes)
         mSetTimerButton!!.setOnClickListener {
-            startMonitorTimer()
+            var intent = Intent(mContext, SetTimerActivity::class.java)
+            mContext?.startActivity(intent)
         }
         mMunalCheckInButton!!.setOnClickListener {
-            var checkInTimerListener = this
             var intent = Intent(mContext, CheckInActivity::class.java)
             mContext?.startActivity(intent)
         }

@@ -18,7 +18,7 @@ import retrofit2.Response
  */
 
 class AlertRequest(private val listener: HTTPClientInterface) : BaseRequest() {
-    private var alertCallObjet: Call<Void>? = null
+    private var alertCallObject: Call<Void>? = null
     private val requestAlert: RequestAlert = RequestAlert()
 
     init {
@@ -28,8 +28,8 @@ class AlertRequest(private val listener: HTTPClientInterface) : BaseRequest() {
     }
 
     fun alert(requestObject: BaseRequest, STASK_AlertEmergency: Int) {
-            alertCallObjet = interfaceAPI.alert(requestAlert)
-            alertCallObjet!!.enqueue(object : Callback<Void> {
+            alertCallObject = interfaceAPI.alert(requestAlert)
+            alertCallObject!!.enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.code() == 200) {
                         val networkSuccessInformation = NetworkSuccessInformation(STASK_AlertEmergency)
@@ -46,7 +46,7 @@ class AlertRequest(private val listener: HTTPClientInterface) : BaseRequest() {
                     val errorInformation = NetworkErrorInformation()
                     errorInformation.detailMessage = NetworkConstants.FAILURE_PAYLOAD
                     listener.onFailure(requestObject, errorInformation)
-                    alertCallObjet!!.cancel()
+                    alertCallObject!!.cancel()
 
                 }
             })

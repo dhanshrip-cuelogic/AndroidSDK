@@ -287,4 +287,10 @@
     <string name="text_back">Back</string>
     <string name="change_timer_desiable_decr">Loner Mobile can check if you\'re OK periodically. Set the timer below. </string>
     <string name="send_message">SEND MESSAGE</string>
+    <string name="msg_check_in_require">Manual Check-in completed</string>
+    <string name="never">Never</string>
+    <string name="until_turned_off">Until turned off</string>
+    <string name="once">Once</string>
+    <string name="twice">Twice</string>
+    <string name="until_a_specific_item">Until a specific time</string>
 </resources>

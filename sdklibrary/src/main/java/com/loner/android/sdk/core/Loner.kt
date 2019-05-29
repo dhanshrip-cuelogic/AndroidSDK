@@ -52,5 +52,6 @@ abstract class Loner {
      */
     abstract fun sendEmergencyAlertApi(context:Context,listener: ActivityCallBackInterface)
     abstract fun getConfiguration(context:Context,listener: ActivityCallBackInterface)
+    abstract fun sendMessage(context:Context,message:String, listener: ActivityCallBackInterface)
 
 }

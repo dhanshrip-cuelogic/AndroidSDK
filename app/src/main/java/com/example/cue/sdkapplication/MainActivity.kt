@@ -24,7 +24,7 @@ class MainActivity : Activity(){
         setContentView(R.layout.activity_main)
         progressBarDailog = ProgressDialog(this)
         progressBarDailog!!.setMessage("Loading..")
-        progressBarDailog!!.setCancelable(true)
+        progressBarDailog!!.setCancelable(false)
         emergencySlider = findViewById(R.id.emergency_slider)
         checkInTimerView = findViewById(R.id.check_view)
         checkInTimerView.loadChecKInTimerComponent(true,true, 120)

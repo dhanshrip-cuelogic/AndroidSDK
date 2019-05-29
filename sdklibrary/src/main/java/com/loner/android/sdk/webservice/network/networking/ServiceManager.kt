@@ -8,6 +8,7 @@ import com.loner.android.sdk.webservice.interfaces.HTTPClientInterface
 import com.loner.android.sdk.webservice.network.apis.AlertRequest
 import com.loner.android.sdk.webservice.network.apis.BaseRequest
 import com.loner.android.sdk.webservice.network.apis.ConfigurationRequest
+import com.loner.android.sdk.webservice.network.apis.MessageRequest
 import com.loner.android.sdk.webservice.network.helper.NetworkErrorInformation
 import com.loner.android.sdk.webservice.network.helper.NetworkSuccessInformation
 import java.util.*
@@ -20,6 +21,8 @@ import java.util.*
 class ServiceManager private constructor() : HTTPClientInterface, APIsInterface {
     private var alertRequest: AlertRequest? = null
     private var configurationRequest: ConfigurationRequest? = null
+    private var messageRequest :MessageRequest? = null
+
     private val callbackMap: HashMap<BaseRequest, ActivityCallBackInterface> = HashMap()
     var networkStatus: NetworkStatus = NetworkStatus()
 
@@ -72,6 +75,19 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
             callbackMap[configurationRequest as BaseRequest] = responseDataListener
             configurationRequest!!.getConfiguration(configurationRequest!!, Constant.STASK_Configuration)
         }else {
+            responseDataListener.onResponseDataFailure("Please check Internet Connection")
+        }
+
+    }
+
+    override fun sendMessageApi(context: Context, message: String, responseDataListener: ActivityCallBackInterface) {
+        if(networkStatus.isNetworkAvailable(context) && message.isNotEmpty()){
+            messageRequest = MessageRequest(message,this)
+            callbackMap[messageRequest as BaseRequest] = responseDataListener
+            messageRequest?.messageToServer(messageRequest!!,Constant.STASK_MESSAGE)
+        } else if(message.isEmpty()){
+            responseDataListener.onResponseDataFailure("Message should not be empty")
+        } else {
             responseDataListener.onResponseDataFailure("Please check Internet Connection")
         }
 
