@@ -1,4 +1,4 @@
-package com.loner.android.sdk.data;
+package com.loner.android.sdk.data.sdkconfiguraton;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,33 +15,33 @@ import org.jetbrains.annotations.NotNull;
 
 public class DataStore {
 
-    public static final String BASE_URL = "base_url";                                       // Base URL for the over all application.
+    public static final String BASE_URL = "base_url";
 
-	public static final String DEVICE_ID = "device_id";										// device_id attribute used for saving device_id shared preferences.
-	public static final String ACCESS_TOKEN = "access_token";								// access token attribute used for saving access token in shared preferences.
+	public static final String DEVICE_ID = "device_id";
+	public static final String ACCESS_TOKEN = "access_token";
     public static final String INTRO_DISPLAYED = "intro_displayed";
     public static final String FIRST_TIME_DISPLAYED = "first_time_displayed";
-    public static final String IS_FIRST_RUN = "isFirstRunOfApp";							// attribute for save is device running for the first time.
-	public static final String IS_MANUAL_CHECK_IN_ON = "isManualCheckinOn";					// attribute that save the instance of the is manual check-in on
-	public static final String IS_EMERGENCY_ON = "isEmergencyOn";							// attribute related to emergency on
-	public static final String IS_SILENT_ALERT_VIBRATE_ON = "isSilentVibrateOn";							// attribute related to emergency on
-	public static final String IS_GPS_MOTION_ON = "isGpsMotionOn";							// attribute related to gps motion on
-	public static final String IS_ALARM_SOUND_ON = "isAlarmSoundOn";						// attribute related to alarm sound on
-	public static final String IS_AUDIBLE_ALERTS_ON = "isAudibleAlertsOn";					// attribute related to audible alert on
-	public static final String CHECKIN_TIMER = "checkinTimerValue";							// attribute related to check in timer value on
-	public static final String CUTOFF_SPEED = "cutoffSpeedInt";								// attribute related to cut off speed on
-	public static final String FDU_ADDRESS = "fduAdress";									// attribute related to fdu address on
-	public static final String FDU_BATTERY_VALUE = "fduBatteryValue";						// attribute related to fdu battery value on
-	public static final String FDU_CONNECTION_STATE = "disconnected";						// attribute related to fdu battery value on
+    public static final String IS_FIRST_RUN = "isFirstRunOfApp";
+	public static final String IS_MANUAL_CHECK_IN_ON = "isManualCheckinOn";
+	public static final String IS_EMERGENCY_ON = "isEmergencyOn";
+	public static final String IS_SILENT_ALERT_VIBRATE_ON = "isSilentVibrateOn";
+	public static final String IS_GPS_MOTION_ON = "isGpsMotionOn";
+	public static final String IS_ALARM_SOUND_ON = "isAlarmSoundOn";
+	public static final String IS_AUDIBLE_ALERTS_ON = "isAudibleAlertsOn";
+	public static final String CHECKIN_TIMER = "checkinTimerValue";
+	public static final String CUTOFF_SPEED = "cutoffSpeedInt";
+	public static final String FDU_ADDRESS = "fduAdress";
+	public static final String FDU_BATTERY_VALUE = "fduBatteryValue";
+	public static final String FDU_CONNECTION_STATE = "disconnected";
 	public static final String DEFAULT_DEVICE_NAME = "defaultdevicename";
 	public static final String DEFAULT_DEVICE_ADDR = "defaultdeviceaddress";
 
-	public static final String EMERGENCY_ENABLED = "emergency_enabled";						// attribute related to emergency on
-	public static final String EMERGENCY_NUMBER = "emergency_number";						// emergency number value
-	public static final String GPS_PUBLISH_PERIOD = "gps_publish_period";					// device_id attribute used for saving device_id shared preferences.
+	public static final String EMERGENCY_ENABLED = "emergency_enabled";
+	public static final String EMERGENCY_NUMBER = "emergency_number";
+	public static final String GPS_PUBLISH_PERIOD = "gps_publish_period";
 	public static final String ALLOW_USER_TO_CONFIGURE = "allow_user_to_configure";
-	public static final String LOCATION_TIMER = "location_timer";								// attribute related to cut off speed on
-	public static final String CHECKIN_DIALOG_TIME = "checkin_dialog_time";								// attribute related to cut off speed on
+	public static final String LOCATION_TIMER = "location_timer";
+	public static final String CHECKIN_DIALOG_TIME = "checkin_dialog_time";
 	public static final String PHONE_NUMBER = "device_phone_number";
 
 	// V.BTTN Setting configuration for long press.

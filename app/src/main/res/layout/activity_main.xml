@@ -12,12 +12,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="243dp"
+        android:layout_marginTop="244dp"
         android:layout_marginEnd="41dp"
-        android:layout_marginBottom="190dp"
+        android:layout_marginBottom="166dp"
+        app:layout_constraintBottom_toTopOf="@+id/emergency_slider"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.loner.android.sdk.widget.EmergencySlider
         android:id="@+id/emergency_slider"
@@ -26,6 +29,6 @@
         android:gravity="bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

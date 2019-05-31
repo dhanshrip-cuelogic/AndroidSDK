@@ -48,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:fontFamily="@font/open_sans"
             android:gravity="center"
             android:text="@string/set_timer"
             android:textAllCaps="true"
@@ -86,6 +87,7 @@
                 android:id="@+id/texthour"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
                 android:gravity="left"
                 android:paddingLeft="@dimen/diff_20"
                 android:text="@string/hour_text"
@@ -133,6 +135,7 @@
                 android:id="@+id/textminutes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
                 android:gravity="right"
                 android:paddingRight="@dimen/diff_20"
                 android:text="@string/minute_text"
@@ -164,8 +167,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:gravity="center"
             android:layout_marginLeft="@dimen/diff_10"
+            android:fontFamily="@font/open_sans"
+            android:gravity="center"
             android:text="@string/repeat_text"
             android:textSize="@dimen/font_size_17" />
 
@@ -182,9 +186,10 @@
             android:id="@+id/textrepeatselection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/diff_10"
             android:layout_alignBaseline="@+id/textrepeat"
+            android:layout_marginRight="@dimen/diff_10"
             android:layout_toLeftOf="@+id/backarrow"
+            android:fontFamily="@font/open_sans"
             android:gravity="center"
             android:text="Never"
             android:textSize="@dimen/text_repeat_size" />
@@ -216,10 +221,11 @@
             android:layout_height="@dimen/outlined_btn_height"
             android:layout_marginRight="@dimen/diff_10"
             android:background="@drawable/btn_disable_selector"
+            android:fontFamily="@font/open_sans_semibold"
             android:text="@string/disable_text"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="@dimen/timer_save_button_size"/>
+            android:textSize="@dimen/timer_save_button_size" />
 
         <Button
             android:id="@+id/btnSaveTimer"
@@ -227,6 +233,7 @@
             android:layout_height="@dimen/outlined_btn_height"
             android:layout_marginLeft="@dimen/diff_10"
             android:background="@drawable/btn_timer_save_selector"
+            android:fontFamily="@font/open_sans_semibold"
             android:text="@string/save"
             android:textAllCaps="true"
             android:textColor="@color/white"
@@ -247,13 +254,15 @@
             android:layout_height="30dp"
             android:background="@null"
             android:src="@mipmap/check_in_timer_info"/>
+
         <TextView
             android:id="@+id/check_info_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/diff_5"
-            android:textSize="12sp"
-            android:text="@string/check_in_time_info"/>
+            android:fontFamily="@font/open_sans"
+            android:text="@string/check_in_time_info"
+            android:textSize="12sp" />
 
     </LinearLayout>
     <include

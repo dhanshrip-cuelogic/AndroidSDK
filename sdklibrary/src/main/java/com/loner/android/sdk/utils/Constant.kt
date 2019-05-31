@@ -9,5 +9,5 @@ object Constant {
     const val accessToken ="813af900bd61a5d2d0cf"
     const val deviceId:String ="800006506"
 
-
+    const val DIM_VALUE_FOR_DIALOG = 0.3f
 }

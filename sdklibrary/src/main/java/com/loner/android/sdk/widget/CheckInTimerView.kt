@@ -15,17 +15,17 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.loner.android.sdk.R
 import com.loner.android.sdk.activity.ActivityInterface.ManualCheckInListener
+import com.loner.android.sdk.activity.ActivityInterface.TimerListener
 import com.loner.android.sdk.activity.CheckInActivity
 import com.loner.android.sdk.activity.SetTimerActivity
 import com.loner.android.sdk.countdowntimer.CheckInTimerListener
 import com.loner.android.sdk.countdowntimer.MonitoringCoutDownTimer
-import com.loner.android.sdk.utils.Constant
-import com.loner.android.sdk.utils.ConvertCheckInTextFormate
-import com.loner.android.sdk.utils.ConvertSecondToMilisecond
+import com.loner.android.sdk.data.sdkconfiguraton.AppConfiguration
+import com.loner.android.sdk.data.timerconfiguration.TimerConfiguration
+import com.loner.android.sdk.utils.*
 
 
-
-class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListener {
+class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListener,TimerListener {
     private var mCheckInTimerDisable: TextView? = null
     private var mCheckInTimerDiscription: TextView? = null
     private var mCheckInTimer: TextView? = null
@@ -37,6 +37,21 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     enum class TimerState {
         Stopped, Paused, Running
     }
+    enum class TimerCount {
+        TimerSpecficTime,
+        TimerNone
+    }
+    enum class TimerType{
+        TimerTypeNever,
+        TimerTypeUntilTurnedOff,
+        TimerTypeOnce,
+        TimerTypeTwice,
+        TimerTypeUntilSpecificTime,
+        TimerTypeNone
+    }
+
+    private var timerType = TimerType.TimerTypeNone
+    private var timerSpecificType = TimerCount.TimerNone
     private var timerState = TimerState.Stopped
     private var monitorTimerLengthMillisecond: Long = 0
     private var currentTimerLengthMillisecond: Long = 0
@@ -83,14 +98,17 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         }
     }
 
-    fun loadChecKInTimerComponent(isAllowUserToConfigure : Boolean?,isManualCheckInEnabled:Boolean?, timerValue : Long? ){
+    fun loadCheckInTimerComponent(isAllowUserToConfigure : Boolean?,isManualCheckInEnabled:Boolean?, timerValue : Int? ){
         if(isAllowUserToConfigure == null || isManualCheckInEnabled == null || timerValue == null){
             throw IllegalStateException("All value should not be null")
             return
         }
         checkVisibilityOfView(isAllowUserToConfigure, isManualCheckInEnabled)
-        if(timerValue != 0L){
-            monitorTimerLengthMillisecond = this.ConvertSecondToMilisecond(timerValue)
+        if(timerValue != 0){
+            var checkTimeInSecond = this.ConvertMinuteToSecond(timerValue)
+            AppConfiguration.getInstance().setTimeBetweenCheckinsLng(mContext!!,checkTimeInSecond)
+            AppConfiguration.getInstance().setManualCheckIn(mContext!!,true)
+            monitorTimerLengthMillisecond = this.ConvertSecondToMilisecond(checkTimeInSecond)
             startMonitorTimer()
         }
 
@@ -131,8 +149,21 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     private fun getTimerStatus():TimerState{
         return timerState
     }
+    private fun getTimerType(): TimerType {
+        return timerType
+    }
 
+    private fun setTimerType(timerType: TimerType) {
+        this.timerType= timerType
+    }
 
+    fun getTimerCount(): TimerCount {
+        return timerSpecificType
+    }
+
+    fun setTimerCount(timerCount: TimerCount) {
+        this.timerSpecificType = timerCount
+    }
     private fun checkVisibilityOfView(isAllowUserToConfigure : Boolean,isManualCheckInEnabled:Boolean) {
         if(isManualCheckInEnabled && !isAllowUserToConfigure){
             manualCheckInOnAndAllowUserOff()
@@ -202,8 +233,12 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     }
 
     override fun onViewUpdateOnTimer(millisUntilFinished: Long) {
-        currentTimerLengthMillisecond = millisUntilFinished
-        mCheckInTimer!!.text = this.ConvertCheckInTextFormate(millisUntilFinished)
+        if (0 >= TimerValidation.getMinuteDifferenceTime(TimerConfiguration.getInstance().getSpecficTimeCheckIn(mContext!!)) && getTimerType() === TimerType.TimerTypeUntilSpecificTime) {
+            disableTimer()
+        }else {
+            currentTimerLengthMillisecond = millisUntilFinished
+            mCheckInTimer!!.text = this.ConvertCheckInTextFormate(millisUntilFinished)
+        }
     }
 
     override fun manualCheckInCompeleted(timer: Boolean) {
@@ -214,5 +249,27 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
 
     }
 
+    override fun setNewTimer() {
+        setTimerTypeValue(TimerConfiguration.getInstance().getRepeatTimerType(mContext!!))
+        manualCheckInAndAllowUserOn()
+        monitorTimerLengthMillisecond =this.ConvertSecondToMilisecond(AppConfiguration.getInstance().getTimeBetweenCheckInLng(mContext!!))
+        startMonitorTimer()
+    }
 
+    override fun disableTimer() {
+        stopMonitorTimer()
+        manualCheckInOffAndAllowUserOn()
+        setTimerType(TimerType.TimerTypeNone)
+        setTimerCount(TimerCount.TimerNone)
+    }
+
+    private fun setTimerTypeValue(timerType: String) {
+        when(timerType){
+            mContext?.getText(R.string.never)?.toString() -> setTimerType(TimerType.TimerTypeNever)
+            mContext?.getText(R.string.until_turned_off)?.toString() -> setTimerType(TimerType.TimerTypeUntilTurnedOff)
+            mContext?.getText(R.string.until_a_specific_item)?.toString() -> setTimerType(TimerType.TimerTypeUntilSpecificTime)
+            mContext?.getText(R.string.once)?.toString() -> setTimerType(TimerType.TimerTypeOnce)
+            mContext?.getText(R.string.twice)?.toString() -> setTimerType(TimerType.TimerTypeTwice)
+        }
+    }
 }

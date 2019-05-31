@@ -293,4 +293,10 @@
     <string name="once">Once</string>
     <string name="twice">Twice</string>
     <string name="until_a_specific_item">Until a specific time</string>
+    <string name="check_in_time_current">Please select a time which is greater than current time</string>
+    <string name="until_specific">Until</string>
+    <string name="check_in_required">Check-in required</string>
+    <string name="press_ok_to_check_in_now">Press OK to check in now.</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="ok_text">Ok</string>
 </resources>

@@ -73,7 +73,7 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
         if(networkStatus.isNetworkAvailable(context)) {
             configurationRequest = ConfigurationRequest(this)
             callbackMap[configurationRequest as BaseRequest] = responseDataListener
-            configurationRequest!!.getConfiguration(configurationRequest!!, Constant.STASK_Configuration)
+            configurationRequest!!.getConfiguration(context,configurationRequest!!, Constant.STASK_Configuration)
         }else {
             responseDataListener.onResponseDataFailure("Please check Internet Connection")
         }

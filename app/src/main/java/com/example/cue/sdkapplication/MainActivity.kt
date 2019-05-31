@@ -27,7 +27,7 @@ class MainActivity : Activity(){
         progressBarDailog!!.setCancelable(false)
         emergencySlider = findViewById(R.id.emergency_slider)
         checkInTimerView = findViewById(R.id.check_view)
-        checkInTimerView.loadChecKInTimerComponent(true,true, 120)
+        checkInTimerView.loadCheckInTimerComponent(true,true, 10)
 
 
         // use Loner sdk for slider

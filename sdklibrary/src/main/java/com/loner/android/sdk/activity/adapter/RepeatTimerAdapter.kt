@@ -10,6 +10,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.loner.android.sdk.R
 import com.loner.android.sdk.activity.ActivityInterface.RepeatTimerListener
+import com.loner.android.sdk.data.timerconfiguration.TimerConfiguration
 
 class RepeatTimerAdapter: BaseAdapter {
     private var context: Context
@@ -24,27 +25,30 @@ class RepeatTimerAdapter: BaseAdapter {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val viewHolder: ViewHolder
+        val rowView:View
         if (convertView == null) {
-            viewHolder = RepeatTimerAdapter.ViewHolder()
+            viewHolder = ViewHolder()
             val inflater = LayoutInflater.from(context)
-            convertView = inflater.inflate(R.layout.repeat_list, parent, false)
-            viewHolder.mRepeatText = convertView.findViewById(R.id.repeat_item_text) as TextView
-            viewHolder.selectionImageView = convertView.findViewById(R.id.selectImage) as ImageView
-            viewHolder.rowRelativeLayout = convertView.findViewById(R.id.layEnglish) as RelativeLayout
-            convertView.setTag(viewHolder)
+            rowView = inflater.inflate(R.layout.repeat_list, parent, false)
+            viewHolder.mRepeatText =rowView.findViewById(R.id.repeat_item_text) as TextView
+            viewHolder.selectionImageView =rowView.findViewById(R.id.selectImage) as ImageView
+            viewHolder.rowRelativeLayout = rowView.findViewById(R.id.layEnglish) as RelativeLayout
+            rowView.tag = viewHolder
 
         } else {
+            rowView = convertView
             viewHolder = convertView.tag as ViewHolder
         }
-        if (context.getText(repeatList[position]).toString() == TimerConfiguration.getInstance().getListRepeatTimerType()) {
+        if (context.getText(repeatList[position]).toString() == TimerConfiguration.getInstance().getListRepeatTimerType(context)) {
             viewHolder.selectionImageView?.visibility = View.VISIBLE
         } else {
             viewHolder.selectionImageView?.visibility = View.INVISIBLE
         }
-        viewHolder.mRepeatText.setText(context.getText(repeatList[position]).toString())
-        viewHolder.rowRelativeLayout.setOnClickListener(View.OnClickListener { repeatTimerListener .setRepeat(context.getText(repeatList[position]).toString()) })
-
-        return convertView
+        viewHolder.mRepeatText.text = context.getText(repeatList[position]).toString()
+        viewHolder.rowRelativeLayout.setOnClickListener{
+            repeatTimerListener.setRepeat(context.getText(repeatList[position]).toString())
+        }
+        return rowView
     }
 
     override fun getCount(): Int {
@@ -52,17 +56,17 @@ class RepeatTimerAdapter: BaseAdapter {
     }
 
     override fun getItem(position: Int): Any {
-        return  0
+        return repeatList[position]
 
     }
 
     override fun getItemId(position: Int): Long {
-       return  0
+       return position.toLong()
     }
 
     private class ViewHolder {
-        internal var mRepeatText: TextView? = null
-        internal var rowRelativeLayout: RelativeLayout? = null
-        internal var selectionImageView: ImageView? = null
+        lateinit var mRepeatText: TextView
+        lateinit var rowRelativeLayout: RelativeLayout
+        lateinit var selectionImageView: ImageView
     }
 }

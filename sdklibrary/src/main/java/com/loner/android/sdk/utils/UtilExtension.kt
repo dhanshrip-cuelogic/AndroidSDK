@@ -12,3 +12,6 @@ fun CheckInTimerView.ConvertCheckInTextFormate(millisUntilFinished: Long): Strin
 fun CheckInTimerView.ConvertSecondToMilisecond(seconds: Long) : Long {
     return seconds*1000
 }
+fun CheckInTimerView.ConvertMinuteToSecond(seconds: Int) : Long {
+    return (seconds*60).toLong()
+}
