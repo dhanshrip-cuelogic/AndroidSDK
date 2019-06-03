@@ -12,7 +12,7 @@ import android.widget.TextView
 import com.loner.android.sdk.R
 import com.loner.android.sdk.utils.Constant
 
-class CustomAlertDialog constructor(context: Context, title: CharSequence?, subject: CharSequence?, buttontext: CharSequence?): Dialog(context, R.style.dialogTheme) {
+class CustomAlertDialog constructor(context: Context, title: CharSequence?, subject: CharSequence?, buttontext: CharSequence?, lonerDialogListener: LonerDialogListener?): Dialog(context, R.style.dialogTheme) {
 
     private lateinit var txtCustomDialogTitle: TextView
     private lateinit var txtCustomDialogSubject:TextView
@@ -21,12 +21,15 @@ class CustomAlertDialog constructor(context: Context, title: CharSequence?, subj
     private var btnText: CharSequence? = null
     private lateinit var btnCustomDialogOk: Button
     private var mContext: Context
+    private var mlonerDialogListener:LonerDialogListener? = null
+
 
     init {
         this.mContext = context
         title?. let { this.titleText=title }
         subject?.let { this.subjectText = subject }
         buttontext?.let { this.btnText = buttontext }
+        lonerDialogListener?.let { this.mlonerDialogListener = lonerDialogListener }
     }
 
 
@@ -60,9 +63,8 @@ class CustomAlertDialog constructor(context: Context, title: CharSequence?, subj
         txtCustomDialogSubject = findViewById(R.id.customDialogSubject)
         btnCustomDialogOk = findViewById(R.id.customDialogOk)
         btnCustomDialogOk.setOnClickListener {
+            this.mlonerDialogListener?.onPositiveButtonClicked()
             dismiss()
         }
     }
-
-
 }

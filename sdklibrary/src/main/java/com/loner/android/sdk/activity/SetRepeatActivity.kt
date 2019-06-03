@@ -11,7 +11,7 @@ import android.widget.*
 import com.loner.android.sdk.R
 import com.loner.android.sdk.activity.ActivityInterface.RepeatTimerListener
 import com.loner.android.sdk.activity.adapter.RepeatTimerAdapter
-import com.loner.android.sdk.dailogs.LonerDailog
+import com.loner.android.sdk.dailogs.LonerDialog
 import com.loner.android.sdk.data.timerconfiguration.TimerConfiguration
 import com.loner.android.sdk.utils.TimerValidation
 import kotlinx.android.synthetic.main.activity_set_repeation.*
@@ -75,7 +75,7 @@ class SetRepeatActivity : Activity(), DatePicker.OnDateChangedListener, RepeatTi
                 setResult(105, backIntent)
                 this@SetRepeatActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 finish()
-            } else { LonerDailog.getInstance().showAlertDialog(this@SetRepeatActivity, null, getText(R.string.check_in_time_current).toString(),getText(R.string.okay).toString())
+            } else { LonerDialog.getInstance().showAlertDialog(this@SetRepeatActivity, null, getText(R.string.check_in_time_current).toString(),getText(R.string.okay).toString())
             }
 
         } else {

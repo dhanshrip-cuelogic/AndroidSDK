@@ -12,7 +12,7 @@ import android.view.Window
 import android.widget.*
 import com.loner.android.sdk.R
 import com.loner.android.sdk.activity.ActivityInterface.TimerListener
-import com.loner.android.sdk.dailogs.LonerDailog
+import com.loner.android.sdk.dailogs.LonerDialog
 import com.loner.android.sdk.data.sdkconfiguraton.AppConfiguration
 import com.loner.android.sdk.data.timerconfiguration.TimerConfiguration
 import com.loner.android.sdk.data.timerconfiguration.TimerDataStore
@@ -226,7 +226,7 @@ class SetTimerActivity : Activity(), View.OnClickListener {
                     if (TimerValidation.IsCurrentTimeSame(mSpecficTime)) {
                         saveTimerConfiguration()
                     } else {
-                          LonerDailog.getInstance().showAlertDialog(this@SetTimerActivity, null, getText(R.string.check_in_time_current).toString(), getText(R.string.okay).toString())
+                          LonerDialog.getInstance().showAlertDialog(this@SetTimerActivity, null, getText(R.string.check_in_time_current).toString(), getText(R.string.okay).toString())
                     }
                 }
             }

@@ -151,7 +151,7 @@
     <string name="connection_info">Loner Mobile needs network access to begin monitoring, please try again.</string>
     <string name="help">Please contact Blackline GPS for an activation code</string>
 
-    <!-- MissedCheckinActivity -->
+    <!-- MissedCheckInActivity -->
     <string name="cancel_alert_text_missed_checkin">Unable to acknowledge missed check-in alarm - you need a network connection to do this.</string>
 
     <!-- MonitoringActivity -->

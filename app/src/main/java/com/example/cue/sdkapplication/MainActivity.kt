@@ -6,8 +6,8 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.widget.Button
 import com.loner.android.sdk.core.Loner
+import com.loner.android.sdk.dailogs.LonerDialog
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.widget.CheckInTimerView
 import com.loner.android.sdk.widget.EmergencySlider
@@ -27,7 +27,12 @@ class MainActivity : Activity(){
         progressBarDailog!!.setCancelable(false)
         emergencySlider = findViewById(R.id.emergency_slider)
         checkInTimerView = findViewById(R.id.check_view)
-        checkInTimerView.loadCheckInTimerComponent(true,true, 10)
+        checkInTimerView.loadCheckInTimerComponent(true,true, 1, object: CheckInTimerView.OnTimerListener {
+            override fun onTimerComplete() {
+                showCheckAlert()
+            }
+        })
+
 
 
         // use Loner sdk for slider
@@ -38,6 +43,11 @@ class MainActivity : Activity(){
             }
 
         })
+    }
+
+    fun showCheckAlert(){
+        LonerDialog.getInstance().showCheckInAlert(this, getText(com.loner.android.sdk.R.string.check_in_required).toString(),
+                getText(com.loner.android.sdk.R.string.press_ok_to_check_in_now).toString(),null)
     }
     fun emergencyAlertCall() {
         // Call alert send api call from loner sdk

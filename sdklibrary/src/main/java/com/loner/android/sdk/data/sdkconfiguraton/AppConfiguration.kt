@@ -36,6 +36,9 @@ class AppConfiguration private constructor() {
         return DataStore.getBooleanData(context, DataStore.MANUAL_CHECK_IN, false)
 
     }
+    fun setTimerManualCheckInEnable(context: Context,isEnable: Boolean) {
+        DataStore.saveBooleanData(context, DataStore.MANUAL_CHECK_IN, isEnable)
+    }
      fun setCheckInTimeOut(context: Context, checkInTimeOut: Int?) {
         DataStore.saveLongData(context, DataStore.CHECKIN_TIMER, checkInTimeOut!!.toLong())
     }

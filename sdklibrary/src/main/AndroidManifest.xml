@@ -3,17 +3,21 @@
     package="com.loner.android.sdk">
 
     <application>
-        <activity android:name=".activity.SetRepeatActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.Holo.Light"
-            android:launchMode="singleTop">
+        <activity android:name=".activity.MissedCheckInActivity"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Holo.Light">
 
         </activity>
         <activity
+            android:name=".activity.SetRepeatActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Holo.Light"></activity>
+        <activity
             android:name=".activity.SetTimerActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.Holo.Light"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Holo.Light" />
         <activity
             android:name=".activity.CheckInActivity"
             android:launchMode="singleTask" />
