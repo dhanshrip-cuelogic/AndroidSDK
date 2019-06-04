@@ -66,16 +66,17 @@ class SetRepeatActivity : Activity(), DatePicker.OnDateChangedListener, RepeatTi
         if (TimerConfiguration.getInstance().getListRepeatTimerType(this).equals(getText(R.string.until_a_specific_item))) {
             if (TimerValidation.IsCurrentTimeSame(TimerValidation.getTimePickerTime(timePicker.currentHour, timePicker.currentMinute, datePicker.year, datePicker.month, datePicker.dayOfMonth))) {
                 backIntent.putExtra("until_specfic_time", TimerValidation.getTimePickerTime(timePicker.currentHour, timePicker.currentMinute, datePicker.year, datePicker.month, datePicker.dayOfMonth))
-                TimerConfiguration.getInstance().setListHourTimerPicker(this,timePicker.currentHour)
-                TimerConfiguration.getInstance().setListMinuteTimerPicker(this,timePicker.currentMinute)
-                TimerConfiguration.getInstance().setListDayofDatePicekr(this,datePicker.dayOfMonth)
-                TimerConfiguration.getInstance().setListMonthofDatePicekr(this,datePicker.month)
-                TimerConfiguration.getInstance().setListYearofDatePicekr(this,datePicker.year)
+                TimerConfiguration.getInstance().setListHourTimerPicker(this, timePicker.currentHour)
+                TimerConfiguration.getInstance().setListMinuteTimerPicker(this, timePicker.currentMinute)
+                TimerConfiguration.getInstance().setListDayofDatePicekr(this, datePicker.dayOfMonth)
+                TimerConfiguration.getInstance().setListMonthofDatePicekr(this, datePicker.month)
+                TimerConfiguration.getInstance().setListYearofDatePicekr(this, datePicker.year)
                 backIntent.putExtra("timer_repeat_type", TimerConfiguration.getInstance().getListRepeatTimerType(this))
                 setResult(105, backIntent)
                 this@SetRepeatActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 finish()
-            } else { LonerDialog.getInstance().showAlertDialog(this@SetRepeatActivity, null, getText(R.string.check_in_time_current).toString(),getText(R.string.okay).toString())
+            } else {
+                LonerDialog.getInstance().showAlertDialog(this@SetRepeatActivity, null, getText(R.string.check_in_time_current).toString(), getText(R.string.okay).toString())
             }
 
         } else {
@@ -118,12 +119,6 @@ class SetRepeatActivity : Activity(), DatePicker.OnDateChangedListener, RepeatTi
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-    }
-
-
     override fun onDateChanged(view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         if (0 > TimerValidation.getMinuteDifferenceTime(TimerValidation.getTimePickerTime(timePicker.currentHour, timePicker.currentMinute, datePicker.year, datePicker.month, datePicker.dayOfMonth))) {
             now = Calendar.getInstance()
@@ -133,11 +128,9 @@ class SetRepeatActivity : Activity(), DatePicker.OnDateChangedListener, RepeatTi
 
     }
 
-
-
     companion object {
-        lateinit var instance :  SetRepeatActivity
-        fun setRepeatActivityInstance(instance: SetRepeatActivity){
+        lateinit var instance: SetRepeatActivity
+        fun setRepeatActivityInstance(instance: SetRepeatActivity) {
             this.instance = instance
         }
 
@@ -145,9 +138,8 @@ class SetRepeatActivity : Activity(), DatePicker.OnDateChangedListener, RepeatTi
             return instance
         }
     }
-
     override fun setRepeat(repeatType: String) {
-        TimerConfiguration.getInstance().setListRepeatTimerType(this,repeatType)
+        TimerConfiguration.getInstance().setListRepeatTimerType(this, repeatType)
         numberPickerView(repeatType)
         repeatTimerAdapter.notifyDataSetChanged()
     }

@@ -7,8 +7,11 @@ import android.content.Context
  * implemented at the APIsInterface class of Service layer.
  */
 interface APIsInterface {
-    fun sendAlertApi(context: Context, responseDataListener: ActivityCallBackInterface)
+    fun sendAlertApi(context: Context,message:String, responseDataListener: ActivityCallBackInterface)
     fun requestConfiguration(context:Context,responseDataListener: ActivityCallBackInterface)
     fun sendMessageApi(context: Context, message:String,responseDataListener: ActivityCallBackInterface)
+    fun sendNotificationApi(context: Context, message:String,responseDataListener: ActivityCallBackInterface)
+
+
 
 }

@@ -17,12 +17,14 @@ import com.loner.android.sdk.activity.ActivityInterface.TimerListener
 import com.loner.android.sdk.activity.CheckInActivity
 import com.loner.android.sdk.activity.MissedCheckInActivity
 import com.loner.android.sdk.activity.SetTimerActivity
+import com.loner.android.sdk.core.Loner
 import com.loner.android.sdk.countdowntimer.CheckInTimerListener
 import com.loner.android.sdk.countdowntimer.MonitoringCoutDownTimer
 import com.loner.android.sdk.data.sdkconfiguraton.AppConfiguration
 import com.loner.android.sdk.data.timerconfiguration.TimerConfiguration
 import com.loner.android.sdk.data.timerconfiguration.TimerDataStore
 import com.loner.android.sdk.utils.*
+import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 
 
 class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListener,TimerListener,CheckViewUpdateListener {
@@ -239,6 +241,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
          mTimerListener?.onTimerComplete()
     }
     override fun onCheckTimerViewUpdate() {
+        acknowledgeForCheckIn()
         if (AppConfiguration.getInstance().isTimerManualCheckInEnable(mContext!!) && !TimerConfiguration.getInstance().isTimerEnable(mContext!!) && getTimerCount() === TimerCount.TimerNone && !isTimerEnable) {
             startMonitorTimer()
         } else if(!isTimerEnable()){
@@ -253,13 +256,47 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         }
     }
 
+    private fun acknowledgeForCheckIn() {
+      Loner.client.sendMessage(mContext!!,"Manual Check-in completed",object:ActivityCallBackInterface{
+          override fun onResponseDataSuccess(successResponse: String) {
+
+          }
+
+          override fun onResponseDataFailure(failureResponse: String) {
+
+          }
+      })
+    }
+
     override fun onMissCheckInAlert() {
+        sendMissedCheckInAlert()
         var intent = Intent(mContext, MissedCheckInActivity::class.java)
         mContext?.startActivity(intent)
     }
 
+    private fun sendMissedCheckInAlert() {
+       Loner.client.sendAlertApi(mContext!!,"missed_check_in", object:ActivityCallBackInterface{
+           override fun onResponseDataSuccess(successResponse: String) {
+
+           }
+           override fun onResponseDataFailure(failureResponse: String) {
+
+           }
+       })
+    }
+
     private fun requestForCheckIn() {
         mTimerCount++
+        Loner.client.sendNotification(mContext!!,"manual_check_in_pending",object : ActivityCallBackInterface {
+            override fun onResponseDataSuccess(successResponse: String) {
+
+            }
+
+            override fun onResponseDataFailure(failureResponse: String) {
+
+            }
+
+        })
     }
 
     override fun onViewUpdateOnTimer(millisUntilFinished: Long) {

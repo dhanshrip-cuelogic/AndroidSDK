@@ -17,12 +17,12 @@ import retrofit2.Response
  *     RequestAlert data class which use for API input parameters<p>
  */
 
-class AlertRequest(private val listener: HTTPClientInterface) : BaseRequest() {
+class AlertRequest(message: String,private val listener: HTTPClientInterface) : BaseRequest() {
     private var alertCallObject: Call<Void>? = null
     private val requestAlert: RequestAlert = RequestAlert()
 
     init {
-        requestAlert.alertType = "emergency_alert"
+        requestAlert.alertType = message
         requestAlert.data = Utility.currentDate
         requestAlert.deviceId = Constant.deviceId
     }

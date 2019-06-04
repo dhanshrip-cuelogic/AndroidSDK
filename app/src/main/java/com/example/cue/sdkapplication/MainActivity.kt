@@ -4,6 +4,7 @@ package com.example.cue.sdkapplication
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import com.loner.android.sdk.core.Loner
@@ -18,7 +19,6 @@ class MainActivity : Activity(){
     var emergencySlider: EmergencySlider? = null
     var progressBarDailog: ProgressDialog? = null
     lateinit var checkInTimerView: CheckInTimerView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,7 +46,7 @@ class MainActivity : Activity(){
     }
 
     fun showCheckAlert(){
-        LonerDialog.getInstance().showCheckInAlert(this, getText(com.loner.android.sdk.R.string.check_in_required).toString(),
+        Loner.client.showCheckInAlertDialog(this, getText(com.loner.android.sdk.R.string.check_in_required).toString(),
                 getText(com.loner.android.sdk.R.string.press_ok_to_check_in_now).toString(),null)
     }
     fun emergencyAlertCall() {

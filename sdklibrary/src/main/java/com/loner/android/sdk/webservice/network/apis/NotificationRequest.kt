@@ -1,6 +1,7 @@
 package com.loner.android.sdk.webservice.network.apis
 
-import com.loner.android.sdk.model.request.RequestMessageApi
+
+import com.loner.android.sdk.model.request.RequestNotificationApi
 import com.loner.android.sdk.utils.Constant
 import com.loner.android.sdk.utils.Utility
 import com.loner.android.sdk.webservice.interfaces.HTTPClientInterface
@@ -11,30 +12,30 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MessageRequest(message: String, private val listener: HTTPClientInterface):BaseRequest() {
-    private var messageRetrofitObject: Call<Void>? = null
-    private val requestMessageModule: RequestMessageApi = RequestMessageApi()
+class NotificationRequest(message: String, private val listener: HTTPClientInterface):BaseRequest()  {
+    private var NotificationRetrofitObject: Call<Void>? = null
+    private val requestNotificationApi = RequestNotificationApi()
 
     init {
-        requestMessageModule.message = message
-        requestMessageModule.deviceId = Constant.deviceId
-        requestMessageModule.data = Utility.currentDate
+        requestNotificationApi.type = message
+        requestNotificationApi.deviceId = Constant.deviceId
+        requestNotificationApi.data = Utility.currentDate
     }
 
-    fun messageToServer(requestObject: BaseRequest, STASK_MESSAGE: Int) {
-        messageRetrofitObject = interfaceAPI.message(requestMessageModule)
-        messageRetrofitObject?.enqueue(object : Callback<Void> {
+    fun notificationToServer(requestObject: BaseRequest, STASK_NOTIFICATION: Int) {
+        NotificationRetrofitObject = interfaceAPI.notification(requestNotificationApi)
+        NotificationRetrofitObject?.enqueue(object : Callback<Void> {
 
             override fun onFailure(call: Call<Void>, t: Throwable) {
                 val errorInformation = NetworkErrorInformation()
                 errorInformation.detailMessage = NetworkConstants.FAILURE_PAYLOAD
                 listener.onFailure(requestObject, errorInformation)
-                messageRetrofitObject!!.cancel()
+                NotificationRetrofitObject!!.cancel()
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.code() == 200) {
-                    val networkSuccessInformation = NetworkSuccessInformation(STASK_MESSAGE)
+                    val networkSuccessInformation = NetworkSuccessInformation(STASK_NOTIFICATION)
                     listener.onSuccess(requestObject, response, networkSuccessInformation)
                 } else {
                     val errorInformation = NetworkErrorInformation()
@@ -44,6 +45,6 @@ class MessageRequest(message: String, private val listener: HTTPClientInterface)
             }
         })
 
-    }
 
+    }
 }

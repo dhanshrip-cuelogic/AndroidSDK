@@ -3,6 +3,7 @@ package com.loner.android.sdk.webservice.interfaces
 
 import com.loner.android.sdk.model.request.RequestAlert
 import com.loner.android.sdk.model.request.RequestMessageApi
+import com.loner.android.sdk.model.request.RequestNotificationApi
 import com.loner.android.sdk.model.respons.ConfigurationResponse
 import com.loner.android.sdk.utils.Constant
 import retrofit2.Call
@@ -19,5 +20,8 @@ interface APIEndpoints {
 
     @POST("/1/message?access_token=" + Constant.accessToken)
     fun message(@Body messageApi: RequestMessageApi): Call<Void>
+
+    @POST("/1/notification?access_token=" + Constant.accessToken)
+    fun notification(@Body requestNotificationApi: RequestNotificationApi): Call<Void>
 
 }

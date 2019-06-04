@@ -1,6 +1,8 @@
 package com.loner.android.sdk.core
 
+import android.app.AlertDialog
 import android.content.Context
+import com.loner.android.sdk.dailogs.LonerDialog
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.webservice.network.networking.ServiceManager
 
@@ -18,7 +20,11 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
      *  @param ActivityCallBackInterface ActivityCallBackInterface It's give a callback to app for Api request success or failure
      */
     override fun sendEmergencyAlertApi(context:Context,listener: ActivityCallBackInterface) {
-        serviceManager.sendAlertApi(context,listener)
+        serviceManager.sendAlertApi(context,"emergency_alert",listener)
+    }
+
+    override fun sendAlertApi(context: Context, message: String, listener: ActivityCallBackInterface) {
+        serviceManager.sendAlertApi(context,message,listener)
     }
 
     override fun getConfiguration(context: Context, listener: ActivityCallBackInterface) {
@@ -28,13 +34,25 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
 
     companion object {
         private lateinit var serviceManager:ServiceManager
+        private lateinit var lonerDialog: LonerDialog
         fun create(): RealLoner {
             serviceManager = ServiceManager.getInstance()
+            lonerDialog = LonerDialog.getInstance()
             return RealLoner()
         }
     }
 
+    override fun sendNotification(context: Context, message: String, listener: ActivityCallBackInterface) {
+        serviceManager.sendNotificationApi(context, message, listener)
+    }
+
     override fun sendMessage(context: Context, message: String, listener: ActivityCallBackInterface) {
         serviceManager.sendMessageApi(context, message, listener)
+    }
+
+
+    override fun showCheckInAlertDialog(context: Context, title: String?, subject: String?, buttonText: String?) {
+        lonerDialog.showCheckInAlert(context, context.getText(com.loner.android.sdk.R.string.check_in_required).toString(),
+                context.getText(com.loner.android.sdk.R.string.press_ok_to_check_in_now).toString(),null)
     }
 }

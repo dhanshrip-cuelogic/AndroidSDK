@@ -51,7 +51,16 @@ abstract class Loner {
      * @param ActivityCallBackInterface It's give a callback to app for Api request success or failure
      */
     abstract fun sendEmergencyAlertApi(context:Context,listener: ActivityCallBackInterface)
+    abstract fun sendAlertApi(context:Context,message:String,listener: ActivityCallBackInterface)
+
+
     abstract fun getConfiguration(context:Context,listener: ActivityCallBackInterface)
+
     abstract fun sendMessage(context:Context,message:String, listener: ActivityCallBackInterface)
+
+    abstract fun sendNotification(context:Context,message:String, listener: ActivityCallBackInterface)
+
+    abstract  fun showCheckInAlertDialog(context: Context, title:String?,subject:String?,buttonText:String?)
+
 
 }
