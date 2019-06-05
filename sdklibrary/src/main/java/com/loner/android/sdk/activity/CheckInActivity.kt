@@ -56,15 +56,16 @@ class CheckInActivity : AppCompatActivity() {
     }
 
     private fun sendNoteToThePortal(checkInNote:String){
-        progressBarDailog!!.show()
+        progressBarDailog?.show()
         Loner.client.sendMessage(this,checkInNote, object :ActivityCallBackInterface{
             override fun onResponseDataSuccess(successResponse: String) {
-                progressBarDailog!!.dismiss()
+                progressBarDailog?.dismiss()
                 manualCheckInListener.manualCheckInCompeleted(true)
                 finish()
             }
 
             override fun onResponseDataFailure(failureResponse: String) {
+                progressBarDailog?.dismiss()
                 Toast.makeText(applicationContext,failureResponse,Toast.LENGTH_LONG).show()
             }
         })
