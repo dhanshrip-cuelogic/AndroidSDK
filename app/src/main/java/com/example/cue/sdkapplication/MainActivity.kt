@@ -7,6 +7,9 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.loner.android.sdk.core.Loner
 import com.loner.android.sdk.dailogs.LonerDialog
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
@@ -15,7 +18,7 @@ import com.loner.android.sdk.widget.EmergencySlider
 import com.loner.android.sdk.widget.EmergencySlider.EmergencySliderListetener;
 
 
-class MainActivity : Activity(){
+class MainActivity : FragmentActivity(), OnMapReadyCallback {
     var emergencySlider: EmergencySlider? = null
     var progressBarDailog: ProgressDialog? = null
     lateinit var checkInTimerView: CheckInTimerView
@@ -83,4 +86,7 @@ class MainActivity : Activity(){
         alert.show()
     }
 
+    override fun onMapReady(p0: GoogleMap?) {
+
+    }
 }
