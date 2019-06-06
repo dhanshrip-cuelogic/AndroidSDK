@@ -1,27 +1,37 @@
 package com.example.cue.sdkapplication
 
 
-import android.app.Activity
+import android.Manifest
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.DialogInterface
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.FragmentActivity
+import android.support.v4.content.ContextCompat
+import android.widget.Toast
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.loner.android.sdk.core.Loner
-import com.loner.android.sdk.dailogs.LonerDialog
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.widget.CheckInTimerView
 import com.loner.android.sdk.widget.EmergencySlider
 import com.loner.android.sdk.widget.EmergencySlider.EmergencySliderListetener;
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.LatLng
+
+
 
 
 class MainActivity : FragmentActivity(), OnMapReadyCallback {
     var emergencySlider: EmergencySlider? = null
     var progressBarDailog: ProgressDialog? = null
     lateinit var checkInTimerView: CheckInTimerView
+    private val LOCATION_REQUEST_CODE = 101
+    private lateinit var mMap: GoogleMap
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,6 +40,11 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
         progressBarDailog!!.setCancelable(false)
         emergencySlider = findViewById(R.id.emergency_slider)
         checkInTimerView = findViewById(R.id.check_view)
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        val mapFragment = supportFragmentManager
+                .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
         checkInTimerView.loadCheckInTimerComponent(true,true, 1, object: CheckInTimerView.OnTimerListener {
             override fun onTimerComplete() {
                 showCheckAlert()
@@ -86,7 +101,48 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
         alert.show()
     }
 
-    override fun onMapReady(p0: GoogleMap?) {
+    private fun requestPermission(permissionType: String,
+                                  requestCode: Int) {
+
+        ActivityCompat.requestPermissions(this,
+                arrayOf(permissionType), requestCode
+        )
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            LOCATION_REQUEST_CODE -> {
+
+                if (grantResults.isEmpty() || grantResults[0] !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this,
+                            "Unable to show location - permission required",
+                            Toast.LENGTH_LONG).show()
+                } else {
+
+                    val mapFragment = supportFragmentManager
+                            .findFragmentById(R.id.map) as SupportMapFragment
+                    mapFragment.getMapAsync(this)
+                }
+            }
+        }
+
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        if(mMap != null) {
+            val permission = ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+
+            if (permission == PackageManager.PERMISSION_GRANTED) {
+                mMap?.isMyLocationEnabled = true
+            } else {
+                requestPermission(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        LOCATION_REQUEST_CODE)
+            }
+        }
 
     }
 }
