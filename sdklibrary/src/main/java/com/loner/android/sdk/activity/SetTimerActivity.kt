@@ -7,6 +7,7 @@ import android.content.res.Resources
 import android.graphics.drawable.ColorDrawable
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.Window
 import android.widget.*
@@ -33,7 +34,6 @@ class SetTimerActivity : Activity(), View.OnClickListener {
     private var displayMinuteValue = arrayOf("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14",
             "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35",
             "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59")
-    private var isCancelClicked = false
     private var mRepeatType = " "
     private var mSpecficTime = " "
     private lateinit var timerListener: TimerListener
@@ -51,10 +51,10 @@ class SetTimerActivity : Activity(), View.OnClickListener {
         mMinutePicker.maxValue = 59
         mMinutePicker.minValue = 0
         mMinutePicker.displayedValues = displayMinuteValue
-        setDividerColor(mHourPicker, resources.getColor(R.color.timer_colour))
-        setDividerColor(mMinutePicker, resources.getColor(R.color.timer_colour))
+        setDividerColor(mHourPicker, ContextCompat.getColor(this, R.color.timer_colour))
+        setDividerColor(mMinutePicker,ContextCompat.getColor(this, R.color.timer_colour))
         if (!TimerConfiguration.getInstance().isTimerEnable(this) && !AppConfiguration.getInstance().isTimerManualCheckInEnable(this)) {
-            btnDisableTimer.setTextColor(resources.getColor(R.color.disable_button_colour))
+            btnDisableTimer.setTextColor(ContextCompat.getColor(this, R.color.disable_button_colour))
             btnDisableTimer.isEnabled = false
         }
 

@@ -19,11 +19,12 @@
 
         <TextView
             android:id="@+id/customDialogTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans"
             android:text="@string/check_in_required"
             android:textColor="@color/black"
+            android:gravity="center_horizontal"
             android:textSize="@dimen/font_size_20"
             android:textStyle="bold"
             android:typeface="sans"
@@ -31,11 +32,12 @@
 
         <TextView
             android:id="@+id/customDialogSubject"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/open_sans"
             android:scrollHorizontally="true"
+            android:gravity="center_horizontal"
             android:text="@string/press_ok_to_check_in_now"
             android:textColor="@color/black"
             android:textSize="@dimen/font_size_17"

@@ -19,7 +19,7 @@ import java.util.TimerTask
 /**
  * The Class handle sliderUnlockWidget event like onSliderUnlock and onSliderTouched
  */
-class SliderUnlockWidget : SeekBar, OnSeekBarChangeListener {
+class SliderUnlockWidget : android.support.v7.widget.AppCompatSeekBar, OnSeekBarChangeListener {
     internal var originalProgress: Int = 0
     private var redComponentView: View? = null
 

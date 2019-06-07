@@ -19,9 +19,7 @@ import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.widget.CheckInTimerView
 import com.loner.android.sdk.widget.EmergencySlider
 import com.loner.android.sdk.widget.EmergencySlider.EmergencySliderListetener;
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.LatLng
+
 
 
 
@@ -45,29 +43,14 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        checkInTimerView.loadCheckInTimerComponent(true,true, 1, object: CheckInTimerView.OnTimerListener {
-            override fun onTimerComplete() {
-                showCheckAlert()
-            }
-        })
-
-
+        checkInTimerView.loadCheckInTimerComponent(true,true, 1, null)
 
         // use Loner sdk for slider
-        emergencySlider?.setOnEmergencySliderListetener(object : EmergencySliderListetener {
-            override fun onEmergencySlide() {
-                    progressBarDailog!!.show()
-                    emergencyAlertCall()
-            }
-
-        })
+        emergencySlider?.setOnEmergencySliderListetener(this,null)
     }
 
-    fun showCheckAlert(){
-        Loner.client.showCheckInAlertDialog(this, getText(com.loner.android.sdk.R.string.check_in_required).toString(),
-                getText(com.loner.android.sdk.R.string.press_ok_to_check_in_now).toString(),null)
-    }
-    fun emergencyAlertCall() {
+
+  /*  fun emergencyAlertCall() {
         // Call alert send api call from loner sdk
         Loner.client.sendEmergencyAlertApi(this, object : ActivityCallBackInterface {
             override fun onResponseDataSuccess(successResponse: String) {
@@ -80,7 +63,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
             }
 
         })
-    }
+    }*/
 
     fun alertResponseDialog(alertMsg: String) {
         val dialogBuilder = AlertDialog.Builder(this)
@@ -131,6 +114,11 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        val mapSettings = mMap?.uiSettings
+        mapSettings?.isZoomControlsEnabled = true
+        mapSettings?.isZoomGesturesEnabled = true
+        mapSettings?.isScrollGesturesEnabled = true
+        mapSettings?.isTiltGesturesEnabled = true
         if(mMap != null) {
             val permission = ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)

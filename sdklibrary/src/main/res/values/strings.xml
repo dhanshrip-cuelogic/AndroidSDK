@@ -299,4 +299,6 @@
     <string name="press_ok_to_check_in_now">Press OK to check in now.</string>
     <string name="cancel_text">Cancel</string>
     <string name="ok_text">Ok</string>
+    <string name="check_in_now_to_turn_off_dec">You asked Loner Mobile to check in with you until this time.\n\nCheck in now to confirm you are ok and to turn off the check-in timer.</string>
+    <string name="check_in_now_to_turn_off">ARE YOU OK?</string>
 </resources>

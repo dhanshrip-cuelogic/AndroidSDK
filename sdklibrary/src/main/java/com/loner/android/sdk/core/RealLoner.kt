@@ -52,7 +52,7 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
 
 
     override fun showCheckInAlertDialog(context: Context, title: String?, subject: String?, buttonText: String?) {
-        lonerDialog.showCheckInAlert(context, context.getText(com.loner.android.sdk.R.string.check_in_required).toString(),
-                context.getText(com.loner.android.sdk.R.string.press_ok_to_check_in_now).toString(),null)
+        lonerDialog.showCheckInAlert(context,title,
+               subject,null)
     }
 }

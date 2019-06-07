@@ -1,12 +1,15 @@
 package com.loner.android.sdk.widget
 
 import android.content.Context
+import android.content.Intent
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
 
 import com.loner.android.sdk.R
+import com.loner.android.sdk.activity.EmergencyAlertActivity
+import com.loner.android.sdk.activity.MissedCheckInActivity
 import com.loner.android.sdk.core.Loner
 import com.loner.android.sdk.utils.SliderUnlockWidget
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
@@ -19,7 +22,7 @@ class EmergencySlider : RelativeLayout, SliderUnlockWidget.SliderUnlockWidgetLis
     private var redComponentView: View? = null
     private var emergencySlider: SliderUnlockWidget? = null
     private var listener: EmergencySliderListetener? = null
-
+    private var mContext: Context? = null
     constructor(context: Context) : super(context) {
         init()
     }
@@ -33,21 +36,34 @@ class EmergencySlider : RelativeLayout, SliderUnlockWidget.SliderUnlockWidgetLis
         inflater.inflate(R.layout.emergency_slider_view, this)
         redComponentView = findViewById(R.id.redComponentView)
         emergencySlider = findViewById(R.id.seekEmergency)
-        emergencySlider!!.setSliderUnlockListener(this)
-        emergencySlider!!.setRedComponentView(redComponentView!!)
-        emergencySlider!!.progress = 0
+        emergencySlider?.setSliderUnlockListener(this)
+        emergencySlider?.setRedComponentView(redComponentView!!)
+        emergencySlider?.progress = 0
 
     }
 
     override fun onSliderUnlock(sliderUnlockWidget: SliderUnlockWidget) {
-        emergencySlider!!.progress = 0
-        emergencySlider!!.updateTheRedComponent(0)
-        listener!!.onEmergencySlide()
+        emergencySlider?.progress = 0
+        emergencySlider?.updateTheRedComponent(0)
+        listener?.onEmergencySlide()
+        var intent = Intent(mContext, EmergencyAlertActivity::class.java)
+        mContext?.startActivity(intent)
+        Loner.client.sendEmergencyAlertApi(mContext!!, object : ActivityCallBackInterface {
+            override fun onResponseDataSuccess(successResponse: String) {
+
+            }
+            override fun onResponseDataFailure(failureResponse: String) {
+
+            }
+
+        })
+
 
     }
 
-    fun setOnEmergencySliderListetener(listener: EmergencySliderListetener) {
+    fun setOnEmergencySliderListetener(context:Context,listener: EmergencySliderListetener?) {
         this.listener = listener
+        context.let { this.mContext = context }
     }
 
     override fun onSliderTouched() {

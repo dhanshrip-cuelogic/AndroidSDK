@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * Model class to store the important attributes in the shared preference
  * @author cuelogic
