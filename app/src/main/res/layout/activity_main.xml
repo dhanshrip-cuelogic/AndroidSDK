@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -34,7 +33,7 @@
 
     <com.loner.android.sdk.widget.EmergencySlider
         android:id="@+id/emergency_slider"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="72dp"
         android:gravity="bottom"
         app:layout_constraintBottom_toBottomOf="parent"

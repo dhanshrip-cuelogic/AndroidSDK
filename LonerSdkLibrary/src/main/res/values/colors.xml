@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+
+    <!--Enter pin-->
+    <color name="textual_grey">#666666</color>
+    <color name="done_button_grey">#A0A2A9</color>
+    <!--Enter pin-->
+    <!---->
+    <color name="green_default">#22C064</color>
+    <color name="green_focus">#009944</color>
+    <!---->
+
+    <!--Configuration screen-->
+
+    <!--Enter pin-->
+    <!--Enter pin-->
+    <color name="gradient_grey">#b3b5b5</color>
+    <color name="custom_blue_color_default">#4AB4E8</color>
+    <color name="bkg_color_for_alert_screens">#C1272D</color>
+    <color name="custom_white">#FFFFFF</color>
+    <color name="slider_red">#C2272F</color>
+    <color name="check_in_default">#1C1C1C</color>
+    <color name="check_in_pressed">#242424</color>
+    <color name="timer_colour">#949393</color>
+    <color name="timer_colour_light">#faf9f9</color>
+    <color name="transparency_colour">#66000000</color>
+    <color name="disable_button_colour">#A0A5AA</color>
+
+
+</resources>

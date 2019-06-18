@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Loner Mobile</string>
+    <string name="alert_sent">Alert Sent</string>
+    <string name="emergency">Emergency</string>
+    <string name="acknowledge">Acknowledge &amp; Check-in</string>
+    <string name="missed_check_in">Missed check-in</string>
+    <string name="cancel">Cancel</string>
+    <string name="change_timer">Change Timer</string>
+    <string name="okay">OK</string>
+    <string name="check_in">Check-in</string>
+    <string name="countdown_timer_disabled">Check-in timer disabled</string>
+    <string name="start_monitoring_timer">00:00:00</string>
+    <string name="countdown_required_to_check_in">Time until next check-in</string>
+    <string name="swipe_text_sos_alert"><b>swipe</b> for SOS alert </string>
+    <string name="custom_note_hint_text">Enter text max 80 characters\n\n\n\n\n\n</string>
+    <string name="trying_to_reconnect">Waiting to reconnect</string>
+    <string-array name="barrows_list">
+        <item>SELECT A QUICK NOTE</item>
+        <item>Starting shift.</item>
+        <item>Ending shift.</item>
+        <item>Entering site.</item>
+        <item>Exiting site.</item>
+        <item>Flagging location.</item>
+    </string-array>
+    <string name="send_check_in_all">Send</string>
+    <string name="set_timer">SET TIMER</string>
+    <string name="hours_text">hours</string>
+    <string name="hour_text">hour</string>
+    <string name="minute_text">minute</string>
+    <string name="minutes_text">minutes</string>
+    <string name="repeat_text">Repeat</string>
+    <string name="disable_text">Disable</string>
+    <string name="check_in_time_info">If you are using a default check-in timer, this feature will override it.</string>
+    <string name="save">Save</string>
+    <string name="text_description">When would you like Loner Mobile to check on you until?</string>
+    <string name="text_back">Back</string>
+    <string name="change_timer_disable_description">Loner Mobile can check if you\'re OK periodically. Set the timer below. </string>
+    <string name="send_message">SEND MESSAGE</string>
+    <string name="msg_check_in_require">Manual Check-in completed</string>
+    <string name="never">Never</string>
+    <string name="until_turned_off">Until turned off</string>
+    <string name="once">Once</string>
+    <string name="twice">Twice</string>
+    <string name="until_a_specific_item">Until a specific time</string>
+    <string name="check_in_time_current">Please select a time which is greater than current time</string>
+    <string name="until_specific">Until</string>
+    <string name="check_in_required">Check-in required</string>
+    <string name="press_ok_to_check_in_now">Press OK to check in now.</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="ok_text">Ok</string>
+    <string name="check_in_now_to_turn_off_dec">You asked Loner Mobile to check in with you until this time.\n\nCheck in now to confirm you are ok and to turn off the check-in timer.</string>
+    <string name="check_in_now_to_turn_off">ARE YOU OK?</string>
+</resources>

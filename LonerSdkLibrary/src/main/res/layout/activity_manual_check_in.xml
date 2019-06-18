@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <!-- title layout -->
+
+    <include
+        android:id="@+id/checkinTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/title" />
+
+    <!-- Button section -->
+
+    <RelativeLayout
+        android:id="@+id/layButtonSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/checkinTitle"
+        android:layout_marginTop="@dimen/medium_margin_from_top"
+        android:orientation="vertical">
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sendNoteReLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin_from_top"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/layButtonSection">
+        <Spinner
+            android:id="@+id/spinQuickNoteFull"
+            android:layout_width="@dimen/width_for_duo_components"
+            android:layout_height="@dimen/height_for_spinner"
+            android:spinnerMode="dropdown"
+            android:layout_centerHorizontal="true"
+            android:entries="@array/barrows_list"
+            android:dropDownVerticalOffset="0dp"
+            android:background="@drawable/spinner_selector_ui"
+            />
+
+        <EditText
+            android:id="@+id/customTextEdt"
+            android:layout_width="@dimen/width_for_duo_components"
+            android:layout_height="@dimen/edit_text_field_height"
+            android:layout_below="@+id/spinQuickNoteFull"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/mid_plus_margin_from_top"
+            android:background="@drawable/edt_box_selector"
+            android:ems="10"
+            android:fontFamily="@font/open_sans"
+            android:gravity="top"
+            android:hint="@string/custom_note_hint_text"
+            android:inputType="textMultiLine"
+            android:padding="@dimen/average_padding"
+            android:textSize="@dimen/small_text_size"
+            android:windowSoftInputMode="stateHidden">
+
+            <requestFocus />
+        </EditText>
+
+
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/btnSendCheckin"
+        android:layout_width="@dimen/width_for_duo_components"
+        android:layout_height="@dimen/btn_height_on_monitoring"
+        android:layout_below="@+id/sendNoteReLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/max_marging_from_top"
+        android:background="@drawable/btn_new_check_in_selector"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/send_check_in_all"
+        android:textAllCaps="true"
+        android:textColor="@color/custom_white"
+        android:textSize="@dimen/font_size_15" />
+
+
+    <Button
+        android:id="@+id/btnCancelCheckin"
+        android:layout_width="@dimen/outlined_btn_width"
+        android:layout_height="@dimen/outlined_btn_height"
+        android:layout_below="@+id/btnSendCheckin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/mid_plus_margin_from_top"
+        android:background="@drawable/small_outlined_btn_selector"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/cancel"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_15" />
+
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/network_overlay_height"
+        layout="@layout/large_network_error_overlay"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
+

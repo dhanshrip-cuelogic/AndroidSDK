@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/timer_colour" />
+    <RelativeLayout
+        android:id="@+id/layEnglish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/diff_25"
+        android:paddingTop="@dimen/diff_10"
+        android:paddingBottom="@dimen/diff_10"
+        android:paddingRight="@dimen/diff_10">
+        <TextView
+            android:id="@+id/repeat_item_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_15"
+            android:fontFamily="@font/open_sans"
+            android:layout_centerVertical="true"
+            />
+
+        <ImageView
+            android:id="@+id/selectImage"
+            android:layout_width="21dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:src="@drawable/icons_right_tick"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
