@@ -111,7 +111,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
             return
         }
         checkVisibilityOfView(isAllowUserToConfigure, isManualCheckInEnabled)
-        if(timerValue != 0){
+        if(timerValue != 0 && isAllowUserToConfigure){
             val checkTimeInSecond = this.convertMinuteToSecond(timerValue)
             AppConfiguration.getInstance().setTimeBetweenCheckinLng(mContext!!,checkTimeInSecond)
             AppConfiguration.getInstance().setManualCheckIn(mContext!!,true)
