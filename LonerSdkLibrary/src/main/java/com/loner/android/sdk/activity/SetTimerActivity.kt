@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable
 
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.Window
 import android.widget.*
@@ -24,7 +25,7 @@ import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 
 
-class SetTimerActivity : Activity(), View.OnClickListener {
+class SetTimerActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var mHourPicker: NumberPicker
     private lateinit var mMinutePicker: NumberPicker
@@ -41,6 +42,7 @@ class SetTimerActivity : Activity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        supportActionBar!!.hide()
         setTimerActivityInstance(this)
         setContentView(R.layout.activity_set_timer)
         timerListener = CheckInTimerView.getCheckInTimerView()
@@ -313,5 +315,18 @@ class SetTimerActivity : Activity(), View.OnClickListener {
                 textrepeatselection.text = TimerConfiguration.getInstance().getListRepeatTimerType(this)
             }
         }
+    }
+    override fun onNetworkConnected() {
+        super.onNetworkConnected()
+        repeatLayout.isEnabled = true
+        btnDisableTimer.isEnabled = true
+        btnSaveTimer.isEnabled = true
+    }
+
+    override fun onNetworkDisconnected() {
+        super.onNetworkDisconnected()
+        repeatLayout.isEnabled = false
+        btnDisableTimer.isEnabled = false
+        btnSaveTimer.isEnabled = false
     }
 }

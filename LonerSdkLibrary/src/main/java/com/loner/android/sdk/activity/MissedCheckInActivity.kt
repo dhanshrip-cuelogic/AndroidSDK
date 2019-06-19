@@ -2,6 +2,7 @@ package com.loner.android.sdk.activity
 
 import android.app.Activity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.Window
 import com.loner.android.sdk.R
 import com.loner.android.sdk.core.Loner
@@ -9,11 +10,12 @@ import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.widget.CheckInTimerView
 import kotlinx.android.synthetic.main.activity_alert.*
 
-class MissedCheckInActivity : Activity() {
+class MissedCheckInActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        supportActionBar!!.hide()
         setContentView(R.layout.activity_alert)
         txtalert_name.text = getText(R.string.missed_check_in).toString()
         alertImage_resource.setImageResource(R.mipmap.missed_checkin_icon)
@@ -33,5 +35,12 @@ class MissedCheckInActivity : Activity() {
             finish()
         }
 
+    }
+    override fun onNetworkConnected() {
+        super.onNetworkConnected()
+    }
+
+    override fun onNetworkDisconnected() {
+        super.onNetworkDisconnected()
     }
 }

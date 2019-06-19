@@ -25,6 +25,7 @@
     <dimen name="slide_hold_view_width">420dp</dimen>
     <dimen name="btn_height_on_monitoring">60dp</dimen>
     <dimen name="large_btn_width">296dp</dimen>
+    <dimen name="network_overlay_large_btn_width">320dp</dimen>
     <dimen name="small_text_size">15dp</dimen>
     <dimen name="title_components_margin_top_bottom">15dp</dimen>
     <dimen name="timer_title_components_margin_top_bottom">28dp</dimen>

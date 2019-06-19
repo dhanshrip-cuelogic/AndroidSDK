@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="large_btn_width">330dp</dimen>
+    <dimen name="network_overlay_large_btn_width">350dp</dimen>
     <dimen name="btn_height_on_monitoring">65dp</dimen>
     <dimen name="emergency_slider_height">73dp</dimen>
     <dimen name="width_for_duo_components">340dp</dimen>

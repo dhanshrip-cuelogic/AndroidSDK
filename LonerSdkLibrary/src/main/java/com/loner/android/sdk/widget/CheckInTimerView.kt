@@ -2,18 +2,23 @@ package com.loner.android.sdk.widget
 
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.loner.android.sdk.R
+
 import com.loner.android.sdk.activity.ActivityInterface.ManualCheckInListener
 import com.loner.android.sdk.activity.ActivityInterface.TimerListener
+import com.loner.android.sdk.activity.BaseActivity
 import com.loner.android.sdk.activity.CheckInActivity
 import com.loner.android.sdk.activity.MissedCheckInActivity
 import com.loner.android.sdk.activity.SetTimerActivity
@@ -23,11 +28,15 @@ import com.loner.android.sdk.countdowntimer.MonitoringCountDownTimer
 import com.loner.android.sdk.data.sdkconfiguraton.AppConfiguration
 import com.loner.android.sdk.data.timerconfiguration.TimerConfiguration
 import com.loner.android.sdk.data.timerconfiguration.TimerDataStore
+import com.loner.android.sdk.receiver.ConnectionBroadcastReceiver
 import com.loner.android.sdk.utils.*
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 
 
-class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListener,TimerListener,CheckViewUpdateListener {
+
+
+
+class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListener,TimerListener,CheckViewUpdateListener, ConnectionBroadcastReceiver.NetworkConnectionStatusListener  {
     private var mCheckInTimerDisable: TextView? = null
     private var mCheckInTimerDescription: TextView? = null
     private var mCheckInTimer: TextView? = null
@@ -60,7 +69,8 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     private var monitorTimerLengthMillisecond: Long = 0
     private var currentTimerLengthMillisecond: Long = 0
     private var monitoringTimer: MonitoringCountDownTimer? = null
-
+    lateinit var mNetworkConnectionStatusReceivers:ConnectionBroadcastReceiver
+    private var networkRetryOverlay: View? = null
     companion object {
         private lateinit var instance : CheckInTimerView
 
@@ -92,6 +102,12 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         mCheckInTimer = findViewById(R.id.txtTimer)
         mSetTimerButton = findViewById(R.id.btnSetTimerButton)
         mCheckInButton = findViewById(R.id.btnCheckinWithNotes)
+        networkRetryOverlay = findViewById<View>(R.id.networkOverlay)
+        networkRetryOverlay?.visibility = View.GONE
+        networkRetryOverlay?.alpha = 0.8f
+        mNetworkConnectionStatusReceivers = ConnectionBroadcastReceiver()
+        mContext?.registerReceiver(mNetworkConnectionStatusReceivers, IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"))
+        mNetworkConnectionStatusReceivers.setNetworkConnectionListener(this)
         TimerDataStore.getInstance(mContext!!).clearAll()
         mSetTimerButton!!.setOnClickListener {
             val intent = Intent(mContext, SetTimerActivity::class.java)
@@ -111,7 +127,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
             return
         }
         checkVisibilityOfView(isAllowUserToConfigure, isManualCheckInEnabled)
-        if(timerValue != 0){
+        if(timerValue != 0 && isManualCheckInEnabled){
             val checkTimeInSecond = this.convertMinuteToSecond(timerValue)
             AppConfiguration.getInstance().setTimeBetweenCheckinLng(mContext!!,checkTimeInSecond)
             AppConfiguration.getInstance().setManualCheckIn(mContext!!,true)
@@ -124,12 +140,10 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
 
     private fun startMonitorTimer(){
         if(getTimerStatus() == TimerState.Running) stopMonitorTimer()
-
         val timerValue = if (getTimerStatus() == TimerState.Paused)
             currentTimerLengthMillisecond
         else
             monitorTimerLengthMillisecond
-
         monitoringTimer = MonitoringCountDownTimer(timerValue,1000,this)
         monitoringTimer!!.start()
         setTimerStatus(TimerState.Running)
@@ -377,5 +391,17 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
 
     interface OnTimerListener {
         fun onTimerComplete()
+    }
+
+    override fun onNetworkDisconnected() {
+        networkRetryOverlay?.visibility = View.VISIBLE
+        mSetTimerButton?.isEnabled = false
+        mCheckInButton?.isEnabled = false
+    }
+
+    override fun onNetworkConnected() {
+        networkRetryOverlay?.visibility = View.GONE
+        mSetTimerButton?.isEnabled = true
+        mCheckInButton?.isEnabled = true
     }
 }

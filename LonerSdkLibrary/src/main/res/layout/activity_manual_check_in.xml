@@ -99,6 +99,7 @@
         android:textSize="@dimen/font_size_15" />
 
     <include
+        android:id="@+id/networkOverlay"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/network_overlay_height"
         layout="@layout/large_network_error_overlay"

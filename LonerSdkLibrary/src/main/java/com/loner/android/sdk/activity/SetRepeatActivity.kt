@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -17,7 +18,7 @@ import com.loner.android.sdk.utils.TimerValidation
 import kotlinx.android.synthetic.main.activity_set_repeation.*
 import java.util.*
 
-class SetRepeatActivity : Activity(), DatePicker.OnDateChangedListener, RepeatTimerListener {
+class SetRepeatActivity : BaseActivity(), DatePicker.OnDateChangedListener, RepeatTimerListener {
     private lateinit var listView: ListView
     private var itemRepeatTime = intArrayOf(R.string.never, R.string.until_turned_off, R.string.once, R.string.twice, R.string.until_a_specific_item)
     private lateinit var timePicker: TimePicker
@@ -30,6 +31,7 @@ class SetRepeatActivity : Activity(), DatePicker.OnDateChangedListener, RepeatTi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        supportActionBar!!.hide()
         setContentView(R.layout.activity_set_repeation)
         setRepeatActivityInstance(this)
         init()
@@ -157,5 +159,14 @@ class SetRepeatActivity : Activity(), DatePicker.OnDateChangedListener, RepeatTi
     override fun onBackPressed() {
         backButtonPress()
         super.onBackPressed()
+    }
+    override fun onNetworkConnected() {
+        super.onNetworkConnected()
+        btnBackButton.isEnabled = true
+    }
+
+    override fun onNetworkDisconnected() {
+        super.onNetworkDisconnected()
+        btnBackButton.isEnabled = false
     }
 }

@@ -263,6 +263,7 @@
 
     </LinearLayout>
     <include
+        android:id="@+id/networkOverlay"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/network_overlay_height"
         android:layout_centerInParent="true"

@@ -14,7 +14,7 @@ import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.widget.CheckInTimerView
 import kotlinx.android.synthetic.main.activity_manual_check_in.*
 
-class CheckInActivity : AppCompatActivity() {
+class CheckInActivity : BaseActivity() {
     var progressBarDialog: ProgressDialog? = null
     private lateinit var manualCheckInListener: ManualCheckInListener
     private lateinit var mQuickNoteSpinner: Spinner
@@ -87,7 +87,15 @@ class CheckInActivity : AppCompatActivity() {
 
     }
 
+    override fun onNetworkConnected() {
+        super.onNetworkConnected()
+        btnSendCheckin.isEnabled = true
+    }
 
+    override fun onNetworkDisconnected() {
+        super.onNetworkDisconnected()
+        btnSendCheckin.isEnabled = false
+    }
 
 
 }

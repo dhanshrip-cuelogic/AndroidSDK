@@ -62,12 +62,12 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_size_15" />
     </LinearLayout>
-   <!-- <include
+   <include
         android:id="@+id/networkOverlay"
-        layout="@layout/network_error_overlay"
+        layout="@layout/large_network_error_overlay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/network_overlay_height"
         android:layout_centerInParent="true"
-        android:visibility="gone" />-->
+        android:visibility="gone" />
 
 </RelativeLayout>
