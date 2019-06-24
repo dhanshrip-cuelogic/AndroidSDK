@@ -1,4 +1,4 @@
-<!-- Ui screeen for missed check in alert -->
+<!-- Ui screen for missed check in alert -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@android:style/Theme.NoTitleBar"
     android:layout_width="match_parent"
@@ -22,29 +22,26 @@
             android:id="@+id/alertImage_resource"
             android:layout_width="@dimen/alert_icon_width"
             android:layout_height="@dimen/alert_icon_height"
-            android:layout_centerHorizontal="true"
             android:contentDescription="@string/app_name" />
 
         <TextView
-            android:id="@+id/txtalert_name"
+            android:id="@+id/text_alert_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/ivMissedCheckin"
             android:layout_marginTop="@dimen/diff_25"
+            android:fontFamily="@font/open_sans_semibold"
             android:gravity="center_horizontal"
             android:textColor="@color/white"
-            android:typeface="sans"
+            android:textSize="@dimen/alert_title_text_size"
             android:textStyle="bold"
-            android:textSize="@dimen/alert_title_text_size"/>
+            android:typeface="sans" />
 
         <TextView
             android:id="@+id/txtAlertSent_Missed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtMissedCheckin"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/diff_10"
+            android:fontFamily="@font/open_sans"
             android:text="@string/alert_sent"
             android:textColor="@color/white"
             android:textSize="@dimen/alert_sub_title_text_size" />
@@ -53,9 +50,7 @@
             android:id="@+id/btnAcknowledge"
             android:layout_width="@dimen/large_btn_width"
             android:layout_height="@dimen/btn_height_on_monitoring"
-            android:layout_below="@id/txtAlertSent_Missed"
             android:text="@string/acknowledge"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/diff_20"
             android:textAllCaps="true"
             android:background="@drawable/btn_new_check_in_selector"

@@ -40,7 +40,7 @@ class Fdu {
     var alarmAcknowledgeTimeOut:Int = 0
 
     @SerializedName("gsm_lost_alarm_timeout")
-    var GsmLostAlarmTimeOut:Int = 0
+    var gsmLostAlarmTimeOut:Int = 0
 
     @SerializedName("low_battery_alarm_level")
     var lowBatteryAlarmLevel:Int = 0

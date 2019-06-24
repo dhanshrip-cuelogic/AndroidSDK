@@ -1,17 +1,15 @@
 package com.loner.android.sdk.activity
 
 
-import android.app.Activity
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.drawable.ColorDrawable
-
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.Window
-import android.widget.*
+import android.widget.ImageView
+import android.widget.NumberPicker
 import com.loner.android.sdk.R
 import com.loner.android.sdk.activity.ActivityInterface.TimerListener
 import com.loner.android.sdk.dailogs.LonerDialog
@@ -37,7 +35,7 @@ class SetTimerActivity : BaseActivity(), View.OnClickListener {
             "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59")
     private var mRepeatType = " "
     private var mSpecificTime = " "
-    private lateinit var timerListener: TimerListener
+    private  var timerListener: TimerListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -216,7 +214,7 @@ class SetTimerActivity : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.btnDisableTimer -> {
-                timerListener.disableTimer()
+                timerListener?.disableTimer()
                 TimerDataStore.getInstance(this).clearAll()
                 this@SetTimerActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 finish()
@@ -252,7 +250,7 @@ class SetTimerActivity : BaseActivity(), View.OnClickListener {
             TimerConfiguration.getInstance().setSpecificTimeCheckIn(this, " ")
             mSpecificTime = " "
         }
-        timerListener.setNewTimer()
+        timerListener?.setNewTimer()
         TimerConfiguration.getInstance().setListRepeatTimerType(this, mRepeatType)
         this@SetTimerActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         finish()
@@ -260,13 +258,13 @@ class SetTimerActivity : BaseActivity(), View.OnClickListener {
 
     companion object {
         private const val TIMER_REPEAT_REQUEST = 101
-        private lateinit var instance: SetTimerActivity
-        fun setTimerActivityInstance(instance: SetTimerActivity) {
+        private  var instance: SetTimerActivity? = null
+       private fun setTimerActivityInstance(instance: SetTimerActivity?) {
             this.instance = instance
         }
 
-        fun getTimerActivityInstance(): SetTimerActivity {
-            return instance
+        fun getTimerActivityInstance(): SetTimerActivity? {
+            return instance?: null
         }
     }
 
@@ -328,5 +326,10 @@ class SetTimerActivity : BaseActivity(), View.OnClickListener {
         repeatLayout.isEnabled = false
         btnDisableTimer.isEnabled = false
         btnSaveTimer.isEnabled = false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        setTimerActivityInstance(null)
     }
 }

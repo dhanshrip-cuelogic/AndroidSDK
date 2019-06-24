@@ -17,21 +17,21 @@ class TimerDataStore private constructor(context: Context) {
         }
     }
     companion object {
-        val LIST_TIMER_REPEAT_TYPE = "list_repeat_type"
-        val TIMER_REPEAT_TYPE = "repeat_type"
-        val TIMER_HOUR_PICKER = "hour_picker_value"
-        val LIST_TIMER_HOUR_PICKER = "list_hour_picker_value"
-        val TIMER_MINUTE_PICKER = "minute_picker_value"
-        val LIST_TIMER_MINUTE_PICKER = "list_minute_picker_value"
-        val DAY_DATE_PICKER = "day_date_picker"
-        val MONTH_DATE_PICKER = "month_date_picker"
-        val YEAR_DATE_PICKER = "year_date_picker"
-        val LIST_DAY_DATE_PICKER = "list_day_date_picker"
-        val LIST_MONTH_DATE_PICKER = "list_month_date_picker"
-        val LIST_YEAR_DATE_PICKER = "list_year_date_picker"
-        val SET_TIMER_FIRST_TIME = "set_timer_first_time"
-        val TIMER_SET = "timer_enable"
-        val TIMER_SPECIFIC_TIME = "specific_time_to_check_in"
+        const val LIST_TIMER_REPEAT_TYPE = "list_repeat_type"
+        const val TIMER_REPEAT_TYPE = "repeat_type"
+        const val TIMER_HOUR_PICKER = "hour_picker_value"
+        const val LIST_TIMER_HOUR_PICKER = "list_hour_picker_value"
+        const val TIMER_MINUTE_PICKER = "minute_picker_value"
+        const val LIST_TIMER_MINUTE_PICKER = "list_minute_picker_value"
+        const val DAY_DATE_PICKER = "day_date_picker"
+        const val MONTH_DATE_PICKER = "month_date_picker"
+        const val YEAR_DATE_PICKER = "year_date_picker"
+        const val LIST_DAY_DATE_PICKER = "list_day_date_picker"
+        const val LIST_MONTH_DATE_PICKER = "list_month_date_picker"
+        const val LIST_YEAR_DATE_PICKER = "list_year_date_picker"
+        const val SET_TIMER_FIRST_TIME = "set_timer_first_time"
+        const val TIMER_SET = "timer_enable"
+        const val TIMER_SPECIFIC_TIME = "specific_time_to_check_in"
         @Volatile
         private var sharePrefInstance: TimerDataStore? = null
         fun getInstance(context: Context): TimerDataStore {
@@ -61,7 +61,6 @@ class TimerDataStore private constructor(context: Context) {
     /**
      * get the string data from the shared preferences in accordance with the
      * attribute pass to the function
-     * @param con Context
      * @param variable String
      * @param defaultValue String
      * @return String value

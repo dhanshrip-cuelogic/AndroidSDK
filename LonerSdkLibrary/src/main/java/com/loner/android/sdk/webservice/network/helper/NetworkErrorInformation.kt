@@ -9,7 +9,7 @@ import org.json.JSONObject
  */
 class NetworkErrorInformation : BaseJSONParser {
 
-    private val KEY_STATUS_CODE = "statusCode"
+    private val KEYSTATUSCODE = "statusCode"
     private val KEY_ERROR = "error"
     private val KEY_MESSAGE = "message"
     private val KEY_DETAILS = "details"
@@ -33,25 +33,25 @@ class NetworkErrorInformation : BaseJSONParser {
         try {
             jsonRegister = JSONObject(responseString)
 
-            statusCode = Integer.parseInt(optInt(jsonRegister, KEY_STATUS_CODE))
+            statusCode = Integer.parseInt(optInt(jsonRegister, KEYSTATUSCODE))
             error = optString(jsonRegister, KEY_ERROR)
             message = optString(jsonRegister, KEY_MESSAGE)
 
             val detailObject = optJSONObject(jsonRegister, KEY_DETAILS)
             if (detailObject != null) {
 
-                try {
-                    detailCode = Integer.parseInt(optInt(detailObject, KEY_DETAILS_CODE))
+                detailCode = try {
+                    Integer.parseInt(optInt(detailObject, KEY_DETAILS_CODE))
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    detailCode = 0
+                    0
                 }
 
-                try {
-                    detailMessage = optString(detailObject, KEY_DETAILS_MESSAGE)
+                detailMessage = try {
+                    optString(detailObject, KEY_DETAILS_MESSAGE)
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    detailMessage = "Unspecified error"
+                    "Unspecified error"
                 }
 
             }

@@ -8,5 +8,5 @@ import com.loner.android.sdk.webservice.network.networking.RetrofitClientInstanc
  * This files used as base class for other API classes.
  */
 abstract class BaseRequest : RequestConfig {
-    var interfaceAPI = RetrofitClientInstance.retrofitInstance!!.create(APIEndpoints::class.java)
+    var interfaceAPI: APIEndpoints = RetrofitClientInstance.retrofitInstance!!.create(APIEndpoints::class.java)
 }

@@ -3,14 +3,12 @@ package com.loner.android.sdk.widget
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -18,22 +16,21 @@ import com.loner.android.sdk.R
 
 import com.loner.android.sdk.activity.ActivityInterface.ManualCheckInListener
 import com.loner.android.sdk.activity.ActivityInterface.TimerListener
-import com.loner.android.sdk.activity.BaseActivity
 import com.loner.android.sdk.activity.CheckInActivity
 import com.loner.android.sdk.activity.MissedCheckInActivity
 import com.loner.android.sdk.activity.SetTimerActivity
 import com.loner.android.sdk.core.Loner
 import com.loner.android.sdk.countdowntimer.CheckInTimerListener
 import com.loner.android.sdk.countdowntimer.MonitoringCountDownTimer
+import com.loner.android.sdk.dailogs.LonerDialog
 import com.loner.android.sdk.data.sdkconfiguraton.AppConfiguration
 import com.loner.android.sdk.data.timerconfiguration.TimerConfiguration
 import com.loner.android.sdk.data.timerconfiguration.TimerDataStore
+import com.loner.android.sdk.model.VibrationManager
 import com.loner.android.sdk.receiver.ConnectionBroadcastReceiver
 import com.loner.android.sdk.utils.*
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
-
-
-
+import com.loner.android.sdk.webservice.network.networking.NetworkStatus
 
 
 class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListener,TimerListener,CheckViewUpdateListener, ConnectionBroadcastReceiver.NetworkConnectionStatusListener  {
@@ -43,6 +40,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     private var mSetTimerButton: Button? = null
     private var mCheckInButton: Button? = null
     private var mContext: Context? = null
+    private var mCurrentActivity: Context? = null
     private var mTimerCount = 0
     private var isTimerEnable = false
     private var mTimerListener:OnTimerListener? = null
@@ -69,17 +67,19 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     private var monitorTimerLengthMillisecond: Long = 0
     private var currentTimerLengthMillisecond: Long = 0
     private var monitoringTimer: MonitoringCountDownTimer? = null
-    lateinit var mNetworkConnectionStatusReceivers:ConnectionBroadcastReceiver
+    private lateinit var mNetworkConnectionStatusReceivers:ConnectionBroadcastReceiver
     private var networkRetryOverlay: View? = null
-    companion object {
-        private lateinit var instance : CheckInTimerView
+    private var isCheckInAlert:Boolean = false
 
-        fun setCheckInTimerView(instance:CheckInTimerView){
+    companion object {
+        private var instance : CheckInTimerView? = null
+
+        fun setCheckInTimerView(instance:CheckInTimerView?){
             this.instance = instance
         }
 
-        fun getCheckInTimerView():CheckInTimerView{
-            return instance
+        fun getCheckInTimerView():CheckInTimerView? {
+            return instance?:null
         }
     }
 
@@ -119,12 +119,12 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         }
     }
 
-    fun loadCheckInTimerComponent(isAllowUserToConfigure : Boolean?,isManualCheckInEnabled:Boolean?, timerValue : Int?,timerListener: OnTimerListener? ){
+    fun loadCheckInTimerComponent(context:Context,isAllowUserToConfigure : Boolean?,isManualCheckInEnabled:Boolean?, timerValue : Int?,timerListener: OnTimerListener? ){
+        mCurrentActivity = context
         timerListener?.let { this.mTimerListener = timerListener }
 
         if(isAllowUserToConfigure == null || isManualCheckInEnabled == null || timerValue == null){
             throw IllegalStateException("All value should not be null")
-            return
         }
         checkVisibilityOfView(isAllowUserToConfigure, isManualCheckInEnabled)
         if(timerValue != 0 && isManualCheckInEnabled){
@@ -149,7 +149,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         setTimerStatus(TimerState.Running)
     }
 
-    private fun pausedMonitorTimer() {
+     fun pausedMonitorTimer() {
         monitoringTimer?.cancel()
         monitoringTimer = null
         setTimerStatus(TimerState.Paused)
@@ -251,11 +251,13 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     }
 
     override fun onMonitorTimerFinish() {
-         requestForCheckIn()
-         mTimerListener?.onTimerComplete()?: Loner.client.showCheckInAlertDialog(mContext!!, mContext?.getText(R.string.check_in_required).toString(),
-                 mContext?.getText(R.string.press_ok_to_check_in_now).toString(),null)
+        isCheckInAlert = true
+        if(NetworkStatus().isNetworkAvailable(mContext!!)) {
+            requestForCheckIn()
+        }
     }
     override fun onCheckTimerViewUpdate() {
+        isCheckInAlert = false
         acknowledgeForCheckIn()
         if (AppConfiguration.getInstance().isTimerManualCheckInEnable(mContext!!) && !TimerConfiguration.getInstance().isTimerEnable(mContext!!) && getTimerCount() === TimerCount.TimerNone && !isTimerEnable) {
             startMonitorTimer()
@@ -284,6 +286,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     }
 
     override fun onMissCheckInAlert() {
+        isCheckInAlert = false
         sendMissedCheckInAlert()
         val intent = Intent(mContext, MissedCheckInActivity::class.java)
         mContext?.startActivity(intent)
@@ -301,8 +304,12 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     }
 
     private fun requestForCheckIn() {
+        DocleanUp.doCleanAllActivity()
         mCheckInTimer!!.text = "00:00:00"
         mTimerCount++
+        mTimerListener?.onTimerComplete()
+                ?: LonerDialog.getInstance().showCheckInAlert(mCurrentActivity!!, mContext?.getText(R.string.check_in_required).toString(),
+                        mContext?.getText(R.string.press_ok_to_check_in_now).toString(), null)
         Loner.client.sendNotification(mContext!!,"manual_check_in_pending",object : ActivityCallBackInterface {
             override fun onResponseDataSuccess(successResponse: String) {
 
@@ -328,10 +335,20 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         }
     }
 
-    override fun manualCheckInCompeleted(timer: Boolean) {
+    override fun manualCheckInCompleted(timer: Boolean) {
         if(timer) {
             mTimerCount++
             stopMonitorTimer()
+            startMonitorTimer()
+        }
+
+    }
+
+    override fun alertCheckInCompleted(timer: Boolean) {
+        if(timer) {
+            stopMonitorTimer()
+            startMonitorTimer()
+        }else {
             startMonitorTimer()
         }
 
@@ -397,11 +414,17 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         networkRetryOverlay?.visibility = View.VISIBLE
         mSetTimerButton?.isEnabled = false
         mCheckInButton?.isEnabled = false
+        if(isCheckInAlert) {
+            LonerDialog.getInstance().dismissCheckInAlertDialog()
+            SoundManager.getInstance(mContext!!).stopSound()
+            VibrationManager.getInstance(mContext!!).stopVibration()
+        }
     }
 
     override fun onNetworkConnected() {
         networkRetryOverlay?.visibility = View.GONE
         mSetTimerButton?.isEnabled = true
         mCheckInButton?.isEnabled = true
+        if(isCheckInAlert) requestForCheckIn()
     }
 }

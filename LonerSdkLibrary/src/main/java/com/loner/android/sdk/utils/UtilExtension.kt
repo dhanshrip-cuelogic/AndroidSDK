@@ -15,3 +15,4 @@ fun CheckInTimerView.convertSecondToMillisecond(seconds: Long) : Long {
 fun CheckInTimerView.convertMinuteToSecond(seconds: Int) : Long {
     return (seconds*60).toLong()
 }
+

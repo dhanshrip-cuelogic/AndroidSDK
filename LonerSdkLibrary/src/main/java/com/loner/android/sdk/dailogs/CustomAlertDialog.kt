@@ -20,12 +20,10 @@ class CustomAlertDialog constructor(context: Context, title: CharSequence?, subj
     private var subjectText: CharSequence? = null
     private var btnText: CharSequence? = null
     private lateinit var btnCustomDialogOk: Button
-    private var mContext: Context
     private var mlonerDialogListener:LonerDialogListener? = null
 
 
     init {
-        this.mContext = context
         title?. let { this.titleText=title }
         subject?.let { this.subjectText = subject }
         buttontext?.let { this.btnText = buttontext }

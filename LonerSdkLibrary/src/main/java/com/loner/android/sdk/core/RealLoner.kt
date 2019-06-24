@@ -17,7 +17,7 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
      * <p>This is implementation of abstract method of Loner class,
      *    Where sendAlertApi method of ServiceManger call and it send ActivityCallBackInterface interface
      *    for callback</p>
-     *  @param ActivityCallBackInterface ActivityCallBackInterface It's give a callback to app for Api request success or failure
+     *
      */
     override fun sendEmergencyAlertApi(context:Context,listener: ActivityCallBackInterface) {
         serviceManager.sendAlertApi(context,"emergency_alert",listener)

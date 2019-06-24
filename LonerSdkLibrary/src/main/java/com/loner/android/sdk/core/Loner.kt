@@ -48,7 +48,7 @@ abstract class Loner {
      *
      * <p>This method call from App side, when app want to send emergency alert message to server,
      *  App can call this method when emergency slider swipe left to right or call from any event listener</p>
-     * @param ActivityCallBackInterface It's give a callback to app for Api request success or failure
+     *
      */
     abstract fun sendEmergencyAlertApi(context:Context,listener: ActivityCallBackInterface)
     abstract fun sendAlertApi(context:Context,message:String,listener: ActivityCallBackInterface)

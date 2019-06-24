@@ -39,7 +39,7 @@
             android:layout_height="@dimen/height_for_spinner"
             android:spinnerMode="dropdown"
             android:layout_centerHorizontal="true"
-            android:entries="@array/barrows_list"
+            android:entries="@array/alert_check_in_list"
             android:dropDownVerticalOffset="0dp"
             android:background="@drawable/spinner_selector_ui"
             />

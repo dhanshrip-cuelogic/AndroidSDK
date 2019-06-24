@@ -24,6 +24,9 @@
         <activity
             android:name=".activity.CheckInActivity"
             android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.AlertCheckInActivity"
+            android:launchMode="singleTask" />
 
         <meta-data
             android:name="preloaded_fonts"
