@@ -26,9 +26,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-       checkInTimerView.loadCheckInTimerComponent(this,true,true, 1, null)
-
-
+       checkInTimerView.loadCheckInTimerComponent(this,true,true, 1)
     }
     private fun requestPermission(permissionType: String,
                                   requestCode: Int) {

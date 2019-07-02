@@ -41,14 +41,14 @@ class SetRepeatActivity : BaseActivity(), DatePicker.OnDateChangedListener, Repe
             backButtonPress()
         }
         if (TimerConfiguration.getInstance().getListRepeatTimerType(this) == getText(R.string.until_a_specific_item)) {
-            timePicker.setTime(TimerConfiguration.getInstance().getListHourTimerPicker(this),TimerConfiguration.getInstance().getListMinuteTimerPicker(this))
+            setTime(TimerConfiguration.getInstance().getListHourTimerPicker(this), TimerConfiguration.getInstance().getListMinuteTimerPicker(this))
             val day = TimerConfiguration.getInstance().getListDayOfDatePicker(this)
             val month = TimerConfiguration.getInstance().getListMonthOfDatePicker(this)
             val year = TimerConfiguration.getInstance().getListYearOfDatePicker(this)
             datePicker.init(year, month, day, this)
         } else {
             now = Calendar.getInstance(Locale.ENGLISH)
-            timePicker.setTime(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE))
+            setTime(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE))
             datePicker.init(TimerValidation.year, TimerValidation.month, TimerValidation.dayOfMonth, this)
 
         }
@@ -56,7 +56,7 @@ class SetRepeatActivity : BaseActivity(), DatePicker.OnDateChangedListener, Repe
         timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
             if (0 > TimerValidation.getMinuteDifferenceTime(TimerValidation.getTimePickerTime(hourOfDay, minute, datePicker.year, datePicker.month, datePicker.dayOfMonth))) {
                 now = Calendar.getInstance()
-                timePicker.setTime(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE))
+                setTime(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE))
             }
         }
 
@@ -65,10 +65,10 @@ class SetRepeatActivity : BaseActivity(), DatePicker.OnDateChangedListener, Repe
     private fun backButtonPress() {
         val backIntent = Intent()
         if (TimerConfiguration.getInstance().getListRepeatTimerType(this) == getText(R.string.until_a_specific_item)) {
-            if (TimerValidation.isCurrentTimeSame(TimerValidation.getTimePickerTime(timePicker.getCurrentPickerHour(), timePicker.getCurrentPickerMinute(), datePicker.year, datePicker.month, datePicker.dayOfMonth))) {
-                backIntent.putExtra("until_specific_time", TimerValidation.getTimePickerTime(timePicker.getCurrentPickerHour(), timePicker.getCurrentPickerMinute(), datePicker.year, datePicker.month, datePicker.dayOfMonth))
-                TimerConfiguration.getInstance().setListHourTimerPicker(this, timePicker.getCurrentPickerHour())
-                TimerConfiguration.getInstance().setListMinuteTimerPicker(this, timePicker.getCurrentPickerMinute())
+            if (TimerValidation.isCurrentTimeSame(TimerValidation.getTimePickerTime(getCurrentPickerHour(), getCurrentPickerMinute(), datePicker.year, datePicker.month, datePicker.dayOfMonth))) {
+                backIntent.putExtra("until_specific_time", TimerValidation.getTimePickerTime(getCurrentPickerHour(), getCurrentPickerMinute(), datePicker.year, datePicker.month, datePicker.dayOfMonth))
+                TimerConfiguration.getInstance().setListHourTimerPicker(this, getCurrentPickerHour())
+                TimerConfiguration.getInstance().setListMinuteTimerPicker(this, getCurrentPickerMinute())
                 TimerConfiguration.getInstance().setListDayOfDatePicker(this, datePicker.dayOfMonth)
                 TimerConfiguration.getInstance().setListMonthOfDatePicker(this, datePicker.month)
                 TimerConfiguration.getInstance().setListYearOfDatePicker(this, datePicker.year)
@@ -121,9 +121,9 @@ class SetRepeatActivity : BaseActivity(), DatePicker.OnDateChangedListener, Repe
     }
 
     override fun onDateChanged(view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        if (0 > TimerValidation.getMinuteDifferenceTime(TimerValidation.getTimePickerTime(timePicker.getCurrentPickerHour(), timePicker.getCurrentPickerMinute(), datePicker.year, datePicker.month, datePicker.dayOfMonth))) {
+        if (0 > TimerValidation.getMinuteDifferenceTime(TimerValidation.getTimePickerTime(getCurrentPickerHour(), getCurrentPickerMinute(), datePicker.year, datePicker.month, datePicker.dayOfMonth))) {
             now = Calendar.getInstance()
-            timePicker.setTime(now.get(Calendar.HOUR_OF_DAY),now.get(Calendar.MINUTE))
+            setTime(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE))
         }
 
     }
@@ -168,7 +168,7 @@ class SetRepeatActivity : BaseActivity(), DatePicker.OnDateChangedListener, Repe
         btnBackButton.isEnabled = false
     }
 
-   private fun TimePicker.setTime(hour:Int, minute:Int){
+   private fun setTime(hour: Int, minute: Int){
        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
            timePicker.hour = hour
            timePicker.minute = minute
@@ -177,10 +177,10 @@ class SetRepeatActivity : BaseActivity(), DatePicker.OnDateChangedListener, Repe
            timePicker.currentMinute = minute
        }
    }
-  private fun TimePicker.getCurrentPickerHour():Int {
+  private fun getCurrentPickerHour():Int {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
   }
-    private fun TimePicker.getCurrentPickerMinute():Int {
+    private fun getCurrentPickerMinute():Int {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
     }
 }

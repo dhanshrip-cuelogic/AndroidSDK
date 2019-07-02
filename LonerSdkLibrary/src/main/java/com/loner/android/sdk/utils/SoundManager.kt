@@ -14,8 +14,8 @@ class SoundManager private constructor(context: Context) {
 
     init {
         mContext = context
-        alertSound = Uri.parse("""android.resource://${context?.packageName}/${R.raw.alarm}""")
-        checkInSound = Uri.parse("""android.resource://${context?.packageName}/${R.raw.missed_checkin_alert_msg}""")
+        alertSound = Uri.parse("""android.resource://${context.packageName}/${R.raw.alarm}""")
+        checkInSound = Uri.parse("""android.resource://${context.packageName}/${R.raw.missed_checkin_alert_msg}""")
     }
 
     companion object {

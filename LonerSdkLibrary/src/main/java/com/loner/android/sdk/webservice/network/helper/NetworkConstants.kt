@@ -27,7 +27,7 @@ object NetworkConstants {
     /**
      * Enum for StoreResponse status code.
      */
-    enum class RESPONSESTATUS_CODE {
+    enum class RESPONSESTATUSCODE {
         SUCCESS_200, FAILURE_401, FAILURE_403, FAILURE_404
     }
 }

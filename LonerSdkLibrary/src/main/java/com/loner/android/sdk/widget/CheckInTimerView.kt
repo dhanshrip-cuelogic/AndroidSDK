@@ -29,7 +29,6 @@ import com.loner.android.sdk.data.timerconfiguration.TimerDataStore
 import com.loner.android.sdk.model.VibrationManager
 import com.loner.android.sdk.receiver.ConnectionBroadcastReceiver
 import com.loner.android.sdk.utils.*
-import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.webservice.network.networking.NetworkStatus
 
 
@@ -119,7 +118,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         }
     }
 
-    fun loadCheckInTimerComponent(context:Context,isAllowUserToConfigure : Boolean?,isManualCheckInEnabled:Boolean?, timerValue : Int?,timerListener: OnTimerListener? ){
+    @JvmOverloads fun loadCheckInTimerComponent(context:Context,isAllowUserToConfigure : Boolean?,isManualCheckInEnabled:Boolean?, timerValue : Int?, timerListener: OnTimerListener? = null ){
         mCurrentActivity = context
         timerListener?.let { this.mTimerListener = timerListener }
 
@@ -128,11 +127,11 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         }
         checkVisibilityOfView(isAllowUserToConfigure, isManualCheckInEnabled)
         if(timerValue != 0 && isManualCheckInEnabled){
-            val checkTimeInSecond = this.convertMinuteToSecond(timerValue)
+            val checkTimeInSecond = convertMinuteToSecond(timerValue)
             AppConfiguration.getInstance().setTimeBetweenCheckinLng(mContext!!,checkTimeInSecond)
             AppConfiguration.getInstance().setManualCheckIn(mContext!!,true)
             AppConfiguration.getInstance().setTimerManualCheckInEnable(mContext!!,true)
-            monitorTimerLengthMillisecond = this.convertSecondToMillisecond(checkTimeInSecond)
+            monitorTimerLengthMillisecond = convertSecondToMillisecond(checkTimeInSecond)
             startMonitorTimer()
         }
 
@@ -274,15 +273,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     }
 
     private fun acknowledgeForCheckIn() {
-      Loner.client.sendMessage(mContext!!,"Manual Check-in completed",object:ActivityCallBackInterface{
-          override fun onResponseDataSuccess(successResponse: String) {
-
-          }
-
-          override fun onResponseDataFailure(failureResponse: String) {
-
-          }
-      })
+        Loner.getClient().sendMessage(mContext!!,"Manual Check-in completed",null)
     }
 
     override fun onMissCheckInAlert() {
@@ -293,14 +284,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     }
 
     private fun sendMissedCheckInAlert() {
-       Loner.client.sendAlertApi(mContext!!,"missed_check_in", object:ActivityCallBackInterface{
-           override fun onResponseDataSuccess(successResponse: String) {
-
-           }
-           override fun onResponseDataFailure(failureResponse: String) {
-
-           }
-       })
+        Loner.getClient().sendAlertApi(mContext!!,"missed_check_in",null)
     }
 
     private fun requestForCheckIn() {
@@ -310,28 +294,19 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         mTimerListener?.onTimerComplete()
                 ?: LonerDialog.getInstance().showCheckInAlert(mCurrentActivity!!, mContext?.getText(R.string.check_in_required).toString(),
                         mContext?.getText(R.string.press_ok_to_check_in_now).toString(), null)
-        Loner.client.sendNotification(mContext!!,"manual_check_in_pending",object : ActivityCallBackInterface {
-            override fun onResponseDataSuccess(successResponse: String) {
-
-            }
-
-            override fun onResponseDataFailure(failureResponse: String) {
-
-            }
-
-        })
+        Loner.getClient().sendNotification(mContext!!,"manual_check_in_pending",null)
     }
 
     override fun onViewUpdateOnTimer(millisUntilFinished: Long) {
         if (0 >= TimerValidation.getMinuteDifferenceTime(TimerConfiguration.getInstance().getSpecificTimeCheckIn(mContext!!)) && getTimerType() === TimerType.TimerTypeUntilSpecificTime) {
             setTimerCount(TimerCount.TimerSpecificTime)
             stopMonitorTimer()
-            Loner.client.showCheckInAlertDialog(mContext!!, mContext?.getText(R.string.check_in_now_to_turn_off).toString(),
+            Loner.getClient().showCheckInAlertDialog(mContext!!, mContext?.getText(R.string.check_in_now_to_turn_off).toString(),
                     mContext?.getText(R.string.check_in_now_to_turn_off_dec).toString(),null)
 
         }else {
             currentTimerLengthMillisecond = millisUntilFinished
-            mCheckInTimer!!.text = this.convertCheckInTextFormat(millisUntilFinished)
+            mCheckInTimer!!.text = convertCheckInTextFormat(millisUntilFinished)
         }
     }
 
@@ -359,7 +334,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         mTimerCount = -1
         setTimerTypeValue(TimerConfiguration.getInstance().getRepeatTimerType(mContext!!))
         manualCheckInAndAllowUserOn()
-        monitorTimerLengthMillisecond =this.convertSecondToMillisecond(AppConfiguration.getInstance().getTimeBetweenCheckInLng(mContext!!))
+        monitorTimerLengthMillisecond = convertSecondToMillisecond(AppConfiguration.getInstance().getTimeBetweenCheckInLng(mContext!!))
         startMonitorTimer()
     }
 

@@ -56,7 +56,7 @@ class CheckInActivity : BaseActivity() {
 
     private fun sendNoteToThePortal(checkInNote:String){
         progressBarDialog?.show()
-        Loner.client.sendMessage(this,checkInNote, object :ActivityCallBackInterface{
+        Loner.getClient().sendMessage(this,checkInNote, object :ActivityCallBackInterface{
             override fun onResponseDataSuccess(successResponse: String) {
                 progressBarDialog?.dismiss()
                 manualCheckInListener?.manualCheckInCompleted(true)

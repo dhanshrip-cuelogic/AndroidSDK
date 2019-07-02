@@ -19,15 +19,15 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
      *    for callback</p>
      *
      */
-    override fun sendEmergencyAlertApi(context:Context,listener: ActivityCallBackInterface) {
+    override fun sendEmergencyAlertApi(context:Context,listener: ActivityCallBackInterface?) {
         serviceManager.sendAlertApi(context,"emergency_alert",listener)
     }
 
-    override fun sendAlertApi(context: Context, message: String, listener: ActivityCallBackInterface) {
+    override fun sendAlertApi(context: Context, message: String, listener: ActivityCallBackInterface?) {
         serviceManager.sendAlertApi(context,message,listener)
     }
 
-    override fun getConfiguration(context: Context, listener: ActivityCallBackInterface) {
+    override fun getConfiguration(context: Context, listener: ActivityCallBackInterface?) {
 
         serviceManager.requestConfiguration(context,listener)
     }
@@ -42,11 +42,11 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
         }
     }
 
-    override fun sendNotification(context: Context, message: String, listener: ActivityCallBackInterface) {
+    override fun sendNotification(context: Context, message: String, listener: ActivityCallBackInterface?) {
         serviceManager.sendNotificationApi(context, message, listener)
     }
 
-    override fun sendMessage(context: Context, message: String, listener: ActivityCallBackInterface) {
+    override fun sendMessage(context: Context, message: String, listener: ActivityCallBackInterface?) {
         serviceManager.sendMessageApi(context, message, listener)
     }
 

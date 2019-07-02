@@ -7,7 +7,6 @@ import com.loner.android.sdk.R
 import com.loner.android.sdk.core.Loner
 import com.loner.android.sdk.model.VibrationManager
 import com.loner.android.sdk.utils.SoundManager
-import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.webservice.network.networking.NetworkStatus
 import com.loner.android.sdk.widget.CheckInTimerView
 import kotlinx.android.synthetic.main.activity_alert.*
@@ -27,15 +26,7 @@ class MissedCheckInActivity : BaseActivity() {
             CheckInTimerView.getCheckInTimerView()?.onCheckTimerViewUpdate()
             this@MissedCheckInActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             if (NetworkStatus().isNetworkAvailable(this)) {
-                Loner.client.sendNotification(this, "alert_acknowledged", object : ActivityCallBackInterface {
-                    override fun onResponseDataSuccess(successResponse: String) {
-
-                    }
-
-                    override fun onResponseDataFailure(failureResponse: String) {
-
-                    }
-                })
+                Loner.getClient().sendNotification(this, "alert_acknowledged",null)
                 VibrationManager.getInstance(applicationContext).stopVibration()
                 SoundManager.getInstance(applicationContext).stopSound()
                 val intent = Intent(this, AlertCheckInActivity::class.java)

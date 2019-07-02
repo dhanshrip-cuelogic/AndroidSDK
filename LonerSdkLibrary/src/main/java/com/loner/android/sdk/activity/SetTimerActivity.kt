@@ -155,7 +155,6 @@ class SetTimerActivity : BaseActivity(), View.OnClickListener {
             changeValueByOne(mMinutePicker, true)
         }
         validationHourPickerLabel(newValue)
-
     }
 
     private fun validationHourPickerLabel(newValue: Int) {
@@ -167,7 +166,6 @@ class SetTimerActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun changeValueByOne(higherPicker: NumberPicker, increment: Boolean) {
-
         val method: Method
         try {
             method = higherPicker.javaClass.getDeclaredMethod("changeValueByOne", Boolean::class.javaPrimitiveType)

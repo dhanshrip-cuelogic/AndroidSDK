@@ -9,8 +9,8 @@ import org.json.JSONObject
  */
 class NetworkErrorInformation : BaseJSONParser {
 
-    private val KEYSTATUSCODE = "statusCode"
-    private val KEY_ERROR = "error"
+    private val STATUS = "statusCode"
+    private val KEYERROR = "error"
     private val KEY_MESSAGE = "message"
     private val KEY_DETAILS = "details"
     private val KEY_DETAILS_CODE = "code"
@@ -33,8 +33,8 @@ class NetworkErrorInformation : BaseJSONParser {
         try {
             jsonRegister = JSONObject(responseString)
 
-            statusCode = Integer.parseInt(optInt(jsonRegister, KEYSTATUSCODE))
-            error = optString(jsonRegister, KEY_ERROR)
+            statusCode = Integer.parseInt(optInt(jsonRegister, STATUS))
+            error = optString(jsonRegister, KEYERROR)
             message = optString(jsonRegister, KEY_MESSAGE)
 
             val detailObject = optJSONObject(jsonRegister, KEY_DETAILS)
