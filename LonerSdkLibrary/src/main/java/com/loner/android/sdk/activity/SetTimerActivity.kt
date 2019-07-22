@@ -1,16 +1,15 @@
 package com.loner.android.sdk.activity
 
 
-import android.app.Activity
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.drawable.ColorDrawable
-
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.Window
-import android.widget.*
+import android.widget.ImageView
+import android.widget.NumberPicker
 import com.loner.android.sdk.R
 import com.loner.android.sdk.activity.ActivityInterface.TimerListener
 import com.loner.android.sdk.dailogs.LonerDialog
@@ -24,7 +23,7 @@ import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 
 
-class SetTimerActivity : Activity(), View.OnClickListener {
+class SetTimerActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var mHourPicker: NumberPicker
     private lateinit var mMinutePicker: NumberPicker
@@ -36,11 +35,12 @@ class SetTimerActivity : Activity(), View.OnClickListener {
             "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59")
     private var mRepeatType = " "
     private var mSpecificTime = " "
-    private lateinit var timerListener: TimerListener
+    private  var timerListener: TimerListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        supportActionBar!!.hide()
         setTimerActivityInstance(this)
         setContentView(R.layout.activity_set_timer)
         timerListener = CheckInTimerView.getCheckInTimerView()
@@ -155,7 +155,6 @@ class SetTimerActivity : Activity(), View.OnClickListener {
             changeValueByOne(mMinutePicker, true)
         }
         validationHourPickerLabel(newValue)
-
     }
 
     private fun validationHourPickerLabel(newValue: Int) {
@@ -167,7 +166,6 @@ class SetTimerActivity : Activity(), View.OnClickListener {
     }
 
     private fun changeValueByOne(higherPicker: NumberPicker, increment: Boolean) {
-
         val method: Method
         try {
             method = higherPicker.javaClass.getDeclaredMethod("changeValueByOne", Boolean::class.javaPrimitiveType)
@@ -214,7 +212,7 @@ class SetTimerActivity : Activity(), View.OnClickListener {
                 finish()
             }
             R.id.btnDisableTimer -> {
-                timerListener.disableTimer()
+                timerListener?.disableTimer()
                 TimerDataStore.getInstance(this).clearAll()
                 this@SetTimerActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 finish()
@@ -250,7 +248,7 @@ class SetTimerActivity : Activity(), View.OnClickListener {
             TimerConfiguration.getInstance().setSpecificTimeCheckIn(this, " ")
             mSpecificTime = " "
         }
-        timerListener.setNewTimer()
+        timerListener?.setNewTimer()
         TimerConfiguration.getInstance().setListRepeatTimerType(this, mRepeatType)
         this@SetTimerActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         finish()
@@ -258,13 +256,13 @@ class SetTimerActivity : Activity(), View.OnClickListener {
 
     companion object {
         private const val TIMER_REPEAT_REQUEST = 101
-        private lateinit var instance: SetTimerActivity
-        fun setTimerActivityInstance(instance: SetTimerActivity) {
+        private  var instance: SetTimerActivity? = null
+       private fun setTimerActivityInstance(instance: SetTimerActivity?) {
             this.instance = instance
         }
 
-        fun getTimerActivityInstance(): SetTimerActivity {
-            return instance
+        fun getTimerActivityInstance(): SetTimerActivity? {
+            return instance?: null
         }
     }
 
@@ -313,5 +311,23 @@ class SetTimerActivity : Activity(), View.OnClickListener {
                 textrepeatselection.text = TimerConfiguration.getInstance().getListRepeatTimerType(this)
             }
         }
+    }
+    override fun onNetworkConnected() {
+        super.onNetworkConnected()
+        repeatLayout.isEnabled = true
+        btnDisableTimer.isEnabled = true
+        btnSaveTimer.isEnabled = true
+    }
+
+    override fun onNetworkDisconnected() {
+        super.onNetworkDisconnected()
+        repeatLayout.isEnabled = false
+        btnDisableTimer.isEnabled = false
+        btnSaveTimer.isEnabled = false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        setTimerActivityInstance(null)
     }
 }

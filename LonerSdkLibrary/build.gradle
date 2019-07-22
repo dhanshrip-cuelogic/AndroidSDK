@@ -37,7 +37,7 @@ dependencies {
 
     //JSON Parsing
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
-    implementation 'com.google.code.gson:gson:2.7'
+    implementation 'com.google.code.gson:gson:2.8.2'
     //http logging
     implementation 'com.squareup.okhttp3:logging-interceptor:3.4.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

@@ -42,18 +42,18 @@ class  TimerValidation {
 
         fun checkInTimerValue(hours: Int, minutes: Int): Long {
             var mCheckInTime: Long = 0
-            try {
+            mCheckInTime = try {
                 if (hours != 0 && minutes != 0) {
-                    mCheckInTime = ((hours * 60 + minutes) * 60).toLong()
+                    ((hours * 60 + minutes) * 60).toLong()
                 } else if (hours != 0) {
-                    mCheckInTime = (hours * 60 * 60).toLong()
+                    (hours * 60 * 60).toLong()
                 } else if (minutes != 0) {
-                    mCheckInTime = (minutes * 60).toLong()
+                    (minutes * 60).toLong()
                 } else {
-                    mCheckInTime = (1 * 60).toLong()
+                    (1 * 60).toLong()
                 }
             } catch (e: Exception) {
-                mCheckInTime = (1 * 60).toLong()
+                (1 * 60).toLong()
             }
 
             return mCheckInTime
@@ -61,18 +61,18 @@ class  TimerValidation {
 
         fun checkInTimerMinuteValue(hours: Int, minutes: Int): Long {
             var mCheckInTime: Long = 0
-            try {
+            mCheckInTime = try {
                 if (hours != 0 && minutes != 0) {
-                    mCheckInTime = (hours * 60 + minutes).toLong()
+                    (hours * 60 + minutes).toLong()
                 } else if (hours != 0) {
-                    mCheckInTime = (hours * 60).toLong()
+                    (hours * 60).toLong()
                 } else if (minutes != 0) {
-                    mCheckInTime = minutes.toLong()
+                    minutes.toLong()
                 } else {
-                    mCheckInTime = 30
+                    30
                 }
             } catch (e: Exception) {
-                mCheckInTime = 30
+                30
             }
 
             return mCheckInTime
@@ -84,21 +84,23 @@ class  TimerValidation {
             var minutes = ""
             var aTime = " "
             try {
-                if (hours > 12) {
-                    hours -= 12
-                    timeSet = "PM"
-                } else if (hours == 0) {
-                    hours += 12
-                    timeSet = "AM"
-                } else if (hours == 12)
-                    timeSet = "PM"
-                else
-                    timeSet = "AM"
+                when {
+                    hours > 12 -> {
+                        hours -= 12
+                        timeSet = "PM"
+                    }
+                    hours == 0 -> {
+                        hours += 12
+                        timeSet = "AM"
+                    }
+                    hours == 12 -> timeSet = "PM"
+                    else -> timeSet = "AM"
+                }
 
-                if (mins < 10)
-                    minutes = "0$mins"
+                minutes = if (mins < 10)
+                    "0$mins"
                 else
-                    minutes = mins.toString()
+                    mins.toString()
                 // Append in a StringBuilder
                 val mMonth = MONTHS[month]
                 aTime = StringBuilder().append(day).append(" ").append(mMonth).append(" ").append(year).append(" ").append(hours).append(':')

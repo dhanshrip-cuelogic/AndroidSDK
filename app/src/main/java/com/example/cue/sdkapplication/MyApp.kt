@@ -10,6 +10,7 @@ class MyApp : Application() {
         super.onCreate()
         // we can do authentication here for sdk in feature
         Loner.initialize()
+
     }
 
 }

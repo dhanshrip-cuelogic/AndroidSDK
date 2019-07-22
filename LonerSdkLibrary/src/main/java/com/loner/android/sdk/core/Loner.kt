@@ -22,6 +22,7 @@ abstract class Loner {
          * <p>Initializes the Loner singleton.</p>
          * <p>Must be called before trying to access the object with Loner.client</p>
          */
+        @JvmStatic
         @Synchronized
         fun initialize() {
             if (instance != null) {
@@ -34,13 +35,25 @@ abstract class Loner {
         /**
          * <p>Provides access to the Loner client that is required for communication between sdk and app.</p>
          */
-        val client: Loner
-            @Synchronized get() {
+        @JvmStatic
+        fun getClient(): Loner {
+            synchronized(this) {
                 if (instance == null) {
                     throw IllegalStateException("Please call Loner.initialize() before requesting the client.")
                 }
                 return instance as Loner
+
             }
+        }
+
+        /*  @JvmStatic
+          val client: Loner
+              @Synchronized get() {
+                  if (instance == null) {
+                      throw IllegalStateException("Please call Loner.initialize() before requesting the client.")
+                  }
+                  return instance as Loner
+              }*/
     }
 
     /**
@@ -48,19 +61,20 @@ abstract class Loner {
      *
      * <p>This method call from App side, when app want to send emergency alert message to server,
      *  App can call this method when emergency slider swipe left to right or call from any event listener</p>
-     * @param ActivityCallBackInterface It's give a callback to app for Api request success or failure
+     *
      */
-    abstract fun sendEmergencyAlertApi(context:Context,listener: ActivityCallBackInterface)
-    abstract fun sendAlertApi(context:Context,message:String,listener: ActivityCallBackInterface)
+    abstract fun sendEmergencyAlertApi(context: Context, listener: ActivityCallBackInterface?)
+
+    abstract fun sendAlertApi(context: Context, message: String, listener: ActivityCallBackInterface?)
 
 
-    abstract fun getConfiguration(context:Context,listener: ActivityCallBackInterface)
+    abstract fun getConfiguration(context: Context, listener: ActivityCallBackInterface?)
 
-    abstract fun sendMessage(context:Context,message:String, listener: ActivityCallBackInterface)
+    abstract fun sendMessage(context: Context, message: String, listener: ActivityCallBackInterface?)
 
-    abstract fun sendNotification(context:Context,message:String, listener: ActivityCallBackInterface)
+    abstract fun sendNotification(context: Context, message: String, listener: ActivityCallBackInterface?)
 
-    abstract  fun showCheckInAlertDialog(context: Context, title:String?,subject:String?,buttonText:String?)
+    abstract fun showCheckInAlertDialog(context: Context, title: String?, subject: String?, buttonText: String?)
 
 
 }

@@ -29,7 +29,6 @@ class SliderUnlockWidget : android.support.v7.widget.AppCompatSeekBar, OnSeekBar
      * @return the on slider unlock listener
      */
     private var onSliderUnlockListener: SliderUnlockWidgetListener? = null
-        private set
 
     /** The ctx.  */
     private var ctx: Context? = null
@@ -94,7 +93,7 @@ class SliderUnlockWidget : android.support.v7.widget.AppCompatSeekBar, OnSeekBar
             if (sliderCounter == 0) {
                 stopTimer()
             } else {
-                sliderCounter = sliderCounter - 1
+                sliderCounter -= 1
             }
         }
     }
@@ -177,7 +176,7 @@ class SliderUnlockWidget : android.support.v7.widget.AppCompatSeekBar, OnSeekBar
 	 * @see android.widget.SeekBar.OnSeekBarChangeListener#onProgressChanged(android.widget.SeekBar, int, boolean)
 	 */
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-        if (fromUser == true) {
+        if (fromUser) {
             // only allow changes by 1 up or down
             if (progress > originalProgress + 10 || progress < originalProgress - 10) {
                 seekBar.progress = originalProgress

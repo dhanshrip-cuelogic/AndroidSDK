@@ -5,13 +5,16 @@ import android.graphics.drawable.ColorDrawable
 import com.loner.android.sdk.R
 import com.loner.android.sdk.countdowntimer.MissCheckInCountDownTimer
 import com.loner.android.sdk.countdowntimer.MissCheckInTimerListener
+import com.loner.android.sdk.model.VibrationManager
 import com.loner.android.sdk.utils.Constant
+import com.loner.android.sdk.utils.SoundManager
 import com.loner.android.sdk.widget.CheckInTimerView
 
 
 class LonerDialog private constructor() {
   private  lateinit var customAlertDialog:CustomAlertDialog
   private  lateinit var checkInAlertDialog:CustomAlertDialog
+  private var missCheckInCountDownTimer:MissCheckInCountDownTimer? = null
     companion object {
         @Volatile
         private var lonerDialogInstance: LonerDialog? = null
@@ -42,14 +45,15 @@ class LonerDialog private constructor() {
 
     fun showCheckInAlert(context: Context, title: String?, message: String?, buttonText: String?){
 
-        val missCheckInCountDownTimer = MissCheckInCountDownTimer(30*1000,1000, object:MissCheckInTimerListener{
+         missCheckInCountDownTimer = MissCheckInCountDownTimer(30*1000,1000, object:MissCheckInTimerListener{
             override fun onCountDownFinish() {
-                CheckInTimerView.getCheckInTimerView().onMissCheckInAlert()
+                CheckInTimerView.getCheckInTimerView()?.onMissCheckInAlert()
                 checkInAlertDialog.dismiss()
+                SoundManager.getInstance(context).stopSound()
             }
 
         } )
-        missCheckInCountDownTimer.start()
+        missCheckInCountDownTimer?.start()
 
         var buttonText = buttonText
         if (buttonText == null)
@@ -57,8 +61,9 @@ class LonerDialog private constructor() {
         checkInAlertDialog = CustomAlertDialog(context, title, message, buttonText,
                 object : LonerDialogListener {
                     override fun onPositiveButtonClicked() {
-                     CheckInTimerView.getCheckInTimerView().onCheckTimerViewUpdate()
-                     missCheckInCountDownTimer.cancel()
+                     CheckInTimerView.getCheckInTimerView()?.onCheckTimerViewUpdate()
+                     missCheckInCountDownTimer?.cancel()
+                        SoundManager.getInstance(context).stopSound()
                     }
 
                 })
@@ -66,8 +71,14 @@ class LonerDialog private constructor() {
             checkInAlertDialog.window.setDimAmount(Constant.DIM_VALUE_FOR_DIALOG)
             checkInAlertDialog.window.setBackgroundDrawable(ColorDrawable(context.resources.getColor(R.color.transparency_colour)))
             checkInAlertDialog.show()
+            SoundManager.getInstance(context).playSoundForCheckIn()
+            VibrationManager.getInstance(context).vibrationForCheckIn()
         }
 
     }
-
+     fun dismissCheckInAlertDialog(){
+         missCheckInCountDownTimer?.cancel()
+         missCheckInCountDownTimer = null
+         if(checkInAlertDialog!=null && checkInAlertDialog.isShowing) checkInAlertDialog.dismiss()
+     }
 }

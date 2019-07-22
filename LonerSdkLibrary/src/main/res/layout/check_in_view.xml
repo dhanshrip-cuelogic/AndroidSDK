@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="185dp"
+    android:id="@+id/timer_time_layout"
     android:background="@android:color/transparent"
     android:gravity="center_horizontal|center_vertical"
     android:layout_centerHorizontal="true"
     android:layout_centerInParent="true"
     >
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/diff_30"
+        android:paddingRight="@dimen/diff_30">
     <TextView
         android:id="@+id/txtManualDisabled"
-        android:layout_width="@dimen/large_btn_width"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/txtCheckin"
         android:layout_marginBottom="@dimen/diff_15"
@@ -23,7 +28,7 @@
 
     <TextView
         android:id="@+id/txtCheckin"
-        android:layout_width="@dimen/large_btn_width"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtManualDisabled"
         android:layout_alignLeft="@+id/txtTimer"
@@ -36,7 +41,7 @@
 
     <TextView
         android:id="@+id/txtTimer"
-        android:layout_width="@dimen/large_btn_width"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txtCheckin"
         android:layout_alignLeft="@+id/checkInButtonLayout"
@@ -49,7 +54,7 @@
         android:visibility="visible" />
     <LinearLayout
         android:id="@+id/checkInButtonLayout"
-        android:layout_width="@dimen/large_btn_width"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/btn_height_on_monitoring"
         android:layout_below="@id/txtTimer"
         android:layout_marginTop="@dimen/startup_countdown_button_margin_from_top"
@@ -81,4 +86,13 @@
             android:textColor="@android:color/white" />
 
     </LinearLayout>
+    </RelativeLayout>
+    <include
+        android:id="@+id/networkOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        layout="@layout/large_network_error_overlay"
+        android:visibility="gone"/>
 </RelativeLayout>

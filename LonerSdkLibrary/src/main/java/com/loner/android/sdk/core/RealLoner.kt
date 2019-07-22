@@ -17,17 +17,17 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
      * <p>This is implementation of abstract method of Loner class,
      *    Where sendAlertApi method of ServiceManger call and it send ActivityCallBackInterface interface
      *    for callback</p>
-     *  @param ActivityCallBackInterface ActivityCallBackInterface It's give a callback to app for Api request success or failure
+     *
      */
-    override fun sendEmergencyAlertApi(context:Context,listener: ActivityCallBackInterface) {
+    override fun sendEmergencyAlertApi(context:Context,listener: ActivityCallBackInterface?) {
         serviceManager.sendAlertApi(context,"emergency_alert",listener)
     }
 
-    override fun sendAlertApi(context: Context, message: String, listener: ActivityCallBackInterface) {
+    override fun sendAlertApi(context: Context, message: String, listener: ActivityCallBackInterface?) {
         serviceManager.sendAlertApi(context,message,listener)
     }
 
-    override fun getConfiguration(context: Context, listener: ActivityCallBackInterface) {
+    override fun getConfiguration(context: Context, listener: ActivityCallBackInterface?) {
 
         serviceManager.requestConfiguration(context,listener)
     }
@@ -42,11 +42,11 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
         }
     }
 
-    override fun sendNotification(context: Context, message: String, listener: ActivityCallBackInterface) {
+    override fun sendNotification(context: Context, message: String, listener: ActivityCallBackInterface?) {
         serviceManager.sendNotificationApi(context, message, listener)
     }
 
-    override fun sendMessage(context: Context, message: String, listener: ActivityCallBackInterface) {
+    override fun sendMessage(context: Context, message: String, listener: ActivityCallBackInterface?) {
         serviceManager.sendMessageApi(context, message, listener)
     }
 

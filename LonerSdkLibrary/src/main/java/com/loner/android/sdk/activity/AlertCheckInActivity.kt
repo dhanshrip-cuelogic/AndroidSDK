@@ -2,6 +2,7 @@ package com.loner.android.sdk.activity
 
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.Window
 import android.widget.EditText
 import android.widget.Spinner
@@ -13,59 +14,60 @@ import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.widget.CheckInTimerView
 import kotlinx.android.synthetic.main.activity_manual_check_in.*
 
-class CheckInActivity : BaseActivity() {
-    var progressBarDialog: ProgressDialog? = null
+class AlertCheckInActivity : BaseActivity() {
     private  var manualCheckInListener: ManualCheckInListener? = null
     private lateinit var mQuickNoteSpinner: Spinner
     private lateinit var mCustomNoteEditText: EditText
-
+    var progressBarDialog: ProgressDialog? = null
+    private var mLastClickTime: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar!!.hide()
-        setContentView(R.layout.activity_manual_check_in)
-        setCheckInActivityInstance(this)
+        setContentView(R.layout.activity_alert_check_in)
+        setAlertCheckInActivity(this)
         manualCheckInListener = CheckInTimerView.getCheckInTimerView()
         initUI()
-
         btn_send_check_in.setOnClickListener {
             sendCheckInNoteToServer()
         }
         btn_cancel_check_in.setOnClickListener {
-            manualCheckInListener?.manualCheckInCompleted(false)
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                return@setOnClickListener
+            }
+            mLastClickTime = SystemClock.elapsedRealtime()
+            manualCheckInListener?.alertCheckInCompleted(false)
             finish()
         }
-
     }
 
     private fun sendCheckInNoteToServer() {
-        val selectedPosition =  mQuickNoteSpinner.selectedItemPosition
+        val selectedPosition = mQuickNoteSpinner.selectedItemPosition
         val customText = mCustomNoteEditText.text.toString().trim()
         if (selectedPosition == 0 && customText.trim().isEmpty()) {
-         sendNoteToThePortal(getText(R.string.msg_check_in_require).toString())
-        } else if(selectedPosition == 0 && customText.trim().isNotEmpty()) {
-         sendNoteToThePortal(customText)
-        } else if(selectedPosition != 0 && customText.trim().isNotEmpty()) {
-            val checkInNote =mQuickNoteSpinner.selectedItem.toString() + "\n" + customText
+            sendNoteToThePortal(getText(R.string.msg_check_in_require).toString())
+        } else if (selectedPosition == 0 && customText.trim().isNotEmpty()) {
+            sendNoteToThePortal(customText)
+        } else if (selectedPosition != 0 && customText.trim().isNotEmpty()) {
+            val checkInNote = mQuickNoteSpinner.selectedItem.toString() + "\n" + customText
             sendNoteToThePortal(checkInNote)
         } else {
             sendNoteToThePortal(mQuickNoteSpinner.selectedItem.toString())
         }
-
     }
 
-    private fun sendNoteToThePortal(checkInNote:String){
+    private fun sendNoteToThePortal(checkInNote: String) {
         progressBarDialog?.show()
-        Loner.getClient().sendMessage(this,checkInNote, object :ActivityCallBackInterface{
+        Loner.getClient().sendMessage(this, checkInNote, object : ActivityCallBackInterface {
             override fun onResponseDataSuccess(successResponse: String) {
                 progressBarDialog?.dismiss()
-                manualCheckInListener?.manualCheckInCompleted(true)
+                manualCheckInListener?.alertCheckInCompleted(true)
                 finish()
             }
 
             override fun onResponseDataFailure(failureResponse: String) {
                 progressBarDialog?.dismiss()
-                Toast.makeText(applicationContext,failureResponse,Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, failureResponse, Toast.LENGTH_LONG).show()
             }
         })
 
@@ -79,8 +81,26 @@ class CheckInActivity : BaseActivity() {
         mQuickNoteSpinner = findViewById(R.id.spinQuickNoteFull)
         mCustomNoteEditText = findViewById(R.id.customTextEdt)
         mCustomNoteEditText.clearFocus()
+    }
 
 
+    companion object {
+
+        private var INSTANCE: AlertCheckInActivity? = null
+
+        private fun setAlertCheckInActivity(instance: AlertCheckInActivity?) {
+            INSTANCE = instance
+        }
+
+        fun getAlertCheckInActivity(): AlertCheckInActivity? {
+            return INSTANCE ?: null
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        setAlertCheckInActivity(null)
     }
 
     override fun onNetworkConnected() {
@@ -91,23 +111,6 @@ class CheckInActivity : BaseActivity() {
     override fun onNetworkDisconnected() {
         super.onNetworkDisconnected()
         btn_send_check_in.isEnabled = false
-    }
-
-    companion object {
-        private  var INSTANCE:CheckInActivity? = null
-
-        private fun setCheckInActivityInstance(instance:CheckInActivity?){
-            INSTANCE = instance
-        }
-
-        fun getCheckInActivityInstance(): CheckInActivity? {
-           return INSTANCE?:null
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        setCheckInActivityInstance(null)
     }
 
 }

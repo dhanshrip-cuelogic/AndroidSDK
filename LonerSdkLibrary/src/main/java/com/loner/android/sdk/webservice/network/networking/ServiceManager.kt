@@ -21,7 +21,7 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
     private var messageRequest :MessageRequest? = null
     private var notificationRequest: NotificationRequest? = null
 
-    private val callbackMap: HashMap<BaseRequest, ActivityCallBackInterface> = HashMap()
+    private val callbackMap: HashMap<BaseRequest, ActivityCallBackInterface>? = HashMap()
     private var networkStatus: NetworkStatus = NetworkStatus()
 
     /**
@@ -32,11 +32,9 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
      * @param networkSuccessInformation it is provide success response message as per API call.
      */
     override fun onSuccess(responseObject: BaseRequest, baseDataObject: Any, networkSuccessInformation: NetworkSuccessInformation) {
-        val listener = callbackMap[responseObject]
-        if (listener != null) {
-            listener.onResponseDataSuccess(networkSuccessInformation.responseMsg!!)
-            callbackMap.remove(responseObject)
-        }
+            callbackMap?.get(responseObject)?.onResponseDataSuccess(networkSuccessInformation.responseMsg!!)
+            callbackMap?.remove(responseObject)
+
     }
     /**<p>This method of  HTTPClientInterface
      * When the request api returns the failure.</p>
@@ -44,11 +42,9 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
      * @param errorInformation this object provide error message related api.
      */
     override fun onFailure(responseObject: BaseRequest, errorInformation: NetworkErrorInformation) {
-        val listener = callbackMap[responseObject]
-        if (listener != null) {
-            listener.onResponseDataFailure(errorInformation.detailMessage!!)
-            callbackMap.remove(responseObject)
-        }
+            callbackMap?.get(responseObject)?.onResponseDataFailure(errorInformation.detailMessage!!)
+            callbackMap?.remove(responseObject)
+
     }
 
     /**
@@ -56,50 +52,50 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
      * This method create a object AlertRequest class.
      * @param responseDataListener this interface return a callback of API response
      */
-    override fun sendAlertApi(context:Context,message: String,responseDataListener: ActivityCallBackInterface) {
+    override fun sendAlertApi(context:Context,message: String,responseDataListener: ActivityCallBackInterface?) {
         if(networkStatus.isNetworkAvailable(context)) {
             alertRequest = AlertRequest(message,this)
-            callbackMap[alertRequest as BaseRequest] = responseDataListener
+            responseDataListener?.let {  callbackMap?.set(alertRequest as BaseRequest, responseDataListener)}
             alertRequest!!.alert(alertRequest!!, Constant.STASK_AlertEmergency)
         }else {
-            responseDataListener.onResponseDataFailure("Please check Internet Connection")
+            responseDataListener?.onResponseDataFailure("Please check Internet Connection")
         }
 
     }
 
-    override fun requestConfiguration(context: Context, responseDataListener: ActivityCallBackInterface) {
+    override fun requestConfiguration(context: Context, responseDataListener: ActivityCallBackInterface?) {
         if(networkStatus.isNetworkAvailable(context)) {
             configurationRequest = ConfigurationRequest(this)
-            callbackMap[configurationRequest as BaseRequest] = responseDataListener
+            responseDataListener?.let { callbackMap?.set(configurationRequest as BaseRequest, responseDataListener) }
             configurationRequest!!.getConfiguration(context,configurationRequest!!, Constant.STASK_Configuration)
         }else {
-            responseDataListener.onResponseDataFailure("Please check Internet Connection")
+            responseDataListener?.onResponseDataFailure("Please check Internet Connection")
         }
 
     }
 
-    override fun sendMessageApi(context: Context, message: String, responseDataListener: ActivityCallBackInterface) {
+    override fun sendMessageApi(context: Context, message: String, responseDataListener: ActivityCallBackInterface?) {
         if(networkStatus.isNetworkAvailable(context) && message.isNotEmpty()){
             messageRequest = MessageRequest(message,this)
-            callbackMap[messageRequest as BaseRequest] = responseDataListener
+            responseDataListener?.let { callbackMap?.set(messageRequest as BaseRequest, responseDataListener) }
             messageRequest?.messageToServer(messageRequest!!,Constant.STASK_MESSAGE)
         } else if(message.isEmpty()){
-            responseDataListener.onResponseDataFailure("Message should not be empty")
+            responseDataListener?.onResponseDataFailure("Message should not be empty")
         } else {
-            responseDataListener.onResponseDataFailure("Please check Internet Connection")
+            responseDataListener?.onResponseDataFailure("Please check Internet Connection")
         }
 
     }
 
-    override fun sendNotificationApi(context: Context, message: String, responseDataListener: ActivityCallBackInterface) {
+    override fun sendNotificationApi(context: Context, message: String, responseDataListener: ActivityCallBackInterface?) {
         if(networkStatus.isNetworkAvailable(context) && message.isNotEmpty()){
             notificationRequest = NotificationRequest(message,this)
-            callbackMap[notificationRequest as BaseRequest] = responseDataListener
+            responseDataListener?.let { callbackMap?.set(notificationRequest as BaseRequest, responseDataListener) }
             notificationRequest?.notificationToServer(notificationRequest!!,Constant.STASK_NOTIFICATION)
         } else if(message.isEmpty()){
-            responseDataListener.onResponseDataFailure("Message should not be empty")
+            responseDataListener?.onResponseDataFailure("Message should not be empty")
         } else {
-            responseDataListener.onResponseDataFailure("Please check Internet Connection")
+            responseDataListener?.onResponseDataFailure("Please check Internet Connection")
         }
     }
 
