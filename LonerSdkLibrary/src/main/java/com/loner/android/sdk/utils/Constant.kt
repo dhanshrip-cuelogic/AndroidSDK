@@ -6,6 +6,7 @@ object Constant {
     const val STASK_Configuration = 2
     const val STASK_MESSAGE = 3
     const val STASK_NOTIFICATION = 4
+    const val STASK_LOCATION = 5
 
     const val accessToken ="ce0455f92dbcd62b0369"
     const val deviceId:String ="800006503"

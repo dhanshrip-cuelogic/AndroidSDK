@@ -6,6 +6,8 @@ import com.loner.android.sdk.model.respons.Mobile
 
 
 class AppConfiguration private constructor() {
+
+
     companion object {
         @Volatile
         private var appConfigurationInstance: AppConfiguration? = null

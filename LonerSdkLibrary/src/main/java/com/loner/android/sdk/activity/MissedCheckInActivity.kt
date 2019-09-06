@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Window
 import com.loner.android.sdk.R
 import com.loner.android.sdk.core.Loner
+import com.loner.android.sdk.location.LocationUpdate
 import com.loner.android.sdk.model.VibrationManager
 import com.loner.android.sdk.utils.SoundManager
 import com.loner.android.sdk.webservice.network.networking.NetworkStatus
@@ -22,6 +23,7 @@ class MissedCheckInActivity : BaseActivity() {
         alertImage_resource.setImageResource(R.mipmap.missed_checkin_icon)
         SoundManager.getInstance(applicationContext).playSoundForAlert()
         VibrationManager.getInstance(applicationContext).startVibrationForAlert()
+        LocationUpdate.getInstance(this).getLastLocation()
         btnAcknowledge.setOnClickListener {
             CheckInTimerView.getCheckInTimerView()?.onCheckTimerViewUpdate()
             this@MissedCheckInActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)

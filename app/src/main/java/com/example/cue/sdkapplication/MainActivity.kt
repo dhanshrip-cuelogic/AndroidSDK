@@ -2,6 +2,8 @@ package com.example.cue.sdkapplication
 
 
 import android.Manifest
+
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -12,6 +14,14 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.loner.android.sdk.widget.CheckInTimerView
+import android.location.LocationManager
+import android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS
+import android.content.Intent
+import android.provider.Settings
+import android.support.v7.app.AlertDialog
+
+import android.view.ContextThemeWrapper
+import com.loner.android.sdk.core.Loner
 
 
 class MainActivity : FragmentActivity(), OnMapReadyCallback {
@@ -46,7 +56,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
                             "Unable to show location - permission required",
                             Toast.LENGTH_LONG).show()
                 } else {
-
+                    Loner.getClient().sendLocationUpdate(this)
                     val mapFragment = supportFragmentManager
                             .findFragmentById(R.id.map) as SupportMapFragment
                     mapFragment.getMapAsync(this)
@@ -63,11 +73,19 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
         mapSettings.isZoomGesturesEnabled = true
         mapSettings.isScrollGesturesEnabled = true
         mapSettings.isTiltGesturesEnabled = true
+
         if(mMap != null) {
             val permission = ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
 
             if (permission == PackageManager.PERMISSION_GRANTED) {
+                val service = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                val enabled = service
+                        .isProviderEnabled(LocationManager.GPS_PROVIDER)
+
+                if (!enabled) {
+                    showSettingAlert();
+                }
                 mMap.isMyLocationEnabled = true
             } else {
                 requestPermission(
@@ -76,5 +94,28 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
             }
         }
 
+    }
+
+
+    fun showSettingAlert() {
+        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.myDialog))
+
+        // Set the alert dialog title
+        builder.setTitle("Location On")
+
+        // Display a message on alert dialog
+        builder.setMessage("Loner SDK requires high accuracy location to ensure you get the help you need. Please select high accuracy mode in location settings.")
+
+        // Set a positive button and its click listener on alert dialog
+        builder.setPositiveButton("Setting"){dialog, which ->
+            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            startActivity(intent)
+            dialog.dismiss()
+        }
+        // Finally, make the alert dialog using builder
+        val dialog: AlertDialog = builder.create()
+
+        // Display the alert dialog on app interface
+        dialog.show()
     }
 }

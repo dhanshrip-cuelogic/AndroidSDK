@@ -75,6 +75,8 @@ abstract class Loner {
     abstract fun sendNotification(context: Context, message: String, listener: ActivityCallBackInterface?)
 
     abstract fun showCheckInAlertDialog(context: Context, title: String?, subject: String?, buttonText: String?)
+    abstract fun sendLocationUpdate(context: Context)
+    abstract fun sendLocation(context: Context)
 
 
 }

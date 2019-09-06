@@ -1,6 +1,7 @@
 package com.loner.android.sdk.webservice.interfaces
 
 import android.content.Context
+import android.location.Location
 
 /**
  * This class contains all the services related method which are declared over but
@@ -11,7 +12,5 @@ interface APIsInterface {
     fun requestConfiguration(context:Context,responseDataListener: ActivityCallBackInterface?)
     fun sendMessageApi(context: Context, message:String,responseDataListener: ActivityCallBackInterface?)
     fun sendNotificationApi(context: Context, message:String,responseDataListener: ActivityCallBackInterface?)
-
-
-
+    fun sendLocationApi(context: Context, mLocation: Location?, responseDataListener: ActivityCallBackInterface?)
 }

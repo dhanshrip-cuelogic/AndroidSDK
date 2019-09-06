@@ -29,7 +29,7 @@ class AlertRequest(message: String,private val listener: HTTPClientInterface) : 
 
     fun alert(requestObject: BaseRequest, STASK_AlertEmergency: Int) {
             alertCallObject = interfaceAPI.alert(requestAlert)
-            alertCallObject!!.enqueue(object : Callback<Void> {
+            alertCallObject?.enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.code() == 200) {
                         val networkSuccessInformation = NetworkSuccessInformation(STASK_AlertEmergency)

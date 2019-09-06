@@ -1,6 +1,7 @@
 package com.loner.android.sdk.webservice.interfaces
 
 
+import com.loner.android.sdk.model.request.LocationRequest
 import com.loner.android.sdk.model.request.RequestAlert
 import com.loner.android.sdk.model.request.RequestMessageApi
 import com.loner.android.sdk.model.request.RequestNotificationApi
@@ -23,5 +24,9 @@ interface APIEndpoints {
 
     @POST("/1/notification?access_token=" + Constant.accessToken)
     fun notification(@Body requestNotificationApi: RequestNotificationApi): Call<Void>
+
+
+    @POST("/1/location?access_token=" + Constant.accessToken)
+    fun sendLocation(@Body locationRequest: LocationRequest): Call<Void>
 
 }

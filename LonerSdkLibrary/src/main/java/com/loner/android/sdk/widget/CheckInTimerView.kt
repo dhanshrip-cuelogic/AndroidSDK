@@ -26,6 +26,7 @@ import com.loner.android.sdk.dailogs.LonerDialog
 import com.loner.android.sdk.data.sdkconfiguraton.AppConfiguration
 import com.loner.android.sdk.data.timerconfiguration.TimerConfiguration
 import com.loner.android.sdk.data.timerconfiguration.TimerDataStore
+import com.loner.android.sdk.location.LocationUpdate
 import com.loner.android.sdk.model.VibrationManager
 import com.loner.android.sdk.receiver.ConnectionBroadcastReceiver
 import com.loner.android.sdk.utils.*
@@ -96,6 +97,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.check_in_view, this)
         setCheckInTimerView(this)
+        LocationUpdate.getInstance(mContext!!).getLastLocation()
         mCheckInTimerDisable = findViewById(R.id.txtManualDisabled)
         mCheckInTimerDescription = findViewById(R.id.txtCheckin)
         mCheckInTimer = findViewById(R.id.txtTimer)
@@ -295,6 +297,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
                 ?: LonerDialog.getInstance().showCheckInAlert(mCurrentActivity!!, mContext?.getText(R.string.check_in_required).toString(),
                         mContext?.getText(R.string.press_ok_to_check_in_now).toString(), null)
         Loner.getClient().sendNotification(mContext!!,"manual_check_in_pending",null)
+        LocationUpdate.getInstance(mContext!!).getLastLocation()
     }
 
     override fun onViewUpdateOnTimer(millisUntilFinished: Long) {

@@ -10,7 +10,9 @@ import android.widget.RelativeLayout
 import com.loner.android.sdk.R
 import com.loner.android.sdk.activity.EmergencyAlertActivity
 import com.loner.android.sdk.core.Loner
+import com.loner.android.sdk.location.LocationUpdate
 import com.loner.android.sdk.utils.SliderUnlockWidget
+import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 
 
 /**
@@ -49,7 +51,8 @@ class EmergencySlider : RelativeLayout, SliderUnlockWidget.SliderUnlockWidgetLis
         listener?.onEmergencySlide()
         val intent = Intent(mContext, EmergencyAlertActivity::class.java)
         mContext?.startActivity(intent)
-        Loner.getClient().sendEmergencyAlertApi(mContext!!,null)
+        Loner.getClient().sendEmergencyAlertApi(mContext!!, null)
+
 
     }
 

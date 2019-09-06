@@ -3,6 +3,7 @@ package com.loner.android.sdk.core
 
 import android.content.Context
 import com.loner.android.sdk.dailogs.LonerDialog
+import com.loner.android.sdk.location.LocationUpdate
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.webservice.network.networking.ServiceManager
 
@@ -54,5 +55,16 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
     override fun showCheckInAlertDialog(context: Context, title: String?, subject: String?, buttonText: String?) {
         lonerDialog.showCheckInAlert(context,title,
                subject,null)
+    }
+
+    override fun sendLocationUpdate(context: Context) {
+      LocationUpdate.getInstance(context).getLastLocation()
+    }
+
+    override fun sendLocation(context: Context) {
+       var mLocation =  LocationUpdate.getInstance(context).getLocation()
+       mLocation?.let {
+         serviceManager.sendLocationApi(context,mLocation!!,null)
+       }
     }
 }

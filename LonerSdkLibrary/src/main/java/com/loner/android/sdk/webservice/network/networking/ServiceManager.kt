@@ -1,6 +1,7 @@
 package com.loner.android.sdk.webservice.network.networking
 
 import android.content.Context
+import android.location.Location
 import com.loner.android.sdk.utils.Constant
 import com.loner.android.sdk.webservice.interfaces.APIsInterface
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
@@ -20,6 +21,7 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
     private var configurationRequest: ConfigurationRequest? = null
     private var messageRequest :MessageRequest? = null
     private var notificationRequest: NotificationRequest? = null
+    private var locationUpdate: LocationUpdate? = null
 
     private val callbackMap: HashMap<BaseRequest, ActivityCallBackInterface>? = HashMap()
     private var networkStatus: NetworkStatus = NetworkStatus()
@@ -95,6 +97,16 @@ class ServiceManager private constructor() : HTTPClientInterface, APIsInterface 
         } else if(message.isEmpty()){
             responseDataListener?.onResponseDataFailure("Message should not be empty")
         } else {
+            responseDataListener?.onResponseDataFailure("Please check Internet Connection")
+        }
+    }
+
+    override fun sendLocationApi(context: Context, mLocation: Location?, responseDataListener: ActivityCallBackInterface?) {
+        if(networkStatus.isNetworkAvailable(context)) {
+           locationUpdate = LocationUpdate(mLocation,this)
+            responseDataListener?.let { callbackMap?.set(locationUpdate as BaseRequest, responseDataListener) }
+            locationUpdate?.sendLocation(locationUpdate!!,Constant.STASK_LOCATION)
+        }else {
             responseDataListener?.onResponseDataFailure("Please check Internet Connection")
         }
     }
