@@ -14,23 +14,8 @@
     <string name="swipe_text_sos_alert"><b>swipe</b> for SOS alert </string>
     <string name="custom_note_hint_text">Enter text max 80 characters\n\n\n\n\n\n</string>
     <string name="trying_to_reconnect">Waiting to reconnect</string>
-    <string-array name="barrows_list">
-        <item>SELECT A QUICK NOTE</item>
-        <item>Starting shift.</item>
-        <item>Ending shift.</item>
-        <item>Entering site.</item>
-        <item>Exiting site.</item>
-        <item>Flagging location.</item>
-    </string-array>
-
-    <string-array name="alert_check_in_list">
-        <item>SELECT A QUICK NOTE</item>
-        <item>Assistance required.</item>
-        <item>Incident resolved. No assistance required.</item>
-        <item>False alert. No assistance required.</item>
-        <item>System test. No assistance required.</item>
-    </string-array>
     <string name="send_check_in_all">Send</string>
+
     <string name="set_timer">SET TIMER</string>
     <string name="hours_text">hours</string>
     <string name="hour_text">hour</string>
@@ -59,4 +44,19 @@
     <string name="emergency">SOS</string>
     <string name="check_in_now_to_turn_off_dec">You asked Loner Mobile to check in with you until this time.\n\nCheck in now to confirm you are OK and to turn off the check-in timer.</string>
     <string name="check_in_now_to_turn_off">ARE YOU OK?</string>
+    <string-array name="barrows_list">
+        <item>SELECT A QUICK NOTE</item>
+        <item>Starting shift.</item>
+        <item>Ending shift.</item>
+        <item>Entering site.</item>
+        <item>Exiting site.</item>
+        <item>Flagging location.</item>
+    </string-array>
+    <string-array name="alert_check_in_list">
+        <item>SELECT A QUICK NOTE</item>
+        <item>Assistance required.</item>
+        <item>Incident resolved. No assistance required.</item>
+        <item>False alert. No assistance required.</item>
+        <item>System test. No assistance required.</item>
+    </string-array>
 </resources>

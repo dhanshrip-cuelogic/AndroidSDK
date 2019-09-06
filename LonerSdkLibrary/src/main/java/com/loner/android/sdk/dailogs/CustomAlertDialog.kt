@@ -65,4 +65,8 @@ class CustomAlertDialog constructor(context: Context, title: CharSequence?, subj
             dismiss()
         }
     }
+
+    override fun isShowing(): Boolean {
+        return super.isShowing()
+    }
 }

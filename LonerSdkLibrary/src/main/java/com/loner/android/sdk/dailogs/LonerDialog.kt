@@ -12,8 +12,8 @@ import com.loner.android.sdk.widget.CheckInTimerView
 
 
 class LonerDialog private constructor() {
-  private  lateinit var customAlertDialog:CustomAlertDialog
-  private  lateinit var checkInAlertDialog:CustomAlertDialog
+  private var customAlertDialog: CustomAlertDialog? = null
+    private  lateinit var checkInAlertDialog:CustomAlertDialog
   private var missCheckInCountDownTimer:MissCheckInCountDownTimer? = null
     companion object {
         @Volatile
@@ -29,16 +29,16 @@ class LonerDialog private constructor() {
     }
 
 
-    fun showAlertDialog(context: Context, title: String?, message: String?, buttonText: String?) {
+    fun showAlertDialog(context: Context, title: String?, message: String?, buttonText: String?,lonerDialogListener: LonerDialogListener?) {
         var buttonText = buttonText
         if (buttonText == null)
             buttonText = "OK"
 
-        customAlertDialog = CustomAlertDialog(context, title, message, buttonText,null)
-        if (customAlertDialog.window != null) {
-            customAlertDialog.window.setDimAmount(Constant.DIM_VALUE_FOR_DIALOG)
-            customAlertDialog.window.setBackgroundDrawable(ColorDrawable(context.resources.getColor(R.color.transparency_colour)))
-            customAlertDialog.show()
+        customAlertDialog = CustomAlertDialog(context, title, message, buttonText,lonerDialogListener)
+        if (customAlertDialog?.window != null) {
+            customAlertDialog?.window!!.setDimAmount(Constant.DIM_VALUE_FOR_DIALOG)
+            customAlertDialog!!.window.setBackgroundDrawable(ColorDrawable(context.resources.getColor(R.color.transparency_colour)))
+            customAlertDialog!!.show()
         }
 
     }
@@ -81,4 +81,8 @@ class LonerDialog private constructor() {
          missCheckInCountDownTimer = null
          if(checkInAlertDialog!=null && checkInAlertDialog.isShowing) checkInAlertDialog.dismiss()
      }
+
+    fun isShowingAlert(): Boolean {
+       return customAlertDialog?.isShowing?:false
+    }
 }

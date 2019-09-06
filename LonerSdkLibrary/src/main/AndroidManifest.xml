@@ -2,25 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.loner.android.sdk">
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application>
-        <activity android:name=".activity.EmergencyAlertActivity"
-            android:launchMode="singleTop"></activity>
+        <activity android:name=".activity.PermissionActivity"
+            android:theme="@style/Loner.Internal.Theme.Transparent"/>
+        <activity
+            android:name=".activity.EmergencyAlertActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.MissedCheckInActivity"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.SetRepeatActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:launchMode="singleTop"
-             />
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.SetTimerActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:launchMode="singleTop"
-            />
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.CheckInActivity"
             android:launchMode="singleTask" />

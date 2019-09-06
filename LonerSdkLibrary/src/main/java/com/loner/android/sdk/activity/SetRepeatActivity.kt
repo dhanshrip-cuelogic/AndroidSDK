@@ -77,7 +77,7 @@ class SetRepeatActivity : BaseActivity(), DatePicker.OnDateChangedListener, Repe
                 this@SetRepeatActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 finish()
             } else {
-                LonerDialog.getInstance().showAlertDialog(this@SetRepeatActivity, null, getText(R.string.check_in_time_current).toString(), getText(R.string.okay).toString())
+                LonerDialog.getInstance().showAlertDialog(this@SetRepeatActivity, null, getText(R.string.check_in_time_current).toString(), getText(R.string.okay).toString(),null)
             }
 
         } else {

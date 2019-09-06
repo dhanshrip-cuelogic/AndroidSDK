@@ -224,7 +224,7 @@ class SetTimerActivity : BaseActivity(), View.OnClickListener {
                     if (TimerValidation.isCurrentTimeSame(mSpecificTime)) {
                         saveTimerConfiguration()
                     } else {
-                          LonerDialog.getInstance().showAlertDialog(this@SetTimerActivity, null, getText(R.string.check_in_time_current).toString(), getText(R.string.okay).toString())
+                          LonerDialog.getInstance().showAlertDialog(this@SetTimerActivity, null, getText(R.string.check_in_time_current).toString(), getText(R.string.okay).toString(),null)
                     }
                 }
             }

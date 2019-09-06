@@ -30,6 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/check_view"
         tools:context=".MainActivity" />
 
+
     <com.loner.android.sdk.widget.EmergencySlider
         android:id="@+id/emergency_slider"
         android:layout_width="match_parent"
