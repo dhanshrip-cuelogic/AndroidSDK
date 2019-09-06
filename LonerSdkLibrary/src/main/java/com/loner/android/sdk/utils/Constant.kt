@@ -12,6 +12,6 @@ object Constant {
     const val deviceId:String ="800006503"
 
     const val DIM_VALUE_FOR_DIALOG = 0.3f
-
+    const val PERMISSION_REQUEST_CODE = 1
 
 }
