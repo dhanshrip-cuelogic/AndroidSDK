@@ -44,6 +44,7 @@ class CheckInTimerView : RelativeLayout, CheckInTimerListener, ManualCheckInList
     private var mTimerCount = 0
     private var isTimerEnable = false
     private var mTimerListener: OnTimerListener? = null
+    private var isCountdownTimer = false
 
     /*Timer implementation*/
     enum class TimerState {
@@ -152,6 +153,7 @@ class CheckInTimerView : RelativeLayout, CheckInTimerListener, ManualCheckInList
         monitoringTimer = MonitoringCountDownTimer(timerValue, 1000, this)
         monitoringTimer!!.start()
         setTimerStatus(TimerState.Running)
+        isCountdownTimer = true
     }
 
     fun pausedMonitorTimer() {
@@ -166,6 +168,7 @@ class CheckInTimerView : RelativeLayout, CheckInTimerListener, ManualCheckInList
         monitoringTimer = null
         setTimerStatus(TimerState.Stopped)
         mCheckInTimer!!.text = "00:00:00"
+        isCountdownTimer = false
 
     }
 
@@ -301,7 +304,6 @@ class CheckInTimerView : RelativeLayout, CheckInTimerListener, ManualCheckInList
         DocleanUp.doCleanAllActivity()
         mCheckInTimer!!.text = "00:00:00"
         mTimerCount++
-        stopMonitorTimer()
         mTimerListener?.onTimerComplete()
                 ?: LonerDialog.getInstance().showCheckInAlert(mCurrentActivity!!, mContext?.getText(R.string.check_in_required).toString(),
                         mContext?.getText(R.string.press_ok_to_check_in_now).toString(), null)
@@ -323,22 +325,25 @@ class CheckInTimerView : RelativeLayout, CheckInTimerListener, ManualCheckInList
     }
 
     override fun manualCheckInCompleted(timer: Boolean) {
-        if (timer) {
+        if (timer && isCountdownTimer) {
             mTimerCount++
-            stopMonitorTimer()
-            startMonitorTimer()
+            onCheckTimerViewUpdate(false)
         }
 
     }
 
     override fun alertCheckInCompleted(timer: Boolean) {
-        if (isTimerEnable()) {
-            if (timer) {
-                stopMonitorTimer()
-                startMonitorTimer()
-            } else {
-                startMonitorTimer()
-            }
+        if (!isTimerEnable()) {
+            clearTimer()
+            AppConfiguration.getInstance().setTimerManualCheckInEnable(mContext!!, false)
+            TimerDataStore.getInstance(mContext!!).clearAll()
+            manualCheckInOffAndAllowUserOn()
+            stopMonitorTimer()
+        } else if (timer) {
+            stopMonitorTimer()
+            startMonitorTimer()
+        } else {
+            startMonitorTimer()
         }
 
     }

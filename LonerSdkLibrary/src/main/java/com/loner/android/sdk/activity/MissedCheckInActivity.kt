@@ -25,7 +25,7 @@ class MissedCheckInActivity : BaseActivity() {
         VibrationManager.getInstance(applicationContext).startVibrationForAlert()
         LocationUpdate.getInstance(this).getLastLocation()
         btnAcknowledge.setOnClickListener {
-            CheckInTimerView.getCheckInTimerView()?.onCheckTimerViewUpdate(false)
+           // CheckInTimerView.getCheckInTimerView()?.onCheckTimerViewUpdate(false)
             this@MissedCheckInActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             if (NetworkStatus().isNetworkAvailable(this)) {
                 Loner.getClient().sendNotification(this, "alert_acknowledged",null)
