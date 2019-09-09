@@ -33,7 +33,6 @@ class LonerPermission private constructor(context: Context) {
     }
 
     fun checkPermissions(){
-        Log.d("TAG","verifying call from client")
         startPermissionActivity()
     }
 

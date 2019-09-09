@@ -1,8 +1,8 @@
 package com.loner.android.sdk.activity
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -12,13 +12,16 @@ import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.PermissionChecker
-import android.util.Log
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
+import com.google.android.gms.tasks.Task
 import com.loner.android.sdk.dailogs.LonerDialog
 import com.loner.android.sdk.dailogs.LonerDialogListener
 import com.loner.android.sdk.model.respons.LonerPermission
 import com.loner.android.sdk.utils.Constant
 import java.util.ArrayList
 import java.util.HashMap
+
 
 class PermissionActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsResultCallback {
     private var permissionMap = HashMap<String, String>()
@@ -28,12 +31,10 @@ class PermissionActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissi
         super.onCreate(savedInstanceState)
         permissionMap[Manifest.permission.ACCESS_FINE_LOCATION] = "Loner Mobile uses your location to ensure you get the help you need."
         //permissionMap[Manifest.permission.CALL_PHONE] = "Loner Mobile uses your call settings to ensure you get the help you need."
-
         if (Build.VERSION.SDK_INT >= 23) {
             if (isPermissionsGranted()) {
                 onPermissionsGranted()
             } else {
-                Log.d("TAG","verifying inside oncreate result")
                 requestPermissions(permissionMap, Constant.PERMISSION_REQUEST_CODE)
             }
         } else {
@@ -60,12 +61,10 @@ class PermissionActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissi
                             pendingPermissions.add(listPermissionsNeeded[i])
                         } else {
                             showSettingAlertMessage("Allow permission", permissionMap[listPermissionsNeeded[i]])
-                            Log.d("TAG","verifying  permissions dialog shwon")
                             return
                         }
                     }
                 }
-                Log.d("TAG","verifying pending permissions")
                 if (pendingPermissions.size > 0) {
                     requestPermissions(permissionMap, requestCode)
                 } else {
@@ -146,18 +145,20 @@ class PermissionActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissi
      * @param message String indicates the usage of permission
      */
     private fun showSettingAlertMessage(title: String, message: String?) {
-        LonerDialog.getInstance().showAlertDialog(this, title, message, null, object : LonerDialogListener {
-            override fun onPositiveButtonClicked() {
-                goToAppPermissionScreen()
-            }
-        })
+        if(!isFinishing && !LonerDialog.getInstance().isShowingAlert()) {
+            LonerDialog.getInstance().showAlertDialog(this, title, message, null, object : LonerDialogListener {
+                override fun onPositiveButtonClicked() {
+                    goToAppPermissionScreen()
+                }
+            })
+        }
     }
 
     /**
      * Show usage of each permission after user deny.
      */
     private fun showPermissionAlertMessage() {
-        if(!LonerDialog.getInstance().isShowingAlert()) {
+        if(!isFinishing && !LonerDialog.getInstance().isShowingAlert()) {
             LonerDialog.getInstance().showAlertDialog(this, "Allow location and phone access", "Loner Mobile uses your location and call settings to ensure you get the help you need.", null, object : LonerDialogListener {
                 override fun onPositiveButtonClicked() {
                     ActivityCompat.requestPermissions(this@PermissionActivity, listPermissionsNeeded.toTypedArray(), Constant.PERMISSION_REQUEST_CODE)
@@ -170,6 +171,35 @@ class PermissionActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissi
      * Permission granted callback to the client application
      */
     private fun onPermissionsGranted(){
+        val locationRequest = LocationRequest.create()
+        val builder = LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest)
+
+        val client: SettingsClient = LocationServices.getSettingsClient(this)
+        val task: Task<LocationSettingsResponse> = client.checkLocationSettings(builder.build())
+
+
+        task.addOnSuccessListener { locationSettingsResponse ->
+            // All location settings are satisfied. The client can initialize
+            // location requests here.
+            // ...
+        }
+
+        task.addOnFailureListener { exception ->
+            if (exception is ResolvableApiException){
+                // Location settings are not satisfied, but this can be fixed
+                // by showing the user a dialog.
+                try {
+                    // Show the dialog by calling startResolutionForResult(),
+                    // and check the result in onActivityResult().
+                    exception.startResolutionForResult(this@PermissionActivity,
+                            1)
+                } catch (sendEx: IntentSender.SendIntentException) {
+                    // Ignore the error.
+                }
+            }
+        }
+
         this.finish()
         LonerPermission.onPermissionGranted()
     }
