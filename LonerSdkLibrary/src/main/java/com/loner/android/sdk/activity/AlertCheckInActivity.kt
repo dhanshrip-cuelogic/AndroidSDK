@@ -30,6 +30,10 @@ class AlertCheckInActivity : BaseActivity() {
         manualCheckInListener = CheckInTimerView.getCheckInTimerView()
         initUI()
         btn_send_check_in.setOnClickListener {
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                return@setOnClickListener
+            }
+            mLastClickTime = SystemClock.elapsedRealtime()
             sendCheckInNoteToServer()
         }
         btn_cancel_check_in.setOnClickListener {

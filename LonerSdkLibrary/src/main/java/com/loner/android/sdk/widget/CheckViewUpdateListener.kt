@@ -1,6 +1,6 @@
 package com.loner.android.sdk.widget
 
 interface CheckViewUpdateListener {
-    fun onCheckTimerViewUpdate()
+    fun onCheckTimerViewUpdate(isAck:Boolean)
     fun onMissCheckInAlert()
 }

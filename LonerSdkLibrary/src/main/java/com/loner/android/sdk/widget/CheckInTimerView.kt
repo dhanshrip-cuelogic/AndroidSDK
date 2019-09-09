@@ -33,7 +33,7 @@ import com.loner.android.sdk.utils.*
 import com.loner.android.sdk.webservice.network.networking.NetworkStatus
 
 
-class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListener,TimerListener,CheckViewUpdateListener, ConnectionBroadcastReceiver.NetworkConnectionStatusListener  {
+class CheckInTimerView : RelativeLayout, CheckInTimerListener, ManualCheckInListener, TimerListener, CheckViewUpdateListener, ConnectionBroadcastReceiver.NetworkConnectionStatusListener {
     private var mCheckInTimerDisable: TextView? = null
     private var mCheckInTimerDescription: TextView? = null
     private var mCheckInTimer: TextView? = null
@@ -43,16 +43,19 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     private var mCurrentActivity: Context? = null
     private var mTimerCount = 0
     private var isTimerEnable = false
-    private var mTimerListener:OnTimerListener? = null
+    private var mTimerListener: OnTimerListener? = null
+
     /*Timer implementation*/
     enum class TimerState {
         Stopped, Paused, Running
     }
+
     enum class TimerCount {
         TimerSpecificTime,
         TimerNone
     }
-    enum class TimerType{
+
+    enum class TimerType {
         TimerTypeNever,
         TimerTypeUntilTurnedOff,
         TimerTypeOnce,
@@ -67,19 +70,19 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     private var monitorTimerLengthMillisecond: Long = 0
     private var currentTimerLengthMillisecond: Long = 0
     private var monitoringTimer: MonitoringCountDownTimer? = null
-    private lateinit var mNetworkConnectionStatusReceivers:ConnectionBroadcastReceiver
+    private lateinit var mNetworkConnectionStatusReceivers: ConnectionBroadcastReceiver
     private var networkRetryOverlay: View? = null
-    private var isCheckInAlert:Boolean = false
+    private var isCheckInAlert: Boolean = false
 
     companion object {
-        private var instance : CheckInTimerView? = null
+        private var instance: CheckInTimerView? = null
 
-        fun setCheckInTimerView(instance:CheckInTimerView?){
+        fun setCheckInTimerView(instance: CheckInTimerView?) {
             this.instance = instance
         }
 
-        fun getCheckInTimerView():CheckInTimerView? {
-            return instance?:null
+        fun getCheckInTimerView(): CheckInTimerView? {
+            return instance ?: null
         }
     }
 
@@ -120,44 +123,45 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         }
     }
 
-    @JvmOverloads fun loadCheckInTimerComponent(context:Context,isAllowUserToConfigure : Boolean?,isManualCheckInEnabled:Boolean?, timerValue : Int?, timerListener: OnTimerListener? = null ){
+    @JvmOverloads
+    fun loadCheckInTimerComponent(context: Context, isAllowUserToConfigure: Boolean?, isManualCheckInEnabled: Boolean?, timerValue: Int?, timerListener: OnTimerListener? = null) {
         mCurrentActivity = context
         timerListener?.let { this.mTimerListener = timerListener }
 
-        if(isAllowUserToConfigure == null || isManualCheckInEnabled == null || timerValue == null){
+        if (isAllowUserToConfigure == null || isManualCheckInEnabled == null || timerValue == null) {
             throw IllegalStateException("All value should not be null")
         }
         checkVisibilityOfView(isAllowUserToConfigure, isManualCheckInEnabled)
-        if(timerValue != 0 && isManualCheckInEnabled){
+        if (timerValue != 0 && isManualCheckInEnabled) {
             val checkTimeInSecond = convertMinuteToSecond(timerValue)
-            AppConfiguration.getInstance().setTimeBetweenCheckinLng(mContext!!,checkTimeInSecond)
-            AppConfiguration.getInstance().setManualCheckIn(mContext!!,true)
-            AppConfiguration.getInstance().setTimerManualCheckInEnable(mContext!!,true)
+            AppConfiguration.getInstance().setTimeBetweenCheckinLng(mContext!!, checkTimeInSecond)
+            AppConfiguration.getInstance().setManualCheckIn(mContext!!, true)
+            AppConfiguration.getInstance().setTimerManualCheckInEnable(mContext!!, true)
             monitorTimerLengthMillisecond = convertSecondToMillisecond(checkTimeInSecond)
             startMonitorTimer()
         }
 
     }
 
-    private fun startMonitorTimer(){
-        if(getTimerStatus() == TimerState.Running) stopMonitorTimer()
+    private fun startMonitorTimer() {
+        if (getTimerStatus() == TimerState.Running) stopMonitorTimer()
         val timerValue = if (getTimerStatus() == TimerState.Paused)
             currentTimerLengthMillisecond
         else
             monitorTimerLengthMillisecond
-        monitoringTimer = MonitoringCountDownTimer(timerValue,1000,this)
+        monitoringTimer = MonitoringCountDownTimer(timerValue, 1000, this)
         monitoringTimer!!.start()
         setTimerStatus(TimerState.Running)
     }
 
-     fun pausedMonitorTimer() {
+    fun pausedMonitorTimer() {
         monitoringTimer?.cancel()
         monitoringTimer = null
         setTimerStatus(TimerState.Paused)
 
     }
 
-    private fun stopMonitorTimer(){
+    private fun stopMonitorTimer() {
         monitoringTimer?.cancel()
         monitoringTimer = null
         setTimerStatus(TimerState.Stopped)
@@ -166,18 +170,20 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     }
 
 
-    private fun setTimerStatus(timerState: TimerState){
-       this.timerState = timerState
+    private fun setTimerStatus(timerState: TimerState) {
+        this.timerState = timerState
     }
-    private fun getTimerStatus():TimerState{
+
+    private fun getTimerStatus(): TimerState {
         return timerState
     }
+
     private fun getTimerType(): TimerType {
         return timerType
     }
 
     private fun setTimerType(timerType: TimerType) {
-        this.timerType= timerType
+        this.timerType = timerType
     }
 
     private fun getTimerCount(): TimerCount {
@@ -187,19 +193,20 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     private fun setTimerCount(timerCount: TimerCount) {
         this.timerSpecificType = timerCount
     }
-    private fun checkVisibilityOfView(isAllowUserToConfigure : Boolean,isManualCheckInEnabled:Boolean) {
-        if(isManualCheckInEnabled && !isAllowUserToConfigure){
+
+    private fun checkVisibilityOfView(isAllowUserToConfigure: Boolean, isManualCheckInEnabled: Boolean) {
+        if (isManualCheckInEnabled && !isAllowUserToConfigure) {
             manualCheckInOnAndAllowUserOff()
-        }else if(isManualCheckInEnabled){
+        } else if (isManualCheckInEnabled) {
             manualCheckInAndAllowUserOn()
-        }else if(!isManualCheckInEnabled && !isAllowUserToConfigure) {
+        } else if (!isManualCheckInEnabled && !isAllowUserToConfigure) {
             manualCheckInAndAllowUserOff()
         } else {
             manualCheckInOffAndAllowUserOn()
         }
     }
 
-    private fun manualCheckInOnAndAllowUserOff(){
+    private fun manualCheckInOnAndAllowUserOff() {
         mCheckInTimerDisable?.visibility = View.GONE
         mCheckInTimerDescription?.visibility = View.VISIBLE
         mCheckInTimerDescription?.setText(R.string.countdown_required_to_check_in)
@@ -208,7 +215,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         mSetTimerButton?.visibility = View.GONE
     }
 
-    private fun manualCheckInAndAllowUserOn(){
+    private fun manualCheckInAndAllowUserOn() {
         mCheckInTimerDescription?.visibility = View.VISIBLE
         mCheckInTimerDescription?.setText(R.string.countdown_required_to_check_in)
         mCheckInButton?.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.check_in_button_size))
@@ -216,13 +223,13 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         mCheckInButton?.visibility = View.VISIBLE
         mSetTimerButton?.visibility = View.VISIBLE
         mCheckInTimerDisable?.visibility = View.GONE
-        mSetTimerButton?.background = ContextCompat.getDrawable(mContext!!,R.drawable.btn_change_timer_selector)
-        mSetTimerButton?.setTextColor(ContextCompat.getColor(mContext!!,R.color.black))
+        mSetTimerButton?.background = ContextCompat.getDrawable(mContext!!, R.drawable.btn_change_timer_selector)
+        mSetTimerButton?.setTextColor(ContextCompat.getColor(mContext!!, R.color.black))
         mSetTimerButton?.setText(R.string.change_timer)
         mCheckInTimer?.visibility = View.VISIBLE
     }
 
-    private fun manualCheckInAndAllowUserOff(){
+    private fun manualCheckInAndAllowUserOff() {
         mCheckInTimerDescription?.visibility = View.GONE
         mCheckInTimerDescription?.gravity = Gravity.CENTER_HORIZONTAL
         mCheckInTimerDescription?.setText(R.string.change_timer_disable_description)
@@ -233,7 +240,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         mCheckInTimer?.visibility = View.GONE
     }
 
-    private fun manualCheckInOffAndAllowUserOn(){
+    private fun manualCheckInOffAndAllowUserOn() {
         mCheckInButton?.visibility = View.VISIBLE
         mSetTimerButton?.visibility = View.VISIBLE
         mCheckInTimerDisable?.visibility = View.VISIBLE
@@ -244,8 +251,8 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         mSetTimerButton?.visibility = View.VISIBLE
         mSetTimerButton?.setText(R.string.set_timer)
         mCheckInButton?.setText(R.string.send_message)
-        mSetTimerButton?.background = ContextCompat.getDrawable(mContext!!,R.drawable.btn_change_timer_selector)
-        mSetTimerButton?.setTextColor(ContextCompat.getColor(mContext!!,R.color.black))
+        mSetTimerButton?.background = ContextCompat.getDrawable(mContext!!, R.drawable.btn_change_timer_selector)
+        mSetTimerButton?.setTextColor(ContextCompat.getColor(mContext!!, R.color.black))
         mCheckInButton?.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.check_in_button_size))
         mSetTimerButton?.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.check_in_button_size))
         mCheckInTimer?.visibility = View.GONE
@@ -253,29 +260,30 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
 
     override fun onMonitorTimerFinish() {
         isCheckInAlert = true
-        if(NetworkStatus().isNetworkAvailable(mContext!!)) {
+        if (NetworkStatus().isNetworkAvailable(mContext!!)) {
             requestForCheckIn()
         }
     }
-    override fun onCheckTimerViewUpdate() {
+
+    override fun onCheckTimerViewUpdate(isAck: Boolean) {
         isCheckInAlert = false
-        acknowledgeForCheckIn()
+        if (isAck) acknowledgeForCheckIn()
         if (AppConfiguration.getInstance().isTimerManualCheckInEnable(mContext!!) && !TimerConfiguration.getInstance().isTimerEnable(mContext!!) && getTimerCount() === TimerCount.TimerNone && !isTimerEnable) {
             startMonitorTimer()
-        } else if(!isTimerEnable()){
+        } else if (!isTimerEnable()) {
             clearTimer()
-            AppConfiguration.getInstance().setTimerManualCheckInEnable(mContext!!,false)
+            AppConfiguration.getInstance().setTimerManualCheckInEnable(mContext!!, false)
             TimerDataStore.getInstance(mContext!!).clearAll()
             manualCheckInOffAndAllowUserOn()
             stopMonitorTimer()
-        } else if (TimerConfiguration.getInstance().isTimerEnable(mContext!!)){
+        } else if (TimerConfiguration.getInstance().isTimerEnable(mContext!!)) {
             manualCheckInAndAllowUserOn()
             startMonitorTimer()
         }
     }
 
     private fun acknowledgeForCheckIn() {
-        Loner.getClient().sendMessage(mContext!!,"Manual Check-in completed",null)
+        Loner.getClient().sendMessage(mContext!!, "Manual Check-in completed", null)
     }
 
     override fun onMissCheckInAlert() {
@@ -286,17 +294,18 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     }
 
     private fun sendMissedCheckInAlert() {
-        Loner.getClient().sendAlertApi(mContext!!,"missed_check_in",null)
+        Loner.getClient().sendAlertApi(mContext!!, "missed_check_in", null)
     }
 
     private fun requestForCheckIn() {
         DocleanUp.doCleanAllActivity()
         mCheckInTimer!!.text = "00:00:00"
         mTimerCount++
+        stopMonitorTimer()
         mTimerListener?.onTimerComplete()
                 ?: LonerDialog.getInstance().showCheckInAlert(mCurrentActivity!!, mContext?.getText(R.string.check_in_required).toString(),
                         mContext?.getText(R.string.press_ok_to_check_in_now).toString(), null)
-        Loner.getClient().sendNotification(mContext!!,"manual_check_in_pending",null)
+        Loner.getClient().sendNotification(mContext!!, "manual_check_in_pending", null)
         LocationUpdate.getInstance(mContext!!).getLastLocation()
     }
 
@@ -305,16 +314,16 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
             setTimerCount(TimerCount.TimerSpecificTime)
             stopMonitorTimer()
             Loner.getClient().showCheckInAlertDialog(mContext!!, mContext?.getText(R.string.check_in_now_to_turn_off).toString(),
-                    mContext?.getText(R.string.check_in_now_to_turn_off_dec).toString(),null)
+                    mContext?.getText(R.string.check_in_now_to_turn_off_dec).toString(), null)
 
-        }else {
+        } else {
             currentTimerLengthMillisecond = millisUntilFinished
             mCheckInTimer!!.text = convertCheckInTextFormat(millisUntilFinished)
         }
     }
 
     override fun manualCheckInCompleted(timer: Boolean) {
-        if(timer) {
+        if (timer) {
             mTimerCount++
             stopMonitorTimer()
             startMonitorTimer()
@@ -323,11 +332,13 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     }
 
     override fun alertCheckInCompleted(timer: Boolean) {
-        if(timer) {
-            stopMonitorTimer()
-            startMonitorTimer()
-        }else {
-            startMonitorTimer()
+        if (isTimerEnable()) {
+            if (timer) {
+                stopMonitorTimer()
+                startMonitorTimer()
+            } else {
+                startMonitorTimer()
+            }
         }
 
     }
@@ -351,7 +362,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     }
 
     private fun setTimerTypeValue(timerType: String) {
-        when(timerType){
+        when (timerType) {
             mContext?.getText(R.string.never)?.toString() -> setTimerType(TimerType.TimerTypeNever)
             mContext?.getText(R.string.until_turned_off)?.toString() -> setTimerType(TimerType.TimerTypeUntilTurnedOff)
             mContext?.getText(R.string.until_a_specific_item)?.toString() -> setTimerType(TimerType.TimerTypeUntilSpecificTime)
@@ -361,24 +372,24 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
     }
 
 
-
     private fun isTimerEnable(): Boolean {
         var isTimerEnable = true
-       if (TimerConfiguration.getInstance().isTimerEnable(mContext!!)) {
+        if (TimerConfiguration.getInstance().isTimerEnable(mContext!!)) {
             if (mTimerCount == 1 && getTimerType() === TimerType.TimerTypeOnce) {
                 isTimerEnable = false
             } else if (mTimerCount == 0 && getTimerType() === TimerType.TimerTypeNever) {
                 isTimerEnable = false
             } else if (mTimerCount == 2 && getTimerType() === TimerType.TimerTypeTwice) {
                 isTimerEnable = false
-            } else if(getTimerCount() == TimerCount.TimerSpecificTime) {
+            } else if (getTimerCount() == TimerCount.TimerSpecificTime) {
                 isTimerEnable = false
             }
         } else {
-           isTimerEnable =  true
+            isTimerEnable = true
         }
         return isTimerEnable
     }
+
     private fun clearTimer() {
         setTimerCount(TimerCount.TimerNone)
         setTimerType(TimerType.TimerTypeNone)
@@ -392,7 +403,7 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         networkRetryOverlay?.visibility = View.VISIBLE
         mSetTimerButton?.isEnabled = false
         mCheckInButton?.isEnabled = false
-        if(isCheckInAlert) {
+        if (isCheckInAlert) {
             LonerDialog.getInstance().dismissCheckInAlertDialog()
             SoundManager.getInstance(mContext!!).stopSound()
             VibrationManager.getInstance(mContext!!).stopVibration()
@@ -403,6 +414,6 @@ class CheckInTimerView: RelativeLayout, CheckInTimerListener,ManualCheckInListen
         networkRetryOverlay?.visibility = View.GONE
         mSetTimerButton?.isEnabled = true
         mCheckInButton?.isEnabled = true
-        if(isCheckInAlert) requestForCheckIn()
+        if (isCheckInAlert) requestForCheckIn()
     }
 }

@@ -61,7 +61,7 @@ class LonerDialog private constructor() {
         checkInAlertDialog = CustomAlertDialog(context, title, message, buttonText,
                 object : LonerDialogListener {
                     override fun onPositiveButtonClicked() {
-                     CheckInTimerView.getCheckInTimerView()?.onCheckTimerViewUpdate()
+                     CheckInTimerView.getCheckInTimerView()?.onCheckTimerViewUpdate(true)
                      missCheckInCountDownTimer?.cancel()
                         SoundManager.getInstance(context).stopSound()
                     }
