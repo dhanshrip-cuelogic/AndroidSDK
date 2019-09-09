@@ -3,6 +3,7 @@ package com.loner.android.sdk.core
 
 import android.content.Context
 import android.util.Log
+import com.loner.android.sdk.activity.ActivityInterface.PermissionResultCallback
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 
 /**
@@ -77,6 +78,6 @@ abstract class Loner {
     abstract fun showCheckInAlertDialog(context: Context, title: String?, subject: String?, buttonText: String?)
     abstract fun sendLocationUpdate(context: Context)
     abstract fun sendLocation(context: Context)
-
+    abstract fun checkPermission(context: Context,permissionResultCallback: PermissionResultCallback)
 
 }

@@ -2,8 +2,10 @@ package com.loner.android.sdk.core
 
 
 import android.content.Context
+import com.loner.android.sdk.activity.ActivityInterface.PermissionResultCallback
 import com.loner.android.sdk.dailogs.LonerDialog
 import com.loner.android.sdk.location.LocationUpdate
+import com.loner.android.sdk.model.respons.LonerPermission
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
 import com.loner.android.sdk.webservice.network.networking.ServiceManager
 
@@ -67,4 +69,13 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
          serviceManager.sendLocationApi(context,mLocation!!,null)
        }
     }
+
+    override fun checkPermission(context: Context,permissionResultCallback: PermissionResultCallback){
+        LonerPermission.getInstance(context, object : PermissionResultCallback {
+            override fun onPermissionGranted() {
+                permissionResultCallback.onPermissionGranted()
+            }
+        }).checkPermissions()
+    }
+
 }

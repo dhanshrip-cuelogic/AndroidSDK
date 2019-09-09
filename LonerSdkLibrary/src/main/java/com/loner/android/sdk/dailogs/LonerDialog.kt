@@ -38,7 +38,9 @@ class LonerDialog private constructor() {
         if (customAlertDialog?.window != null) {
             customAlertDialog?.window!!.setDimAmount(Constant.DIM_VALUE_FOR_DIALOG)
             customAlertDialog!!.window.setBackgroundDrawable(ColorDrawable(context.resources.getColor(R.color.transparency_colour)))
-            customAlertDialog!!.show()
+            if(!customAlertDialog!!.isShowing){
+                customAlertDialog!!.show()
+            }
         }
 
     }
