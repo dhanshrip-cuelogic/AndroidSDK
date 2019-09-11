@@ -13,5 +13,6 @@ object Constant {
 
     const val DIM_VALUE_FOR_DIALOG = 0.3f
     const val PERMISSION_REQUEST_CODE = 1
+    const val REQUEST_CHECK_SETTINGS = 2
 
 }

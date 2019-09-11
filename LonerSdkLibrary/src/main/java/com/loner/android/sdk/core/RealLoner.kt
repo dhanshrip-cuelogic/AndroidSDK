@@ -38,6 +38,7 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
     companion object {
         private lateinit var serviceManager:ServiceManager
         private lateinit var lonerDialog: LonerDialog
+        private var isPermissionGranted: Boolean = false
         fun create(): RealLoner {
             serviceManager = ServiceManager.getInstance()
             lonerDialog = LonerDialog.getInstance()
@@ -73,9 +74,14 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
     override fun checkPermission(context: Context,permissionResultCallback: PermissionResultCallback){
         LonerPermission.getInstance(context, object : PermissionResultCallback {
             override fun onPermissionGranted() {
+                isPermissionGranted = true
                 permissionResultCallback.onPermissionGranted()
             }
         }).checkPermissions()
+    }
+
+    override fun isPermissionGranted(): Boolean {
+       return isPermissionGranted
     }
 
 }

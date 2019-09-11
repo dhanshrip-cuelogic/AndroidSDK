@@ -79,5 +79,5 @@ abstract class Loner {
     abstract fun sendLocationUpdate(context: Context)
     abstract fun sendLocation(context: Context)
     abstract fun checkPermission(context: Context,permissionResultCallback: PermissionResultCallback)
-
+    abstract fun isPermissionGranted():Boolean
 }
