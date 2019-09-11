@@ -22,7 +22,7 @@ open class BaseView : RelativeLayout,ConnectionBroadcastReceiver.NetworkConnecti
 
     protected var baseLayout: RelativeLayout? = null
     protected var retryOverlay: View? = null
-    protected var txtRetryOverlay: TextView? = null
+    private var txtRetryOverlay: TextView? = null
 
     constructor(context: Context) : super(context){
        mContext = context

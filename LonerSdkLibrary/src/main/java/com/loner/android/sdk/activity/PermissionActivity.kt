@@ -97,7 +97,7 @@ class PermissionActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissi
                 this.finish()
                 LonerPermission.onPermissionGranted()
             }else{
-                showLocationSettingAlertMessage("Error", "Location service is disabled please enable it from setting")
+                showLocationSettingAlertMessage("Error", "Location service is mandatory in order to use Loner components")
             }
         }
     }
