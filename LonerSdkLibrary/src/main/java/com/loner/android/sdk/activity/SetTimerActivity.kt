@@ -39,8 +39,6 @@ class SetTimerActivity : BaseActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        supportActionBar!!.hide()
         setTimerActivityInstance(this)
         setContentView(R.layout.activity_set_timer)
         timerListener = CheckInTimerView.getCheckInTimerView()

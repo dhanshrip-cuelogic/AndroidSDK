@@ -1,12 +1,12 @@
 package com.loner.android.sdk.activity
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.Window
 import android.widget.DatePicker
 import android.widget.LinearLayout
 import android.widget.ListView
@@ -32,8 +32,6 @@ class SetRepeatActivity : BaseActivity(), DatePicker.OnDateChangedListener, Repe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        supportActionBar!!.hide()
         setContentView(R.layout.activity_set_repeation)
         setRepeatActivityInstance(this)
         init()
@@ -85,7 +83,6 @@ class SetRepeatActivity : BaseActivity(), DatePicker.OnDateChangedListener, Repe
             setResult(105, backIntent)
             this@SetRepeatActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             finish()
-
         }
     }
 

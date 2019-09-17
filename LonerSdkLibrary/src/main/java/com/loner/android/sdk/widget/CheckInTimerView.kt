@@ -1,5 +1,6 @@
 package com.loner.android.sdk.widget
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -30,6 +31,8 @@ import com.loner.android.sdk.location.LocationUpdate
 import com.loner.android.sdk.model.VibrationManager
 import com.loner.android.sdk.receiver.ConnectionBroadcastReceiver
 import com.loner.android.sdk.utils.*
+import com.loner.android.sdk.viewModel.AlertActivityViewModel
+import com.loner.android.sdk.viewModel.CheckInViewModel
 import com.loner.android.sdk.webservice.network.networking.NetworkStatus
 
 
@@ -75,6 +78,8 @@ class CheckInTimerView : RelativeLayout, CheckInTimerListener, ManualCheckInList
     private var networkRetryOverlay: View? = null
     private var isCheckInAlert: Boolean = false
 
+    private  var checkInViewModel: CheckInViewModel? = null
+
     companion object {
         private var instance: CheckInTimerView? = null
 
@@ -110,6 +115,7 @@ class CheckInTimerView : RelativeLayout, CheckInTimerListener, ManualCheckInList
         networkRetryOverlay = findViewById<View>(R.id.networkOverlay)
         networkRetryOverlay?.visibility = View.GONE
         networkRetryOverlay?.alpha = 0.8f
+        //checkInViewModel =  ViewModelProviders.of(mContext!!).get(AlertActivityViewModel::class.java)
         mNetworkConnectionStatusReceivers = ConnectionBroadcastReceiver()
         mContext?.registerReceiver(mNetworkConnectionStatusReceivers, IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"))
         mNetworkConnectionStatusReceivers.setNetworkConnectionListener(this)

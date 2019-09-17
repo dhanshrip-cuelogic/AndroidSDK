@@ -7,6 +7,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.Window
 import com.loner.android.sdk.R
 import com.loner.android.sdk.dailogs.LonerDialog
 import com.loner.android.sdk.dailogs.LonerDialogListener
@@ -20,6 +21,8 @@ open class BaseActivity: AppCompatActivity(), ConnectionBroadcastReceiver.Networ
     private var networkRetryOverlay: View? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        supportActionBar!!.hide()
         mNetworkConnectionStatusReceivers = ConnectionBroadcastReceiver()
         gpsSettingReceiver = GPSSettingReceiver()
     }
