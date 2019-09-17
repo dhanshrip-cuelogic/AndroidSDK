@@ -91,4 +91,11 @@ class EmergencySlider : BaseView, SliderUnlockWidget.SliderUnlockWidgetListener 
         emergencySlider?.progress = 0
         emergencySlider?.isEnabled = false
     }
+    override fun onNetworkDisconnected() {
+        emergencySlider?.isEnabled = false
+    }
+
+    override fun onNetworkConnected() {
+        emergencySlider?.isEnabled = true
+    }
 }

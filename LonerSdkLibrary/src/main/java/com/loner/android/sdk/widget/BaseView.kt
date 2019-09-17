@@ -51,11 +51,9 @@ open class BaseView : RelativeLayout,ConnectionBroadcastReceiver.NetworkConnecti
 
     override fun onNetworkDisconnected() {
         txtRetryOverlay?.text = "Waiting to reconnect"
-        retryOverlay?.visibility = View.VISIBLE
     }
 
     override fun onNetworkConnected() {
-        retryOverlay?.visibility = View.GONE
     }
 
     override fun onGPSDisabled(context: Context) {

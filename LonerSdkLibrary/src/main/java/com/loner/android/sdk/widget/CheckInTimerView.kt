@@ -417,6 +417,8 @@ class CheckInTimerView : BaseView, CheckInTimerListener, ManualCheckInListener, 
         super.onNetworkDisconnected()
         mSetTimerButton?.isEnabled = false
         mCheckInButton?.isEnabled = false
+        retryOverlay?.visibility = View.VISIBLE
+
         if (isCheckInAlert) {
             LonerDialog.getInstance().dismissCheckInAlertDialog()
             SoundManager.getInstance(mContext!!).stopSound()
@@ -428,6 +430,8 @@ class CheckInTimerView : BaseView, CheckInTimerListener, ManualCheckInListener, 
         super.onNetworkConnected()
         mSetTimerButton?.isEnabled = true
         mCheckInButton?.isEnabled = true
+        retryOverlay?.visibility = View.GONE
+
         if (isCheckInAlert) requestForCheckIn()
     }
 

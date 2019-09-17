@@ -4,15 +4,15 @@
  
     <!-- view background color -->
     <solid
-        android:color="@android:color/black">
+        android:color="#80000000">
     </solid>
  
-    <!-- view border color and width -->
+  <!--  &lt;!&ndash; view border color and width &ndash;&gt;
     <stroke
         android:width="3dp"
-        android:color="#1c1b20" >
+        android:color="#70000000" >
     </stroke>
- 
+ -->
     <!-- If you want to add some padding -->
     <padding
         android:left="4dp"
