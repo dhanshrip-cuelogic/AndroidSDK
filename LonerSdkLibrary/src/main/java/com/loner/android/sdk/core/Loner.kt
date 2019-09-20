@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import com.loner.android.sdk.activity.ActivityInterface.PermissionResultCallback
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
+import com.loner.android.sdk.webservice.interfaces.LocationUpdateInerface
 
 /**
  * <p>Loner sdk sample code  provides a Emergency slider widget.You can direct implement slider controller
@@ -76,8 +77,8 @@ abstract class Loner {
     abstract fun sendNotification(context: Context, message: String, listener: ActivityCallBackInterface?)
 
     abstract fun showCheckInAlertDialog(context: Context, title: String?, subject: String?, buttonText: String?)
-    abstract fun sendLocationUpdate(context: Context)
+    abstract fun getLocationUpdate(context: Context,listener: LocationUpdateInerface?)
     abstract fun sendLocation(context: Context)
     abstract fun checkPermission(context: Context,permissionResultCallback: PermissionResultCallback)
-
+    abstract fun isPermissionGranted():Boolean
 }

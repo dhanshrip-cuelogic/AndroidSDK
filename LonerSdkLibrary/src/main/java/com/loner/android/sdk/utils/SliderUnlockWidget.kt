@@ -231,7 +231,6 @@ class SliderUnlockWidget : android.support.v7.widget.AppCompatSeekBar, OnSeekBar
     }
 
     companion object {
-
         var isSliderTouchedUp: Boolean = false
     }
 }

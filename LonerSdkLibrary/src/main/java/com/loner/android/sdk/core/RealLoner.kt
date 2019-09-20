@@ -7,6 +7,7 @@ import com.loner.android.sdk.dailogs.LonerDialog
 import com.loner.android.sdk.location.LocationUpdate
 import com.loner.android.sdk.model.respons.LonerPermission
 import com.loner.android.sdk.webservice.interfaces.ActivityCallBackInterface
+import com.loner.android.sdk.webservice.interfaces.LocationUpdateInerface
 import com.loner.android.sdk.webservice.network.networking.ServiceManager
 
 /**
@@ -22,6 +23,7 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
      *    for callback</p>
      *
      */
+    private var locationListener:LocationUpdateInerface? = null
     override fun sendEmergencyAlertApi(context:Context,listener: ActivityCallBackInterface?) {
         serviceManager.sendAlertApi(context,"emergency_alert",listener)
     }
@@ -38,6 +40,7 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
     companion object {
         private lateinit var serviceManager:ServiceManager
         private lateinit var lonerDialog: LonerDialog
+        private var isPermissionGranted: Boolean = false
         fun create(): RealLoner {
             serviceManager = ServiceManager.getInstance()
             lonerDialog = LonerDialog.getInstance()
@@ -59,23 +62,33 @@ import com.loner.android.sdk.webservice.network.networking.ServiceManager
                subject,null)
     }
 
-    override fun sendLocationUpdate(context: Context) {
+    override fun getLocationUpdate(context: Context,listener: LocationUpdateInerface?) {
       LocationUpdate.getInstance(context).getLastLocation()
+        listener?.let {
+            locationListener = listener
+        }
     }
 
     override fun sendLocation(context: Context) {
        var mLocation =  LocationUpdate.getInstance(context).getLocation()
        mLocation?.let {
          serviceManager.sendLocationApi(context,mLocation!!,null)
+         locationListener?.onLocationChange(mLocation)
        }
     }
 
     override fun checkPermission(context: Context,permissionResultCallback: PermissionResultCallback){
         LonerPermission.getInstance(context, object : PermissionResultCallback {
             override fun onPermissionGranted() {
+                isPermissionGranted = true
                 permissionResultCallback.onPermissionGranted()
             }
         }).checkPermissions()
     }
+
+    override fun isPermissionGranted(): Boolean {
+       return isPermissionGranted
+    }
+
 
 }

@@ -8,10 +8,10 @@ fun convertCheckInTextFormat(millisUntilFinished: Long): String {
             TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)))
 }
 
-fun convertSecondToMillisecond(seconds: Long) : Long {
-    return seconds*1000
+fun Int.convertSecondToMillisecond() : Long {
+    return (this*1000).toLong()
 }
-fun convertMinuteToSecond(seconds: Int) : Long {
-    return (seconds*60).toLong()
+fun Long.convertMinuteToSecond() : Long {
+    return this*60
 }
 

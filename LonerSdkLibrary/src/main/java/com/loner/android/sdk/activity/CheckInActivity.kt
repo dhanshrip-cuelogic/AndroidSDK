@@ -62,7 +62,7 @@ class CheckInActivity : BaseActivity() {
         activityViewModel.responseDataSuccess.observe(this, Observer { isResponse ->
             isResponse?.let {
                 if(isResponse) {
-                    manualCheckInListener?.alertCheckInCompleted(true)
+                    manualCheckInListener?.manualCheckInCompleted(true)
                     finish()
                 }
             }

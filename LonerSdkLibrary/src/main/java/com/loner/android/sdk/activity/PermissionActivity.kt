@@ -1,6 +1,7 @@
 package com.loner.android.sdk.activity
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
@@ -12,8 +13,11 @@ import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.PermissionChecker
+import android.util.Log
 import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.location.*
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.loner.android.sdk.dailogs.LonerDialog
 import com.loner.android.sdk.dailogs.LonerDialogListener
@@ -71,10 +75,12 @@ class PermissionActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissi
                     onPermissionsGranted()
                 }
             }
+
         }
-
-
     }
+
+
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -83,6 +89,15 @@ class PermissionActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissi
                 onPermissionsGranted()
             else {
                 requestPermissions(permissionMap, requestCode)
+            }
+        }else if (requestCode == Constant.REQUEST_CHECK_SETTINGS) {
+            //Check the result from location setting request
+            if (resultCode == Activity.RESULT_OK) {
+                //User enabled GPS
+                this.finish()
+                LonerPermission.onPermissionGranted()
+            }else{
+                showLocationSettingAlertMessage("Error", "Location service is mandatory in order to use Loner components")
             }
         }
     }
@@ -167,10 +182,35 @@ class PermissionActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissi
         }
     }
 
+
+    /**
+     * Show Alert dialog to show enable location
+     * @param message String indicates the usage of permission
+     */
+    private fun showLocationSettingAlertMessage(title: String, message: String?) {
+        if(!isFinishing && !LonerDialog.getInstance().isShowingAlert()) {
+            LonerDialog.getInstance().showAlertDialog(this, title, message, null, object : LonerDialogListener {
+                override fun onPositiveButtonClicked() {
+                    checkGPSSettings()
+                }
+            })
+        }
+    }
+
+
     /**
      * Permission granted callback to the client application
      */
     private fun onPermissionsGranted(){
+//        this.finish()
+//        LonerPermission.onPermissionGranted()
+        checkGPSSettings()
+    }
+
+    /**
+     * check GPS settings status
+     */
+    private fun checkGPSSettings(){
         val locationRequest = LocationRequest.create()
         val builder = LocationSettingsRequest.Builder()
                 .addLocationRequest(locationRequest)
@@ -178,11 +218,10 @@ class PermissionActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissi
         val client: SettingsClient = LocationServices.getSettingsClient(this)
         val task: Task<LocationSettingsResponse> = client.checkLocationSettings(builder.build())
 
-
-        task.addOnSuccessListener { locationSettingsResponse ->
-            // All location settings are satisfied. The client can initialize
-            // location requests here.
-            // ...
+        task.addOnSuccessListener {
+            // Location settings are satisdied,finish the permission activity and send callback to the client app
+            this.finish()
+            LonerPermission.onPermissionGranted()
         }
 
         task.addOnFailureListener { exception ->
@@ -193,15 +232,13 @@ class PermissionActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissi
                     // Show the dialog by calling startResolutionForResult(),
                     // and check the result in onActivityResult().
                     exception.startResolutionForResult(this@PermissionActivity,
-                            1)
+                            Constant.REQUEST_CHECK_SETTINGS)
                 } catch (sendEx: IntentSender.SendIntentException) {
                     // Ignore the error.
                 }
             }
         }
-
-        this.finish()
-        LonerPermission.onPermissionGranted()
     }
+
 
 }

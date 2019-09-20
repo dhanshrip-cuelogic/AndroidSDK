@@ -6,6 +6,7 @@ import android.content.IntentFilter
 import android.location.LocationManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.view.Window
 import com.loner.android.sdk.R
@@ -51,11 +52,11 @@ open class BaseActivity: AppCompatActivity(), ConnectionBroadcastReceiver.Networ
         networkRetryOverlay?.visibility = View.GONE
     }
 
-    override fun onGPSDisabled() {
-        showSettingAlertMessage(this,"Location service is disabled","Seems like your GPS is disabled, Loner requires GPS is to be enable in order to send your location in case of emergency.")
+    override fun onGPSDisabled(context: Context) {
+        showSettingAlertMessage(context,"Location service is disabled","Seems like your GPS is disabled, Loner requires GPS is to be enable in order to send your location in case of emergency.")
     }
 
-    override fun onGPSEnabled() {
+    override fun onGPSEnabled(context: Context) {
 
     }
 

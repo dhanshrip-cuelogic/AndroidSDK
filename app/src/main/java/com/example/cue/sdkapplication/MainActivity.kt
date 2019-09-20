@@ -1,49 +1,55 @@
 package com.example.cue.sdkapplication
 
 
+import android.location.Location
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
-import android.widget.Toast
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.loner.android.sdk.activity.ActivityInterface.PermissionResultCallback
 import com.loner.android.sdk.widget.CheckInTimerView
 import com.loner.android.sdk.core.Loner
+import com.loner.android.sdk.webservice.interfaces.LocationUpdateInerface
+import com.google.android.gms.maps.model.LatLng
+import com.loner.android.sdk.activity.ActivityInterface.PermissionResultCallback
 
-class MainActivity : FragmentActivity(), OnMapReadyCallback {
+class MainActivity : FragmentActivity(), OnMapReadyCallback,PermissionResultCallback, LocationUpdateInerface {
     private lateinit var checkInTimerView: CheckInTimerView
-    private lateinit var mMap: GoogleMap
+    private  var mMap: GoogleMap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         checkInTimerView = findViewById(R.id.check_view)
-        checkInTimerView.loadCheckInTimerComponent(this, true, true, 10)
+       Loner.getClient().checkPermission(this@MainActivity, this)
 
-        Loner.getClient().checkPermission(this,object : PermissionResultCallback{
-            override fun onPermissionGranted() {
-                Toast.makeText(applicationContext,"All peremissions are granted",Toast.LENGTH_LONG).show()
-                Loner.getClient().sendLocationUpdate(this@MainActivity)
-                val mapFragment = supportFragmentManager
-                        .findFragmentById(R.id.map) as SupportMapFragment
-                mapFragment.getMapAsync(this@MainActivity)
-            }
-        })
+    }
 
+    override fun onPermissionGranted() {
+        checkInTimerView.loadCheckInTimerComponent(this@MainActivity, true, true, 10)
+        Loner.getClient().getLocationUpdate(this@MainActivity, this)
+        val mapFragment = supportFragmentManager
+                .findFragmentById(R.id.map) as? SupportMapFragment
+        mapFragment?.getMapAsync(this@MainActivity)
     }
 
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        val mapSettings = mMap.uiSettings
-        mapSettings.isZoomControlsEnabled = true
-        mapSettings.isZoomGesturesEnabled = true
-        mapSettings.isScrollGesturesEnabled = true
-        mapSettings.isTiltGesturesEnabled = true
+        val mapSettings = mMap?.uiSettings
+        mapSettings?.isZoomControlsEnabled = true
+        mapSettings?.isZoomGesturesEnabled = true
+        mapSettings?.isScrollGesturesEnabled = true
+        mapSettings?.isTiltGesturesEnabled = true
         if (mMap != null) {
-            mMap.isMyLocationEnabled = true
+            mMap?.isMyLocationEnabled = true
         }
+    }
 
+    override fun onLocationChange(location: Location?) {
+        val latLng = LatLng(location?.latitude!!, location?.longitude!!)
+        val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15f)
+        mMap?.animateCamera(cameraUpdate)
     }
 }
