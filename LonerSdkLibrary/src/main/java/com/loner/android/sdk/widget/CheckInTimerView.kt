@@ -41,7 +41,6 @@ class CheckInTimerView : BaseView, ManualCheckInListener, TimerListener, CheckVi
     private var mSetTimerButton: Button? = null
     private var mCheckInButton: Button? = null
     private var mContext: Context? = null
-    private var mCurrentActivity: Context? = null
     private var mTimerCount = 0
     private var isTimerEnable = false
     private var mTimerListener: OnTimerListener? = null
@@ -124,8 +123,7 @@ class CheckInTimerView : BaseView, ManualCheckInListener, TimerListener, CheckVi
 
 
     @JvmOverloads
-    fun loadCheckInTimerComponent(context: Context, isAllowUserToConfigure: Boolean?, isManualCheckInEnabled: Boolean?, timerValue: Int?, timerListener: OnTimerListener? = null) {
-        mCurrentActivity = context
+    fun loadCheckInTimerComponent(isAllowUserToConfigure: Boolean?, isManualCheckInEnabled: Boolean?, timerValue: Int?, timerListener: OnTimerListener? = null) {
         manualCheckInTime = timerValue!!
         timerListener?.let { mTimerListener = timerListener }
         if (isAllowUserToConfigure == null || isManualCheckInEnabled == null || timerValue == null) {
@@ -258,7 +256,7 @@ class CheckInTimerView : BaseView, ManualCheckInListener, TimerListener, CheckVi
         mCheckInTimer!!.text = "00:00:00"
         mTimerCount++
         mTimerListener?.onTimerComplete()
-                ?: LonerDialog.getInstance().showCheckInAlert(mCurrentActivity!!, mContext?.getText(R.string.check_in_required).toString(),
+                ?: LonerDialog.getInstance().showCheckInAlert(mContext!!, mContext?.getText(R.string.check_in_required).toString(),
                         mContext?.getText(R.string.press_ok_to_check_in_now).toString(), null)
         Loner.getClient().sendNotification(mContext!!, "manual_check_in_pending", null)
         LocationUpdate.getInstance(mContext!!).getLastLocation()
@@ -388,7 +386,7 @@ class CheckInTimerView : BaseView, ManualCheckInListener, TimerListener, CheckVi
         mSetTimerButton?.isEnabled = true
         mCheckInButton?.isEnabled = true
         retryOverlay?.visibility = View.GONE
-        loadCheckInTimerComponent(context, true, true, manualCheckInTime)
+        loadCheckInTimerComponent(true, true, manualCheckInTime)
     }
 
 }

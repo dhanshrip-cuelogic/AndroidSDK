@@ -23,11 +23,10 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback,PermissionResultCall
         setContentView(R.layout.activity_main)
         checkInTimerView = findViewById(R.id.check_view)
        Loner.getClient().checkPermission(this@MainActivity, this)
-
     }
 
     override fun onPermissionGranted() {
-        checkInTimerView.loadCheckInTimerComponent(this@MainActivity, true, true, 10)
+        checkInTimerView.loadCheckInTimerComponent( true, true, 10)
         Loner.getClient().getLocationUpdate(this@MainActivity, this)
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as? SupportMapFragment

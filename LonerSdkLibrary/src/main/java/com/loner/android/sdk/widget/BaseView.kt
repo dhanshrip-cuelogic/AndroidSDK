@@ -27,17 +27,6 @@ open class BaseView constructor(context: Context, attrs: AttributeSet? =  null) 
        init(context)
    }
 
-   /* constructor(context: Context) : super(context) {
-        mContext = context
-        init(context)
-    }
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        mContext = context
-        init(context)
-    }*/
-
-
     private fun init(context: Context) {
         baseView = inflate(context, R.layout.base_view, this)
         baseLayout = baseView?.findViewById(R.id.childContainer)
